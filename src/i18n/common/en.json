@@ -1,0 +1,59 @@
+{
+  "email": "Email",
+  "password": "パスワード",
+  "login": "ログイン",
+  "menu": {
+    "dashboard": "ダッシュボード",
+    "business_manager": "企業管理",
+    "commodity_manager": "商品管理",
+    "proposal_manager": "提案管理",
+    "order_manager": "受注管理",
+    "masters": "マスタ管理",
+    "admins": "管理者管理"
+  },
+  "system_information": {
+    "title": "システム情報",
+    "create_by": "登録者",
+    "create_at": "登録日",
+    "update_by": "更新者",
+    "updated_at": "更新日"
+  },
+  "confirm_new_password": "パスワード（確認)",
+  "verify_code": "認証コード",
+  "button": {
+    "cancel": "キャンセル",
+    "create": "登録",
+    "edit": "更新",
+    "ok": "同意",
+    "back": "戻る",
+    "upload": "アップロード",
+    "register_new": "新規登録",
+    "search": "検索",
+    "change": "編集",
+    "delete": "削除",
+    "save": "保存"
+  },
+  "modal_confirm": {
+    "unsaved_content": "入力内容を破棄しますか？",
+    "delete_content": "削除してもよろしいですか？",
+    "delete_title": "削除",
+    "logout_title": "ログアウトします。よろしいですか？",
+    "masters_remove_content": "を削除してもよろしいでしょうか?"
+  },
+  "pagination": {
+    "items_per_page": "ページ"
+  },
+  "menu_profile": {
+    "profile": "プロフィール",
+    "change_password": "パスワード変更",
+    "logout": "ログアウト"
+  },
+  "menu_notify": {
+    "open_chat_box": "チャットを開く"
+  },
+  "upload_image": {
+    "main_logo": "メインロゴ"
+  },
+  "e_mail": "E-mail",
+  "confirm_password": "パスワード（確認）"
+}

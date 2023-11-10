@@ -1,0 +1,8 @@
+.formCard {
+  background-color: "#ffffff";
+  :global {
+    .ant-card-body {
+      border-radius: 5px;
+    }
+  }
+}

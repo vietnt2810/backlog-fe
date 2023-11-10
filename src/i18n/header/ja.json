@@ -1,0 +1,35 @@
+{
+  "admins": {
+    "title": "管理者管理",
+    "admins_title": "管理者ー覧",
+    "register_title": "管理者登録",
+    "edit_title": "管理者編集"
+  },
+  "template": {
+    "title": "管理者管理",
+    "register_title": "管理者登録"
+  },
+  "masters": {
+    "title": "マスタ管理",
+    "list_title": "マスタ一覧",
+    "category_title": "商品カテゴリマスタ編集",
+    "tag_edit_title": "特集タグマスタ編集",
+    "purpose_edit_title": "利用目的マスタ編集",
+    "supplier_edit_title": "仕入先マスタ編集"
+  },
+  "companies": {
+    "title": "企業管理",
+    "list_title": "企業一覧",
+    "name_division": "株式会社A",
+    "register_division": "部門登録",
+    "create_company_title": "企業新規登録",
+    "staff_title": "株式会社A",
+    "register_staff_title": "担当者登録",
+    "edit_division": "部門2 詳細情報",
+    "company_detail": "詳細情報"
+  },
+  "proposal": {
+    "title": "提案管理",
+    "list_title": "非ユーザーからのリクエスト一覧"
+  }
+}

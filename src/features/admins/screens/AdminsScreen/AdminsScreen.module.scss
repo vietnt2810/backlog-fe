@@ -1,0 +1,24 @@
+.root {
+  padding: 0 !important;
+  height: 100%;
+  margin-bottom: 0 !important;
+  :global {
+    .ant-card-body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .icon-down-square {
+      font-size: 20px !important;
+      cursor: pointer;
+    }
+    .ant-pagination {
+      padding: 12px 0;
+      background-color: #fff;
+    }
+    .active-row {
+      background-color: #d9d9d9;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@import "@/styles/colors";
+.loginScreen {
+  :global {
+    .text-forgot-password {
+      top: -25px;
+      right: 0;
+    }
+    .ant-form-item-label {
+      padding-bottom: 6px;
+    }
+    .ant-form-item label {
+      color: $text-dark-20;
+      font-weight: 700;
+    }
+    .ant-form-item:not(:last-child) {
+      padding-bottom: 24px;
+    }
+    .button-submit {
+      font-weight: 600;
+    }
+  }
+}

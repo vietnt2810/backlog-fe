@@ -1,0 +1,31 @@
+{
+  "login_form": {
+    "title": "ログイン画面",
+    "description": "E-mailとパスワードを入力してください",
+    "forgot_password": "パスワードを忘れた方はこちら",
+    "email_placeholder": "Email address",
+    "password_placeholder": "Password"
+  },
+  "forgot_password_form": {
+    "title": "パスワードを忘れた方",
+    "description": "ご使用のE-mailアドレスを入力し、「送信」ボタンを押してください。入力されたE-mailアドレス宛に認証コードをお送りいたします。",
+    "email_placeholder": "Email address",
+    "send": "送信"
+  },
+  "confirm_forgot_password_form": {
+    "title": "認証コードを送信しました",
+    "description": "ご使用のE-mailアドレスに認証コードを送信しました。30分以内にE-mailをご確認の上、認証コードを入力し、パスワードの再設定を行ってください。確認コードが送信されない場合は、戻って再度メールアドレスの入力を行ってください。",
+    "verify_code_placeholder": "6桁の認証コードを入力",
+    "password": "パスワード",
+    "password_placeholder": "再設定するパスワードを入力",
+    "confirm_password": "パスワード（確認)",
+    "confirm_password_placeholder": "もう一度、再設定するパスワードを入力",
+    "type_in": "入力",
+    "back": "戻る"
+  },
+  "forgot_password_success": {
+    "title": "パスワード再設定完了",
+    "description": "パスワードの再設定が完了しました。",
+    "login": "ログインする"
+  }
+}

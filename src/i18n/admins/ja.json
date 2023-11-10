@@ -1,0 +1,45 @@
+{
+  "pagination": {
+    "next_page": "次のページ",
+    "prev_page": "前のページ"
+  },
+  "menu": {
+    "business_manager": "事業者管理",
+    "device_manager": "車載デバイス管理",
+    "login_user": "ログイン中ユーザー",
+    "setting": "設定",
+    "title": "アドミン管理ポータル"
+  },
+  "table": {
+    "admins": {
+      "account_name": "管理者名前",
+      "created_at": "登録日",
+      "updated_by": "更新日",
+      "email": "E-mail"
+    }
+  },
+  "button": {
+    "edit": "編集",
+    "create": "新規登録",
+    "delete": "削除",
+    "change_password": "パスワード変更",
+    "update_password": "変更する"
+  },
+
+  "form": {
+    "title": "管理者情報",
+    "email": "E-mail",
+    "name": "氏名",
+    "name_family": "姓",
+    "name_first": "名",
+    "password": "パスワード",
+    "confirm_password": "パスワード（確認）",
+    "reset_password": "パスワードリセット",
+    "avatar": "アバター"
+  },
+  "modal": {
+    "title": "パスワード変更",
+    "new_password": "新しいパスワード",
+    "confirm_new_password": "新しいパスワード（確認）"
+  }
+}

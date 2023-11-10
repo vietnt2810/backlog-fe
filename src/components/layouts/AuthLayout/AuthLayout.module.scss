@@ -1,0 +1,21 @@
+@import "@/styles/colors";
+
+.container {
+  height: 100vh;
+  background-color: #252525;
+  color: $text-dark-20;
+  text-align: center;
+  :global {
+    .ant-card {
+      width: 380px;
+      min-height: 582px;
+      padding: 100px 22px 0px !important;
+    }
+    .ant-btn {
+      font-weight: 500;
+    }
+  }
+  * {
+    font-family: "Mulish";
+  }
+}
