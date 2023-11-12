@@ -3,7 +3,6 @@ import { memo } from "react";
 import { Button, Card, Form, Input, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 import {
   emailRules,
@@ -12,12 +11,11 @@ import {
 } from "@/helpers/validations.helpers";
 import { handleErrorSubmitted, isInvalidForm } from "@/utils/utils";
 
-import styles from "./LoginScreen.module.scss";
-import { AuthPathsEnum } from "../../constants/auth.paths";
+import styles from "./RegisterScreen.module.scss";
 import useAuth from "../../hooks/useAuth";
 import { LoginRequestBody } from "../../types/auth.types";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const { t } = useTranslation("auth");
   const [form] = Form.useForm<LoginRequestBody>();
   const navigate = useNavigate();
@@ -39,23 +37,15 @@ const LoginScreen = () => {
   return (
     <div>
       <Typography className="font-40 font-weight-bold mb-6">
-        Log in to your Backlog Account
+        Sign up for a Backlog Account
       </Typography>
       <Card>
         <div className={styles.loginScreen}>
-          <Typography.Text className="font-19 font-weight-bold text-dark-10">
-            {`Log in or `}
-          </Typography.Text>
-          <Link to={AuthPathsEnum.REGISTER}>
-            <Typography.Text className="font-19 font-weight-bold text-underline text-dark-10">
-              create an account
-            </Typography.Text>
-          </Link>
           <Typography.Title level={3} className="text-dark pt-7 pb-3 font-24">
-            Login Screen
+            Sign up
           </Typography.Title>
           <Typography.Text className="font-14 text-dark-20">
-            Please type in your account information
+            Signing up an account
           </Typography.Text>
 
           <Form
@@ -80,7 +70,14 @@ const LoginScreen = () => {
                 maxLength={100}
               />
             </Form.Item>
-
+            <Form.Item
+              name="username"
+              label="Username"
+              rules={[...requiredRules(t("email"))]}
+              validateFirst
+            >
+              <Input placeholder="Username" size="large" maxLength={100} />
+            </Form.Item>
             <Form.Item
               className="position-relative"
               name="password"
@@ -90,13 +87,6 @@ const LoginScreen = () => {
               validateFirst
             >
               <div className="flex-space-between-center">
-                <Link
-                  className="position-absolute font-10 text-forgot-password text-underline text-dark-20"
-                  to={AuthPathsEnum.FORGOT_PASSWORD}
-                >
-                  Forgot your password?
-                </Link>
-
                 <Input.Password
                   id="password"
                   placeholder={t("login_form.password_placeholder")}
@@ -117,7 +107,6 @@ const LoginScreen = () => {
                   block
                   disabled={isInvalidForm({
                     form,
-                    fieldsRequire: ["email", "password"],
                     isSubmitting: isPostLoginLoading,
                   })}
                 >
@@ -132,4 +121,4 @@ const LoginScreen = () => {
   );
 };
 
-export default memo(LoginScreen);
+export default memo(RegisterScreen);

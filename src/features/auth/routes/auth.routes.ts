@@ -11,6 +11,10 @@ const LoginScreen = lazy(
   () => import("@/features/auth/screens/LoginScreen/LoginScreen")
 );
 
+const RegisterScreen = lazy(
+  () => import("@/features/auth/screens/RegisterScreen/RegisterScreen")
+);
+
 const ConfirmForgotPasswordScreen = lazy(
   () =>
     import(
@@ -34,6 +38,14 @@ const LOGIN_SCREEN: RouteItemDef = {
   id: "Login", // TODO:  screen code
   path: AuthPathsEnum.LOGIN,
   component: LoginScreen,
+  layout: AuthLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
+  isPublicRoute: true,
+};
+
+const REGISTER_SCREEN: RouteItemDef = {
+  id: "Register", // TODO:  screen code
+  path: AuthPathsEnum.REGISTER,
+  component: RegisterScreen,
   layout: AuthLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
   isPublicRoute: true,
 };
@@ -64,6 +76,7 @@ const FORGOT_PASSWORD_SUCCESS_SCREEN: RouteItemDef = {
 
 const AUTH_ROUTES = [
   LOGIN_SCREEN,
+  REGISTER_SCREEN,
   FORGOT_PASSWORD,
   CONFIRM_FORGOT_PASSWORD_SCREEN,
   FORGOT_PASSWORD_SUCCESS_SCREEN,
