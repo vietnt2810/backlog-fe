@@ -1,7 +1,6 @@
 {
   "token": {
-    "fontFamily": "Noto Sans JP, sans-serif",
-    "colorPrimary": "#007BFF",
+    "colorPrimary": "#26453E",
     "colorText": "#252733",
     "colorTextBase": "#000000",
     "fontSizeHeading1": 24,
@@ -41,7 +40,7 @@
       "borderRadius": 4,
       "borderRadiusLG": 8,
       "borderRadiusSM": 4,
-      "colorPrimary": "#007BFF",
+      "colorPrimary": "#26453E",
       "colorBgContainer": "#979797",
       "colorPrimaryHover": "none",
       "lineType": "solid",
