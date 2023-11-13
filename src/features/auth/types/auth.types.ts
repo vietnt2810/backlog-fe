@@ -5,6 +5,12 @@ export type LoginRequestBody = {
   password: string;
 };
 
+export type RegisterRequestBody = {
+  email: string;
+  password: string;
+  username: string;
+};
+
 export type ForgotPasswordRequestBody = {
   email: string;
 };
@@ -12,7 +18,7 @@ export type ForgotPasswordRequestBody = {
 export interface LoginResponse extends DataResponse {
   data: {
     accessToken: string;
-    refreshToken: string;
+    username: string;
     userId: number;
   };
 }

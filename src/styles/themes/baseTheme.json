@@ -54,7 +54,7 @@
       "colorErrorHover": "none",
       "colorErrorActive": "none",
       "colorPrimaryActive": "none",
-      "colorBgContainerDisabled": "rgba(0, 123, 255, 0.5)",
+      "colorBgContainerDisabled": "rgba(38, 69, 62, 0.5)",
       "colorTextDisabled": "#FFFFFF"
     },
     "Input": {

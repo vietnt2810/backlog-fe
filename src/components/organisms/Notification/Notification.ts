@@ -22,7 +22,7 @@ export const openNotification = ({
   return notification[type]({
     message,
     placement,
-    duration: 3,
+    duration: 10,
     className,
   });
 };
