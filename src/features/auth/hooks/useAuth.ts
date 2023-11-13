@@ -4,23 +4,29 @@ import { useMutation } from "@tanstack/react-query";
 
 import api from "@/api/api";
 import { AuthenticationContext } from "@/components/organisms/AuthenticationProvider/AuthenticationProvider";
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/constants";
+import { ACCESS_TOKEN_KEY } from "@/constants/constants";
 import {
   LoginRequestBody,
   LoginResponse,
+  RegisterRequestBody,
 } from "@/features/auth/types/auth.types";
 import { DataError } from "@/types/api.types";
 import { handleClearLocalStorage } from "@/utils/utils";
 
 import { AuthEndpoints } from "../constants/auth.endpoints";
 
-// TODO: Set time out api
-
 /**
  * Hooks login, logout
  */
 const useAuth = () => {
   const { setAccessToken, setRefreshToken } = useContext(AuthenticationContext);
+
+  const { mutateAsync: postRegister, isLoading: isPostRegisterLoading } =
+    useMutation({
+      mutationFn: (params: RegisterRequestBody) => {
+        return api.post(AuthEndpoints.REGISTER(), params);
+      },
+    });
 
   const { mutateAsync: postLogin, isLoading: isPostLoginLoading } = useMutation<
     LoginResponse,
@@ -34,11 +40,6 @@ const useAuth = () => {
       if (loginResponse?.data) {
         setAccessToken(loginResponse.data.accessToken);
         localStorage.setItem(ACCESS_TOKEN_KEY, loginResponse.data.accessToken);
-        setRefreshToken(loginResponse.data.refreshToken);
-        localStorage.setItem(
-          REFRESH_TOKEN_KEY,
-          loginResponse.data.refreshToken
-        );
         localStorage.setItem("USER_ID", String(loginResponse.data.userId));
       }
     },
@@ -57,8 +58,10 @@ const useAuth = () => {
     });
 
   return {
+    postRegister,
     postLogin,
     postLogout,
+    isPostRegisterLoading,
     isPostLoginLoading,
     isPostLogoutLoading,
   };

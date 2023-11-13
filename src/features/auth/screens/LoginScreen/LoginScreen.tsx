@@ -5,11 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import {
-  emailRules,
-  passwordRules,
-  requiredRules,
-} from "@/helpers/validations.helpers";
+import { emailRules, requiredRules } from "@/helpers/validations.helpers";
 import { handleErrorSubmitted, isInvalidForm } from "@/utils/utils";
 
 import styles from "./LoginScreen.module.scss";
@@ -28,7 +24,6 @@ const LoginScreen = () => {
   const from = location.state?.from?.pathname;
 
   const onFinish = (values: LoginRequestBody) => {
-    console.log(values);
     postLogin(values)
       .then(() => navigate(from, { replace: true })) // TODO: Redirect to dashboard
       .catch(err => {
@@ -86,7 +81,7 @@ const LoginScreen = () => {
               name="password"
               htmlFor="password"
               label="Password"
-              rules={[...passwordRules(), ...requiredRules(t("password"))]}
+              rules={[...requiredRules(t("password"))]}
               validateFirst
             >
               <div className="flex-space-between-center">

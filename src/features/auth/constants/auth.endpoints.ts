@@ -1,5 +1,6 @@
 export const AuthEndpoints = {
-  LOGIN: () => `/admins/login`,
+  LOGIN: () => `/signin`,
+  REGISTER: () => `/signup`,
   FORGOT_PASSWORD: () => `/admins/forgot_password`,
   CONFIRM_FORGOT_PASSWORD: () => `/admins/confirm-forgot-password`,
   LOGOUT: () => `/admins/logout`,

@@ -1,12 +1,12 @@
 import { Rule } from "antd/es/form";
 
+import { MESSAGES } from "@/messages/messages";
 import { getMessage } from "@/utils/utils";
 
 const EMAIL_REGEX =
   /^[^.\W](?!.*\.\.)[a-zA-Z0-9._+-/]{1,64}@[a-zA-Z0-9-.]+(\.[a-zA-Z]{2,}){1}$/g;
 
-const PASSWORD_REGEX =
-  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,32}$/;
+const PASSWORD_REGEX = /^(?=.*[0-9])(?=.*[a-zA-Z]).*[A-Za-z\d]{8,32}$/;
 
 const NUMBER_REGEX = /^[0-9]*$/;
 
@@ -15,7 +15,7 @@ export const requiredRules = (field: string): Rule[] => {
     {
       required: true,
       whitespace: true,
-      message: getMessage("MSG0001", field),
+      message: MESSAGES.REQUIRE(field),
     },
   ];
 };
@@ -24,7 +24,7 @@ export const emailRules = (field: string): Rule[] => {
   return [
     {
       pattern: EMAIL_REGEX,
-      message: getMessage("MSG0002", field),
+      message: MESSAGES.WRONG_FORMAT(field),
     },
   ];
 };
@@ -32,7 +32,7 @@ export const emailRules = (field: string): Rule[] => {
 export const passwordRules = (): Rule[] => [
   {
     pattern: PASSWORD_REGEX,
-    message: getMessage("MSG0013"),
+    message: MESSAGES.WRONG_PASSWORD_FORMAT(),
   },
 ];
 

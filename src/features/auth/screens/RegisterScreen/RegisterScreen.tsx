@@ -2,35 +2,41 @@ import { memo } from "react";
 
 import { Button, Card, Form, Input, Typography } from "antd";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+import { openNotification } from "@/components/organisms/Notification/Notification";
 import {
   emailRules,
   passwordRules,
   requiredRules,
 } from "@/helpers/validations.helpers";
-import { handleErrorSubmitted, isInvalidForm } from "@/utils/utils";
+import { isInvalidForm } from "@/utils/utils";
 
 import styles from "./RegisterScreen.module.scss";
+import { AuthPathsEnum } from "../../constants/auth.paths";
 import useAuth from "../../hooks/useAuth";
-import { LoginRequestBody } from "../../types/auth.types";
+import { RegisterRequestBody } from "../../types/auth.types";
 
 const RegisterScreen = () => {
   const { t } = useTranslation("auth");
-  const [form] = Form.useForm<LoginRequestBody>();
+  const [form] = Form.useForm();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const { postLogin, isPostLoginLoading } = useAuth();
+  const { postRegister, isPostRegisterLoading } = useAuth();
 
-  const from = location.state?.from?.pathname;
-
-  const onFinish = (values: LoginRequestBody) => {
-    console.log(values);
-    postLogin(values)
-      .then(() => navigate(from, { replace: true })) // TODO: Redirect to dashboard
+  const onFinish = (values: RegisterRequestBody) => {
+    postRegister(values)
+      .then(() => {
+        openNotification({
+          type: "success",
+          message: "Created new user successfully",
+        });
+        navigate(AuthPathsEnum.LOGIN);
+      })
       .catch(err => {
-        handleErrorSubmitted(form, err);
+        openNotification({
+          message: err.error,
+        });
       });
   };
 
@@ -61,7 +67,7 @@ const RegisterScreen = () => {
             <Form.Item
               name="email"
               label="EMAIL"
-              rules={[...requiredRules(t("email")), ...emailRules(t("email"))]}
+              rules={[...requiredRules("email"), ...emailRules(t("email"))]}
               validateFirst
             >
               <Input
@@ -73,7 +79,7 @@ const RegisterScreen = () => {
             <Form.Item
               name="username"
               label="Username"
-              rules={[...requiredRules(t("email"))]}
+              rules={[...requiredRules("username")]}
               validateFirst
             >
               <Input placeholder="Username" size="large" maxLength={100} />
@@ -83,7 +89,7 @@ const RegisterScreen = () => {
               name="password"
               htmlFor="password"
               label="Password"
-              rules={[...passwordRules(), ...requiredRules(t("password"))]}
+              rules={[...passwordRules(), ...requiredRules("password")]}
               validateFirst
             >
               <div className="flex-space-between-center">
@@ -107,7 +113,8 @@ const RegisterScreen = () => {
                   block
                   disabled={isInvalidForm({
                     form,
-                    isSubmitting: isPostLoginLoading,
+                    fieldsRequire: ["email", "password", "username"],
+                    isSubmitting: isPostRegisterLoading,
                   })}
                 >
                   Login

@@ -9,7 +9,6 @@ import { t } from "i18next";
 import { openNotification } from "@/components/organisms/Notification/Notification";
 import { ApiStatusCodes } from "@/constants/api.constants";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/constants";
-import { AdminsPathsEnum } from "@/features/admins/constants/admins.paths";
 import { AuthEndpoints } from "@/features/auth/constants/auth.endpoints";
 import { handleClearLocalStorage } from "@/utils/utils";
 
@@ -56,10 +55,9 @@ const errorInterceptor = (axiosError: AxiosError) => {
         }
         break;
       case ApiStatusCodes.FORBIDDEN:
-        console.log(123);
         break;
       case ApiStatusCodes.NOT_FOUND:
-        window.location.assign(AdminsPathsEnum.NOT_FOUND);
+        // window.location.assign(AdminsPathsEnum.NOT_FOUND);
         break;
       case 429:
         openNotification({
