@@ -16,6 +16,9 @@ import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
 import AUTH_ROUTES from "@/features/auth/routes/auth.routes";
 import { RouteItemDef } from "@/types/route.types";
 
+import { DashboardPathsEnum } from "./features/dashboard/constants/dashboard.paths";
+import DASHBOARD_ROUTES from "./features/dashboard/routes/dashboard.routes";
+
 const DefaultLayout = lazy(
   () => import("@/components/layouts/DefaultLayout/DefaultLayout")
 );
@@ -27,12 +30,8 @@ const RouteWrapper = ({ route }: { route: RouteItemDef }) => {
   const { accessToken } = useContext(AuthenticationContext);
   const location = useLocation();
 
-  if (
-    route.path === AuthPathsEnum.LOGIN &&
-    route?.isPublicRoute &&
-    accessToken
-  ) {
-    return <Navigate to={AdminsPathsEnum.ADMINS} replace />;
+  if (route?.isPublicRoute && accessToken) {
+    return <Navigate to={DashboardPathsEnum.DASHBOARD} replace />;
   }
 
   if (!route?.isPublicRoute && !accessToken) {
@@ -49,7 +48,11 @@ const RouteWrapper = ({ route }: { route: RouteItemDef }) => {
 };
 
 const AppRoutes = () => {
-  const ROUTE_LIST: RouteItemDef[] = [...AUTH_ROUTES, ...ADMIN_ROUTES];
+  const ROUTE_LIST: RouteItemDef[] = [
+    ...AUTH_ROUTES,
+    ...DASHBOARD_ROUTES,
+    ...ADMIN_ROUTES,
+  ];
 
   return (
     <Suspense fallback={<Loader />}>

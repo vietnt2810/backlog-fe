@@ -1,7 +1,7 @@
 {
   "token": {
     "colorPrimary": "#26453E",
-    "colorText": "#252733",
+    "colorText": "#FAFAFA",
     "colorTextBase": "#000000",
     "fontSizeHeading1": 24,
     "fontSizeHeading2": 20,
@@ -10,7 +10,7 @@
     "lineHeightHeading": 1.45,
     "lineHeightHeading3": 1.4375,
     "boxShadow": "none",
-    "fontSize": 12,
+    "fontSize": 14,
     "borderRadius": 2
   },
   "components": {
@@ -36,7 +36,7 @@
       "colorItemBg": "#474747"
     },
     "Button": {
-      "colorText": "#FFFFFF",
+      "colorText": "#FAFAFA",
       "borderRadius": 4,
       "borderRadiusLG": 8,
       "borderRadiusSM": 4,

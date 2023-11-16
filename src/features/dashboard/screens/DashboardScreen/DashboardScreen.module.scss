@@ -1,0 +1,70 @@
+@import "@/styles/colors";
+
+.container {
+  height: 100vh;
+  background-color: #2d2d2d;
+
+  :global {
+    .avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 32px;
+      aspect-ratio: 1/1;
+      background-color: #d2606f;
+      color: white;
+      border-radius: 50%;
+    }
+    .subHeader {
+      height: 60px;
+
+      .subHeaderItem {
+        height: 100%;
+        font-weight: 700;
+        border-bottom: 1px solid #f4f4f4;
+      }
+    }
+    .mainContent {
+      margin: 30px calc(1 / 8 * 100%);
+
+      .projectItem {
+        width: 100%;
+        height: 77px;
+        padding: 16px;
+        background-color: #333333;
+        box-shadow: 0 0 3px 0 rgba(0 0 0 / 0.5);
+        border-radius: 3px;
+        &:nth-child(3n) {
+          .projectLogo {
+            background-color: #4c7ebf;
+          }
+        }
+        &:nth-child(3n + 1) {
+          .projectLogo {
+            background-color: #42ce9f;
+          }
+        }
+        &:nth-child(3n + 2) {
+          .projectLogo {
+            background-color: #8a84f7;
+          }
+        }
+      }
+      .projectLogo {
+        width: 45px;
+        aspect-ratio: 1/1;
+        border-radius: 20%;
+        font-size: 26px;
+        color: $text-white;
+      }
+      .openProjectButton {
+        width: 85px;
+        height: 40px;
+        background-color: #7e67c5;
+        &:hover {
+          background-color: #694ebc;
+        }
+      }
+    }
+  }
+}

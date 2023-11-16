@@ -2,12 +2,6 @@
 
 .container {
   :global {
-    .logo-text {
-      font-family: "Courier New", Courier, monospace !important;
-      font-size: 24px;
-      font-weight: 700;
-      color: #26453e;
-    }
     .auth-content {
       color: $text-dark-20;
       text-align: center;

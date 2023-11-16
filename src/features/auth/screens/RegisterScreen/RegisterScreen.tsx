@@ -42,7 +42,7 @@ const RegisterScreen = () => {
 
   return (
     <div>
-      <Typography className="font-40 font-weight-bold mb-6">
+      <Typography className="font-40 font-weight-bold mb-6 text-dark">
         Sign up for a Backlog Account
       </Typography>
       <Card>
@@ -117,7 +117,7 @@ const RegisterScreen = () => {
                     isSubmitting: isPostRegisterLoading,
                   })}
                 >
-                  Login
+                  Sign up
                 </Button>
               )}
             </Form.Item>

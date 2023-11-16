@@ -2,6 +2,8 @@ import { memo } from "react";
 
 import cx from "classnames";
 
+import Logo from "@/components/atoms/Logo/Logo";
+
 import styles from "./AuthLayout.module.scss";
 
 interface AuthLayoutProps {
@@ -12,7 +14,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
     <div className={cx(styles.container, "my-6 px-8")}>
       <div className="flex-space-between">
-        <p className="logo-text">backlog</p>
+        <Logo />
         <p className="font-18">Contact us</p>
       </div>
       <div className="auth-content flex-center">{children}</div>

@@ -33,7 +33,7 @@ const LoginScreen = () => {
 
   return (
     <div>
-      <Typography className="font-40 font-weight-bold mb-6">
+      <Typography className="font-40 font-weight-bold mb-6 text-dark">
         Log in to your Backlog Account
       </Typography>
       <Card>

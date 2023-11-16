@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import api from "@/api/api";
 import { AuthenticationContext } from "@/components/organisms/AuthenticationProvider/AuthenticationProvider";
-import { ACCESS_TOKEN_KEY } from "@/constants/constants";
+import { ACCESS_TOKEN_KEY, USER_ID } from "@/constants/constants";
 import {
   LoginRequestBody,
   LoginResponse,
@@ -40,7 +40,7 @@ const useAuth = () => {
       if (loginResponse?.data) {
         setAccessToken(loginResponse.data.accessToken);
         localStorage.setItem(ACCESS_TOKEN_KEY, loginResponse.data.accessToken);
-        localStorage.setItem("USER_ID", String(loginResponse.data.userId));
+        localStorage.setItem(USER_ID, String(loginResponse.data.userId));
       }
     },
   });

@@ -198,3 +198,27 @@ th.ant-table-cell {
 .pre-wrap {
   white-space: pre-wrap;
 }
+
+//Dropdown
+.ant-dropdown-menu {
+  background-color: #333333 !important;
+}
+
+// Profile dropdown
+.profile-dropdown-container {
+  position: relative;
+  top: 2px;
+  z-index: 999;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background: #333333;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.profile-dropdown-item {
+  padding: 8px;
+  &:hover {
+    cursor: pointer;
+    background-color: #47443F;
+  }
+}
