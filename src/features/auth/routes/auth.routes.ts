@@ -35,7 +35,7 @@ const ForgotPasswordSuccessScreen = lazy(
 );
 
 const LOGIN_SCREEN: RouteItemDef = {
-  id: "Login", // TODO:  screen code
+  id: "Login",
   path: AuthPathsEnum.LOGIN,
   component: LoginScreen,
   layout: AuthLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
@@ -43,7 +43,7 @@ const LOGIN_SCREEN: RouteItemDef = {
 };
 
 const REGISTER_SCREEN: RouteItemDef = {
-  id: "Register", // TODO:  screen code
+  id: "Register",
   path: AuthPathsEnum.REGISTER,
   component: RegisterScreen,
   layout: AuthLayout as LazyExoticComponent<MemoExoticComponent<FC>>,

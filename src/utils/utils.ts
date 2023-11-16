@@ -1,8 +1,13 @@
 import { FormInstance } from "antd";
+import dayjs from "dayjs";
 import { t } from "i18next";
 
 import { openNotification } from "@/components/organisms/Notification/Notification";
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/constants";
+import {
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  USER_ID,
+} from "@/constants/constants";
 import { DataError } from "@/types/api.types";
 
 export const getMessage = (
@@ -61,5 +66,10 @@ export const handleErrorSubmitted = (
 export const handleClearLocalStorage = () => {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);
-  localStorage.removeItem("USER_ID");
+  localStorage.removeItem(USER_ID);
+};
+
+export const getCurrentDate = () => {
+  const date = dayjs();
+  return date.format("dddd, MMMM D[th]");
 };
