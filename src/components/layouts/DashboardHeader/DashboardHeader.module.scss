@@ -1,0 +1,20 @@
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  background-color: #d2606f;
+  color: white;
+  border-radius: 50%;
+}
+
+.subHeader {
+  height: 60px;
+
+  .subHeaderItem {
+    height: 100%;
+    font-weight: 700;
+    border-bottom: 1px solid #f4f4f4;
+  }
+}

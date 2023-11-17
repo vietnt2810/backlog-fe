@@ -1,0 +1,13 @@
+@import "@/styles/colors";
+
+.container {
+  height: 100vh;
+  background-color: $bg-dashboard;
+
+  :global {
+    .mainContent {
+      margin: 16px 16px 0;
+      background-color: #3b3535;
+    }
+  }
+}

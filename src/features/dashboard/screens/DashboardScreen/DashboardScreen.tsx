@@ -1,10 +1,10 @@
 import { memo } from "react";
 
-import { Dropdown, Typography } from "antd";
+import { Typography } from "antd";
 import cx from "classnames";
 
 import Button from "@/components/atoms/Button/Button";
-import Logo from "@/components/atoms/Logo/Logo";
+import DashboardHeader from "@/components/layouts/DashboardHeader/DashboardHeader";
 import Loader from "@/components/organisms/Loader/Loader";
 import { USER_ID } from "@/constants/constants";
 import { getCurrentDate } from "@/utils/utils";
@@ -24,40 +24,7 @@ const DashboardScreen = () => {
 
   return (
     <div className={cx(styles.container)}>
-      <div className="bg-dashboard-header px-5 py-2 flex-space-between-center">
-        <Logo textWhite />
-        <Dropdown
-          className="cursor-pointer"
-          placement="bottomRight"
-          trigger={["click"]}
-          dropdownRender={() => (
-            <div className="profile-dropdown-container">
-              <div className="d-flex profile-dropdown-item">
-                <div className="avatar mr-2">F</div>
-                <div>
-                  <Typography>{user?.username}</Typography>
-                  <Typography className="text-dark-20">My profile</Typography>
-                </div>
-              </div>
-              {projects?.map(project => (
-                <div className="profile-dropdown-item">
-                  {project.projectName}
-                </div>
-              ))}
-            </div>
-          )}
-        >
-          <div className="flex-align-center">
-            <div className="avatar">F</div>
-            <Typography className="ml-1 text-white">
-              {user?.username}
-            </Typography>
-          </div>
-        </Dropdown>
-      </div>
-      <div className="subHeader">
-        <Typography className="subHeaderItem flex-center">DASHBOARD</Typography>
-      </div>
+      <DashboardHeader subHeaderTitle="DASHBOARD" />
       {isGetProjectsLoading || isGetUserLoading ? (
         <Loader />
       ) : (
