@@ -12,6 +12,10 @@ const DashboardScreen = lazy(
   () => import("@/features/dashboard/screens/DashboardScreen/DashboardScreen")
 );
 
+const UserProfileScreen = lazy(
+  () => import("@/features/dashboard/screens/UserProfile/UserProfile")
+);
+
 const DASHBOARD_SCREEN: RouteItemDef = {
   id: "Dashboard",
   path: DashboardPathsEnum.DASHBOARD,
@@ -20,6 +24,14 @@ const DASHBOARD_SCREEN: RouteItemDef = {
   isPublicRoute: false,
 };
 
-const DASHBOARD_ROUTES = [DASHBOARD_SCREEN];
+const USER_PROFILE_SCREEN: RouteItemDef = {
+  id: "Profile",
+  path: DashboardPathsEnum.USER_PROFILE,
+  component: UserProfileScreen,
+  layout: BlankLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
+  isPublicRoute: false,
+};
+
+const DASHBOARD_ROUTES = [DASHBOARD_SCREEN, USER_PROFILE_SCREEN];
 
 export default DASHBOARD_ROUTES;

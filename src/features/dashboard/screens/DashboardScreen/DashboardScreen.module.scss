@@ -2,28 +2,9 @@
 
 .container {
   height: 100vh;
-  background-color: #2d2d2d;
+  background-color: $bg-dashboard;
 
   :global {
-    .avatar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 32px;
-      aspect-ratio: 1/1;
-      background-color: #d2606f;
-      color: white;
-      border-radius: 50%;
-    }
-    .subHeader {
-      height: 60px;
-
-      .subHeaderItem {
-        height: 100%;
-        font-weight: 700;
-        border-bottom: 1px solid #f4f4f4;
-      }
-    }
     .mainContent {
       margin: 30px calc(1 / 8 * 100%);
 
