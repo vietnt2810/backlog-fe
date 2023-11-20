@@ -3,11 +3,41 @@
 .container {
   height: 100vh;
   background-color: $bg-dashboard;
-
   :global {
     .mainContent {
-      margin: 16px 16px 0;
+      height: calc(100% - 108px);
+      margin: 16px;
       background-color: #3b3535;
+      box-shadow: 0 0 3px 0 rgba(0 0 0 / 0.5);
+
+      .ant-upload-select,
+      .ant-upload-list-item,
+      .ant-upload-wrapper {
+        position: relative;
+        margin: 0 !important;
+        width: 128px !important;
+        height: 128px !important;
+      }
+      .ant-upload-select {
+        border: 1px solid !important;
+      }
+      .uploadButton {
+        position: absolute;
+        left: 150px;
+        background-color: transparent;
+        color: #1da1f2 !important;
+      }
+      .inputItem {
+        width: 380px;
+        .ant-input {
+          color: $text-white;
+          background: #2d2828;
+        }
+        .ant-input-disabled {
+          background-color: rgba(210, 210, 210, 0.25);
+          color: #d9d9d9;
+        }
+      }
     }
   }
 }
