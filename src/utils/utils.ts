@@ -87,5 +87,5 @@ export const uploadFileToFirebase = async (
 
   const fileUrl = await getDownloadURL(ref(storage, metadata.fullPath));
 
-  return { fileUrl };
+  return fileUrl;
 };

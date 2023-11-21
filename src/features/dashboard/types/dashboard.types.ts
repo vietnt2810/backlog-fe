@@ -1,6 +1,7 @@
 export type UserDetailResponse = {
   email: string;
   username: string;
+  avatarUrl: string;
 };
 
 export type Project = {
@@ -10,3 +11,9 @@ export type Project = {
 };
 
 export type ProjectsResponse = Project[];
+
+export type UpdateUserRequestBody = {
+  email: string;
+  username: string;
+  avatarUrl: string | null;
+};

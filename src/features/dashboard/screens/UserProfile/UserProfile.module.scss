@@ -10,6 +10,11 @@
       background-color: #3b3535;
       box-shadow: 0 0 3px 0 rgba(0 0 0 / 0.5);
 
+      .form {
+        position: relative;
+        max-width: fit-content;
+        margin: 0 auto;
+      }
       .ant-upload-select,
       .ant-upload-list-item,
       .ant-upload-wrapper {
@@ -36,6 +41,17 @@
         .ant-input-disabled {
           background-color: rgba(210, 210, 210, 0.25);
           color: #d9d9d9;
+        }
+      }
+      .submitButton {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        background-color: $bg-purple;
+
+        &:disabled {
+          opacity: 0.6;
         }
       }
     }
