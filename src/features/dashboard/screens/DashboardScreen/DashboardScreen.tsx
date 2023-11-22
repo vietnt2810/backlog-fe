@@ -4,9 +4,9 @@ import { Typography } from "antd";
 import cx from "classnames";
 
 import Button from "@/components/atoms/Button/Button";
-import DashboardHeader from "@/components/layouts/DashboardHeader/DashboardHeader";
 import Loader from "@/components/organisms/Loader/Loader";
 import { USER_ID } from "@/constants/constants";
+import DashboardHeader from "@/features/dashboard/components/DashboardHeader/DashboardHeader";
 import { getCurrentDate } from "@/utils/utils";
 
 import styles from "./DashboardScreen.module.scss";
@@ -36,22 +36,28 @@ const DashboardScreen = () => {
             Your projects
           </Typography>
           <div>
-            {projects?.map(project => (
-              <div
-                key={project.id}
-                className="projectItem flex-space-between-center my-4"
-              >
-                <div className="flex-align-center">
-                  <div className="projectLogo flex-center">
-                    {project.projectName.charAt(0)}
+            {projects?.length ? (
+              projects?.map(project => (
+                <div
+                  key={project.id}
+                  className="projectItem flex-space-between-center my-4"
+                >
+                  <div className="flex-align-center">
+                    <div className="projectLogo flex-center">
+                      {project.projectName.charAt(0)}
+                    </div>
+                    <Typography className="font-weight-bold pl-2">
+                      {project.projectName}
+                    </Typography>
                   </div>
-                  <Typography className="font-weight-bold pl-2">
-                    {project.projectName}
-                  </Typography>
+                  <Button className="openProjectButton">Open</Button>
                 </div>
-                <Button className="openProjectButton">Open</Button>
-              </div>
-            ))}
+              ))
+            ) : (
+              <Typography>
+                Currently, you have not joined in any projects
+              </Typography>
+            )}
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 export const DashboardEndpoints = {
   USERS: () => `users`,
   USER: (userId: string) => `users/${userId}`,
-  PROJECTS: (userId: string) => `users/${userId}/projects`,
+  GET_PROJECTS: (userId: string) => `users/${userId}/projects`,
+  PROJECTS: () => `projects`,
 };

@@ -1,5 +1,8 @@
-import { memo } from "react";
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { memo, useState } from "react";
 
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { Dropdown, Typography } from "antd";
 import cx from "classnames";
 import { Link } from "react-router-dom";
@@ -12,6 +15,7 @@ import useGetProjects from "@/features/dashboard/hooks/useGetProjects";
 import useGetUser from "@/features/dashboard/hooks/useGetUser";
 
 import styles from "./DashboardHeader.module.scss";
+import CreateProjectModal from "../CreateProjectModal/CreateProjectModal";
 
 interface DashboardHeaderProps {
   subHeaderTitle: string;
@@ -22,12 +26,15 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
     String(localStorage.getItem(USER_ID))
   );
 
-  const { projects, isGetProjectsLoading } = useGetProjects(
+  const { projects, isGetProjectsLoading, refetchProjects } = useGetProjects(
     String(localStorage.getItem(USER_ID))
   );
 
+  const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
+    useState(false);
+
   return (
-    <div>
+    <>
       <div className="bg-dashboard-header px-5 py-2 flex-space-between-center">
         <Logo textWhite />
         <Dropdown
@@ -57,12 +64,20 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
                       </div>
                     </div>
                   </Link>
-
                   {projects?.map(project => (
                     <div className="profile-dropdown-item">
                       {project.projectName}
                     </div>
                   ))}
+                  <div
+                    onClick={() => setIsCreateProjectModalOpen(true)}
+                    className="profile-dropdown-item"
+                  >
+                    <PlusCircleOutlined />
+                    <Typography.Text className="ml-2 text-dark-20">
+                      Create a new project
+                    </Typography.Text>
+                  </div>
                 </>
               )}
             </div>
@@ -88,7 +103,14 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
           {subHeaderTitle}
         </Typography>
       </div>
-    </div>
+      {isCreateProjectModalOpen && (
+        <CreateProjectModal
+          refetchProjects={refetchProjects}
+          open={isCreateProjectModalOpen}
+          onCancel={() => setIsCreateProjectModalOpen(false)}
+        />
+      )}
+    </>
   );
 };
 
