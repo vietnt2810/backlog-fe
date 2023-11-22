@@ -1,5 +1,6 @@
 import { FormInstance } from "antd";
 import dayjs from "dayjs";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { t } from "i18next";
 
 import { openNotification } from "@/components/organisms/Notification/Notification";
@@ -8,6 +9,7 @@ import {
   REFRESH_TOKEN_KEY,
   USER_ID,
 } from "@/constants/constants";
+import { storage } from "@/firebase/config";
 import { DataError } from "@/types/api.types";
 
 export const getMessage = (
@@ -72,4 +74,18 @@ export const handleClearLocalStorage = () => {
 export const getCurrentDate = () => {
   const date = dayjs();
   return date.format("dddd, MMMM D[th]");
+};
+
+export const uploadFileToFirebase = async (
+  folderName: string,
+  fileName: string,
+  file: File
+) => {
+  const imageRef = ref(storage, `${folderName}/${fileName}`);
+
+  const { metadata } = await uploadBytes(imageRef, file);
+
+  const fileUrl = await getDownloadURL(ref(storage, metadata.fullPath));
+
+  return fileUrl;
 };

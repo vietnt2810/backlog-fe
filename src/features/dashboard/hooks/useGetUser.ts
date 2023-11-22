@@ -6,18 +6,22 @@ import { DashboardEndpoints } from "../constants/dashboard.endpoints";
 import { UserDetailResponse } from "../types/dashboard.types";
 
 const useGetUser = (userId: string) => {
-  const { data: user, isLoading: isGetUserLoading } =
-    useQuery<UserDetailResponse>({
-      queryKey: ["useGetUser"],
-      queryFn: () => {
-        return api.get(DashboardEndpoints.USER(userId));
-      },
-      enabled: !!userId,
-    });
+  const {
+    data: user,
+    isRefetching: isGetUserLoading,
+    refetch: refetchUser,
+  } = useQuery<UserDetailResponse>({
+    queryKey: ["useGetUser"],
+    queryFn: () => {
+      return api.get(DashboardEndpoints.USER(userId));
+    },
+    enabled: !!userId,
+  });
 
   return {
     user,
     isGetUserLoading,
+    refetchUser,
   };
 };
 

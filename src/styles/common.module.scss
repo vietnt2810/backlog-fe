@@ -343,3 +343,10 @@ $positions: "static", "relative", "absolute", "fixed", "sticky";
 .overflow-scroll {
   overflow-y: auto;
 }
+
+// opacity
+.hoverOpacity {
+  &:hover {
+    opacity: 1.1;
+  }
+}

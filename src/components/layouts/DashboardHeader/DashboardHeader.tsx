@@ -42,7 +42,13 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
                 <>
                   <Link to={DashboardPathsEnum.USER_PROFILE}>
                     <div className="flex-align-center profile-dropdown-item">
-                      <div className={cx(styles.avatar, "mr-2")}>F</div>
+                      {user?.avatarUrl && (
+                        <img
+                          className={cx(styles.avatar, "mr-2")}
+                          alt="avatar"
+                          src={user?.avatarUrl}
+                        />
+                      )}
                       <div>
                         <Typography>{user?.username}</Typography>
                         <Typography className="text-dark-20">
@@ -63,7 +69,14 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
           )}
         >
           <div className="flex-align-center">
-            <div className={cx(styles.avatar)}>F</div>
+            {user?.avatarUrl && (
+              <img
+                alt="avatar"
+                src={user?.avatarUrl}
+                className={cx(styles.avatar)}
+              />
+            )}
+
             <Typography className="ml-1 text-white">
               {user?.username}
             </Typography>

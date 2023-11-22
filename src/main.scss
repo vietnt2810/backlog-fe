@@ -209,6 +209,7 @@ th.ant-table-cell {
   position: relative;
   top: 2px;
   z-index: 999;
+  min-width: 300px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   background: #333333;
   font-size: 14px;
@@ -219,6 +220,11 @@ th.ant-table-cell {
   padding: 8px;
   &:hover {
     cursor: pointer;
-    background-color: #47443F;
+    background-color: #47443f;
   }
+}
+
+// Form
+.ant-form-item-required::before {
+  content: "" !important;
 }
