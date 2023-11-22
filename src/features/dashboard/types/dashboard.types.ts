@@ -17,3 +17,8 @@ export type UpdateUserRequestBody = {
   username: string;
   avatarUrl?: string | null;
 };
+
+export type CreateProjectRequestBody = {
+  projectName: string;
+  userId: string;
+};

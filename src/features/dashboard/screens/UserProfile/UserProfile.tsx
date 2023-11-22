@@ -8,10 +8,10 @@ import { isEqual } from "lodash";
 
 import Button from "@/components/atoms/Button/Button";
 import Form, { Item } from "@/components/atoms/Form/Form";
-import DashboardHeader from "@/components/layouts/DashboardHeader/DashboardHeader";
 import Loader from "@/components/organisms/Loader/Loader";
 import { openNotification } from "@/components/organisms/Notification/Notification";
 import { USER_ID } from "@/constants/constants";
+import DashboardHeader from "@/features/dashboard/components/DashboardHeader/DashboardHeader";
 import { requiredRules } from "@/helpers/validations.helpers";
 import { isInvalidForm, uploadFileToFirebase } from "@/utils/utils";
 
