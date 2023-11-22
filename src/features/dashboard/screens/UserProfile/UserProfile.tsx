@@ -30,16 +30,25 @@ const UserProfile = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [initialFormValue, setInitialFormValue] = useState();
   const [isAvatarChanged, setIsAvatarChanged] = useState(false);
+  const [isUploadingOntoFirebase, setIsUploadingOntoFirebase] = useState(false);
 
   const handleUpdateProfile = async (formValue: any) => {
-    const avatarUrl =
-      formValue.avatarUrl && isAvatarChanged
-        ? await uploadFileToFirebase(
-            "avatars",
-            formValue.avatarUrl.file.name,
-            formValue.avatarUrl.file.originFileObj
-          )
-        : null;
+    let avatarUrl;
+
+    if (formValue.avatarUrl) {
+      if (isAvatarChanged) {
+        setIsUploadingOntoFirebase(true);
+        avatarUrl = await uploadFileToFirebase(
+          "avatars",
+          formValue.avatarUrl.file.name,
+          formValue.avatarUrl.file.originFileObj
+        ).finally(() => setIsUploadingOntoFirebase(false));
+      } else {
+        avatarUrl = undefined;
+      }
+    } else {
+      avatarUrl = null;
+    }
 
     updateUser({
       username: formValue.username,
@@ -123,7 +132,9 @@ const UserProfile = () => {
                       form,
                       fieldsRequire: ["username"],
                       isSubmitting: isUpdateUserLoading || isGetUserLoading,
-                    }) || isEqual(form.getFieldsValue(), initialFormValue)
+                    }) ||
+                    isEqual(form.getFieldsValue(), initialFormValue) ||
+                    isUploadingOntoFirebase
                   }
                   className="submitButton hoverOpacity"
                 >
