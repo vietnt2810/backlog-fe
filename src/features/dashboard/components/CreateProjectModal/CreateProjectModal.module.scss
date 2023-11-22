@@ -1,7 +1,9 @@
 .container {
   :global {
     .ant-form-item-label {
-      color: black !important;
+      label {
+        color: black !important;
+      }
     }
   }
 }
