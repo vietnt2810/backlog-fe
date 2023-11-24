@@ -18,7 +18,8 @@ export type UpdateUserRequestBody = {
   avatarUrl?: string | null;
 };
 
-export type CreateProjectRequestBody = {
+export type CreateEditProjectRequestBody = {
   projectName: string;
-  userId: string;
+  projectId?: number;
+  userId?: string;
 };

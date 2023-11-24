@@ -131,10 +131,11 @@ const UserProfile = () => {
                     isInvalidForm({
                       form,
                       fieldsRequire: ["username"],
-                      isSubmitting: isUpdateUserLoading || isGetUserLoading,
-                    }) ||
-                    isEqual(form.getFieldsValue(), initialFormValue) ||
-                    isUploadingOntoFirebase
+                      isSubmitting:
+                        isUpdateUserLoading ||
+                        isGetUserLoading ||
+                        isUploadingOntoFirebase,
+                    }) || isEqual(form.getFieldsValue(), initialFormValue)
                   }
                   className="submitButton hoverOpacity"
                 >

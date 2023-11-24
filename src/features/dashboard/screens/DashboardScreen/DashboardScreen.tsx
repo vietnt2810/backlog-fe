@@ -1,26 +1,48 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 
-import { Typography } from "antd";
+import { Modal, Typography } from "antd";
 import cx from "classnames";
 
 import Button from "@/components/atoms/Button/Button";
 import Loader from "@/components/organisms/Loader/Loader";
+import { openNotification } from "@/components/organisms/Notification/Notification";
 import { USER_ID } from "@/constants/constants";
 import DashboardHeader from "@/features/dashboard/components/DashboardHeader/DashboardHeader";
 import { getCurrentDate } from "@/utils/utils";
 
 import styles from "./DashboardScreen.module.scss";
+import CreateEditProjectModal from "../../components/CreateEditProjectModal/CreateEditProjectModal";
+import useDeleteProject from "../../hooks/useDeleteProject";
 import useGetProjects from "../../hooks/useGetProjects";
 import useGetUser from "../../hooks/useGetUser";
+import { CreateEditProjectRequestBody } from "../../types/dashboard.types";
 
 const DashboardScreen = () => {
   const { user, isGetUserLoading } = useGetUser(
     String(localStorage.getItem(USER_ID))
   );
-
-  const { projects, isGetProjectsLoading } = useGetProjects(
+  const { projects, isGetProjectsLoading, refetchProjects } = useGetProjects(
     String(localStorage.getItem(USER_ID))
   );
+  const { deleteProject, isDeleteProjectLoading } = useDeleteProject();
+
+  const [selectedProjectToDelete, setSelectedProjectToDelete] = useState<
+    number | null
+  >(null);
+  const [selectedProjectToUpdate, setSelectedProjectToUpdate] =
+    useState<CreateEditProjectRequestBody | null>(null);
+
+  const handleDeleteProject = () => {
+    deleteProject(String(selectedProjectToDelete))
+      .then(() => {
+        openNotification({
+          type: "success",
+          message: "You have successfully deleted a project",
+        });
+        refetchProjects();
+      })
+      .finally(() => setSelectedProjectToDelete(null));
+  };
 
   return (
     <div className={cx(styles.container)}>
@@ -50,7 +72,31 @@ const DashboardScreen = () => {
                       {project.projectName}
                     </Typography>
                   </div>
-                  <Button className="openProjectButton">Open</Button>
+                  <div>
+                    <Button
+                      onClick={() => setSelectedProjectToDelete(project.id)}
+                      className="deleteProjectButton mr-2 font-weight-bold"
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        setSelectedProjectToUpdate({
+                          projectName: project.projectName,
+                          projectId: project.id,
+                        })
+                      }
+                      className="editProjectButton mr-2 font-weight-bold"
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      type="primary"
+                      className="openProjectButton font-weight-bold"
+                    >
+                      Open
+                    </Button>
+                  </div>
                 </div>
               ))
             ) : (
@@ -60,6 +106,33 @@ const DashboardScreen = () => {
             )}
           </div>
         </div>
+      )}
+      {!!selectedProjectToDelete && (
+        <Modal
+          open={!!selectedProjectToDelete}
+          onOk={handleDeleteProject}
+          onCancel={() => setSelectedProjectToDelete(null)}
+          title={
+            <Typography className="text-black font-20">
+              Delete a project
+            </Typography>
+          }
+          okText="Delete"
+          okButtonProps={{ disabled: isDeleteProjectLoading }}
+          closable={false}
+        >
+          <Typography className="text-black">
+            Are you sure to delete this project?
+          </Typography>
+        </Modal>
+      )}
+      {!!selectedProjectToUpdate && (
+        <CreateEditProjectModal
+          project={selectedProjectToUpdate}
+          onCancel={() => setSelectedProjectToUpdate(null)}
+          refetchProjects={refetchProjects}
+          open={!!selectedProjectToUpdate}
+        />
       )}
     </div>
   );
