@@ -15,7 +15,7 @@ import useGetProjects from "@/features/dashboard/hooks/useGetProjects";
 import useGetUser from "@/features/dashboard/hooks/useGetUser";
 
 import styles from "./DashboardHeader.module.scss";
-import CreateProjectModal from "../CreateProjectModal/CreateProjectModal";
+import CreateProjectModal from "../CreateEditProjectModal/CreateEditProjectModal";
 
 interface DashboardHeaderProps {
   subHeaderTitle: string;

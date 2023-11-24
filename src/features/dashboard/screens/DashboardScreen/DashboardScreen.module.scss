@@ -46,6 +46,22 @@
           background-color: #694ebc;
         }
       }
+      .editProjectButton {
+        width: 85px;
+        height: 40px;
+        background-color: #00a69a;
+        &:hover {
+          background-color: #01857c;
+        }
+      }
+      .deleteProjectButton {
+        width: 85px;
+        height: 40px;
+        background-color: #ff4d4f;
+        &:hover {
+          background-color: #ec3437;
+        }
+      }
     }
   }
 }
