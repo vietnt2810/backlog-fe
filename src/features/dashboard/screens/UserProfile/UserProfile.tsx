@@ -40,7 +40,7 @@ const UserProfile = () => {
         setIsUploadingOntoFirebase(true);
         avatarUrl = await uploadFileToFirebase(
           "avatars",
-          formValue.avatarUrl.file.name,
+          String(Date.now()).concat(formValue.avatarUrl.file.name),
           formValue.avatarUrl.file.originFileObj
         ).finally(() => setIsUploadingOntoFirebase(false));
       } else {
@@ -59,7 +59,9 @@ const UserProfile = () => {
         type: "success",
         message: "Changed user profile successfully",
       });
-      refetchUser();
+      setTimeout(() => {
+        refetchUser();
+      }, 500);
       setIsAvatarChanged(false);
     });
   };
