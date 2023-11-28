@@ -8,3 +8,7 @@ export type ProjectMemberDetailResponse = {
   username: string;
   role: boolean;
 };
+
+export type UpdateUserInProjectRequestBody = {
+  memberName: string;
+};

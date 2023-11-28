@@ -6,19 +6,23 @@ import { ProjectsEndpoints } from "../constants/project.endpoints";
 import { ProjectMemberDetailResponse } from "../types/project.types";
 
 const useGetMemberDetail = (projectId: string, memberId: string) => {
-  const { data: memberDetail, isLoading: isGetMemberDetailLoading } =
-    useQuery<ProjectMemberDetailResponse>({
-      queryKey: ["useGetMemberDetail", projectId],
-      queryFn: () => {
-        return api.get(
-          ProjectsEndpoints.PROJECT_MEMBER_DETAIL(projectId, memberId)
-        );
-      },
-    });
+  const {
+    data: memberDetail,
+    isLoading: isGetMemberDetailLoading,
+    refetch: refetchMemberDetail,
+  } = useQuery<ProjectMemberDetailResponse>({
+    queryKey: ["useGetMemberDetail", projectId],
+    queryFn: () => {
+      return api.get(
+        ProjectsEndpoints.PROJECT_MEMBER_DETAIL(projectId, memberId)
+      );
+    },
+  });
 
   return {
     memberDetail,
     isGetMemberDetailLoading,
+    refetchMemberDetail,
   };
 };
 
