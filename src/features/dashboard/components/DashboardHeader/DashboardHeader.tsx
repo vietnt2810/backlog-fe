@@ -5,14 +5,16 @@ import { memo, useState } from "react";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Dropdown, Typography } from "antd";
 import cx from "classnames";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "@/components/atoms/Logo/Logo";
 import Loader from "@/components/organisms/Loader/Loader";
 import { USER_ID } from "@/constants/constants";
+import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
 import { DashboardPathsEnum } from "@/features/dashboard/constants/dashboard.paths";
 import useGetProjects from "@/features/dashboard/hooks/useGetProjects";
 import useGetUser from "@/features/dashboard/hooks/useGetUser";
+import { handleClearLocalStorage } from "@/utils/utils";
 
 import styles from "./DashboardHeader.module.scss";
 import CreateProjectModal from "../CreateEditProjectModal/CreateEditProjectModal";
@@ -22,6 +24,8 @@ interface DashboardHeaderProps {
 }
 
 const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
+  const navigate = useNavigate();
+
   const { user, isGetUserLoading } = useGetUser(
     String(localStorage.getItem(USER_ID))
   );
@@ -76,6 +80,17 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
                     <PlusCircleOutlined />
                     <Typography.Text className="ml-2 text-dark-20">
                       Create a new project
+                    </Typography.Text>
+                  </div>
+                  <div
+                    onClick={() => {
+                      handleClearLocalStorage();
+                      navigate(AuthPathsEnum.LOGIN);
+                    }}
+                    className="profile-dropdown-item"
+                  >
+                    <Typography.Text className="text-dark-20">
+                      Logout
                     </Typography.Text>
                   </div>
                 </>

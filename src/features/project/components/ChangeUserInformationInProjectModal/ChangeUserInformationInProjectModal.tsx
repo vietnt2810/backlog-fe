@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from "react";
 
 import { Input, Modal, ModalProps, Typography } from "antd";
 import { isEqual } from "lodash";
+import { useParams } from "react-router-dom";
 
 import Button from "@/components/atoms/Button/Button";
 import Form, { Item, useForm } from "@/components/atoms/Form/Form";
@@ -10,59 +11,51 @@ import { USER_ID } from "@/constants/constants";
 import { requiredRules } from "@/helpers/validations.helpers";
 import { isInvalidForm } from "@/utils/utils";
 
-import styles from "./CreateEditProjectModal.module.scss";
-import useCreateProject from "../../hooks/useCreateProject";
-import useEditProject from "../../hooks/useEditProject";
-import { CreateEditProjectRequestBody } from "../../types/dashboard.types";
+import styles from "./ChangeUserInformationInProjectModal.module.scss";
+import useUpdateUserInProject from "../../hooks/useUpdateUserInProject";
 
-interface CreateEditProjectModal extends ModalProps {
-  project?: CreateEditProjectRequestBody;
-  refetchProjects: () => void;
+interface ChangeUserInformationInProjectModalProps extends ModalProps {
+  refetchMemberDetail: () => void;
+  usernameInProject?: string;
   onCancel: () => void;
 }
 
-const CreateEditProjectModal = ({
-  project = undefined,
-  refetchProjects,
+const ChangeUserInformationInProjectModal = ({
+  refetchMemberDetail,
+  usernameInProject,
   onCancel,
   ...props
-}: CreateEditProjectModal) => {
+}: ChangeUserInformationInProjectModalProps) => {
   const [form] = useForm();
+  const { projectId } = useParams();
 
-  const { createProject, isCreateProjectLoading } = useCreateProject();
-  const { editProject, isEditProjectLoading } = useEditProject(
-    String(project?.projectId)
-  );
+  const { isUpdateUserInProjectLoading, updateUserInProject } =
+    useUpdateUserInProject(
+      String(projectId),
+      String(localStorage.getItem(USER_ID))
+    );
 
   const [initialFormValue, setInitialFormValue] = useState();
 
-  const handleCreateEditProject = () => {
-    project
-      ? editProject(form.getFieldsValue()).then(() => {
-          openNotification({
-            type: "success",
-            message: "You have successfully updated a project",
-          });
-          onCancel();
-          refetchProjects();
-        })
-      : createProject({
-          ...form.getFieldsValue(),
-          userId: String(localStorage.getItem(USER_ID)),
-        }).then(() => {
-          openNotification({
-            type: "success",
-            message: "You have successfully created a new project",
-          });
-          onCancel();
-          refetchProjects();
+  const handleChangeUserInformationInProject = () => {
+    updateUserInProject(form.getFieldsValue())
+      .then(() => {
+        openNotification({
+          type: "success",
+          message:
+            "You have successfully changed user information under this project",
         });
+        setTimeout(() => {
+          refetchMemberDetail();
+        }, 200);
+      })
+      .finally(() => onCancel());
   };
 
   useEffect(() => {
-    project && form.setFieldValue("projectName", project.projectName);
+    form.setFieldValue("memberName", usernameInProject);
     setInitialFormValue(form.getFieldsValue());
-  }, [form, project]);
+  }, [form, usernameInProject]);
 
   return (
     <Modal
@@ -74,14 +67,14 @@ const CreateEditProjectModal = ({
     >
       <div className={styles.container}>
         <Typography className="text-black font-weight-bold font-20">
-          {project ? "Update a project" : "Create a new project"}
+          Change user information
         </Typography>
         <Form form={form} size="large" layout="vertical">
           <Item
             required
-            label="Project name"
-            name="projectName"
-            rules={[...requiredRules("Project name")]}
+            label="Username"
+            name="memberName"
+            rules={[...requiredRules("Username")]}
           >
             <Input />
           </Item>
@@ -96,18 +89,17 @@ const CreateEditProjectModal = ({
             >
               {() => (
                 <Button
-                  onClick={handleCreateEditProject}
+                  onClick={handleChangeUserInformationInProject}
                   type="primary"
                   disabled={
                     isInvalidForm({
                       form,
-                      fieldsRequire: ["projectName"],
-                      isSubmitting:
-                        isCreateProjectLoading || isEditProjectLoading,
+                      fieldsRequire: ["memberName"],
+                      isSubmitting: isUpdateUserInProjectLoading,
                     }) || isEqual(form.getFieldsValue(), initialFormValue)
                   }
                 >
-                  {project ? "Update" : "Create"}
+                  Update
                 </Button>
               )}
             </Item>
@@ -118,4 +110,4 @@ const CreateEditProjectModal = ({
   );
 };
 
-export default memo(CreateEditProjectModal);
+export default memo(ChangeUserInformationInProjectModal);

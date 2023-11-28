@@ -212,7 +212,6 @@ th.ant-table-cell {
   min-width: 300px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   background: #333333;
-  font-size: 14px;
   border-radius: 5px;
 }
 
@@ -224,6 +223,22 @@ th.ant-table-cell {
   }
 }
 
+.header-dropdown-container {
+  z-index: 999;
+  min-width: 300px;
+  padding: 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 20px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.header-dropdown-item {
+  padding: 8px 15px;
+  &:hover {
+    cursor: pointer;
+    background-color: #ddefe5;
+  }
+}
 // Form
 .ant-form-item-required::before {
   content: "" !important;
