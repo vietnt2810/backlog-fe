@@ -91,10 +91,7 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
                 className={cx(styles.avatar)}
               />
             )}
-
-            <Typography className="ml-1 text-white">
-              {user?.username}
-            </Typography>
+            <Typography className="ml-1">{user?.username}</Typography>
           </div>
         </Dropdown>
       </div>

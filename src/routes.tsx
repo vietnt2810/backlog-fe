@@ -11,13 +11,13 @@ import {
 import { AuthenticationContext } from "@/components/organisms/AuthenticationProvider/AuthenticationProvider";
 import Loader from "@/components/organisms/Loader/Loader";
 import { AdminsPathsEnum } from "@/features/admins/constants/admins.paths";
-import ADMIN_ROUTES from "@/features/admins/routes/admins.routes";
 import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
 import AUTH_ROUTES from "@/features/auth/routes/auth.routes";
 import { RouteItemDef } from "@/types/route.types";
 
 import { DashboardPathsEnum } from "./features/dashboard/constants/dashboard.paths";
 import DASHBOARD_ROUTES from "./features/dashboard/routes/dashboard.routes";
+import PROJECT_ROUTES from "./features/project/routes/project.routes";
 
 const DefaultLayout = lazy(
   () => import("@/components/layouts/DefaultLayout/DefaultLayout")
@@ -51,7 +51,7 @@ const AppRoutes = () => {
   const ROUTE_LIST: RouteItemDef[] = [
     ...AUTH_ROUTES,
     ...DASHBOARD_ROUTES,
-    ...ADMIN_ROUTES,
+    ...PROJECT_ROUTES,
   ];
 
   return (
