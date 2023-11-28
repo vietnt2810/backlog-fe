@@ -1,4 +1,3 @@
 export enum ProjectPathsEnum {
-  DASHBOARD = "/",
-  USER_PROFILE = "/profile",
+  PROJECT_HOMEPAGE = "/:projectId",
 }

@@ -2,12 +2,14 @@ import { memo, useState } from "react";
 
 import { Modal, Typography } from "antd";
 import cx from "classnames";
+import { Link } from "react-router-dom";
 
 import Button from "@/components/atoms/Button/Button";
 import Loader from "@/components/organisms/Loader/Loader";
 import { openNotification } from "@/components/organisms/Notification/Notification";
 import { USER_ID } from "@/constants/constants";
 import DashboardHeader from "@/features/dashboard/components/DashboardHeader/DashboardHeader";
+import { ProjectPathsEnum } from "@/features/project/constants/project.paths";
 import { getCurrentDate } from "@/utils/utils";
 
 import styles from "./DashboardScreen.module.scss";
@@ -90,11 +92,16 @@ const DashboardScreen = () => {
                     >
                       Edit
                     </Button>
-                    <Button
-                      type="primary"
-                      className="openProjectButton font-weight-bold"
-                    >
-                      Open
+                    <Button className="openProjectButton font-weight-bold">
+                      <Link
+                        to={ProjectPathsEnum.PROJECT_HOMEPAGE.replace(
+                          ":projectId",
+                          String(project.id)
+                        )}
+                        target="_blank"
+                      >
+                        Open
+                      </Link>
                     </Button>
                   </div>
                 </div>
