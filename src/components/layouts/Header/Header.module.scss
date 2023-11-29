@@ -1,11 +1,14 @@
 @import "@/styles/colors";
 
 .container {
+  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   height: 50px;
   padding: 0 10px;
+  border-bottom: 1px solid $text-dark-10;
   background-color: #edf4f0;
   color: $text-black;
 

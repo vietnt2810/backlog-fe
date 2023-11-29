@@ -9,14 +9,16 @@ import {
   ProjectOutlined,
 } from "@ant-design/icons";
 import { Dropdown, Typography } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as NotificationIcon } from "@/assets/images/NotificationIcon.svg";
 import Loader from "@/components/organisms/Loader/Loader";
 import { USER_ID } from "@/constants/constants";
 import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
+import { DashboardPathsEnum } from "@/features/dashboard/constants/dashboard.paths";
 import useGetUser from "@/features/dashboard/hooks/useGetUser";
 import ChangeUserInformationInProjectModal from "@/features/project/components/ChangeUserInformationInProjectModal/ChangeUserInformationInProjectModal";
+import { ProjectPaths } from "@/features/project/constants/project.paths";
 import useGetMemberDetail from "@/features/project/hooks/useGetMemberDetail";
 import useGetProject from "@/features/project/hooks/useGetProject";
 import { handleClearLocalStorage } from "@/utils/utils";
@@ -50,7 +52,14 @@ const Header = () => {
     <>
       <div className={styles.container}>
         <div className="flex-align-center">
-          <div className="headerItem">Dashboard</div>
+          <div
+            className="headerItem"
+            onClick={() =>
+              navigate(ProjectPaths.PROJECT_HOMEPAGE(String(projectId)))
+            }
+          >
+            Dashboard
+          </div>
           <div className="headerItem">Projects</div>
           <div className="headerItem">Recently viewed</div>
           <div className="headerItem">
@@ -110,7 +119,9 @@ const Header = () => {
             {project?.projectName}
           </div>
           <div className="headerItem">
-            <HomeOutlined />
+            <Link to={DashboardPathsEnum.DASHBOARD} target="_blank">
+              <HomeOutlined className="text-black" />
+            </Link>
           </div>
         </div>
       </div>

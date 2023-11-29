@@ -5,8 +5,9 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import { openNotification } from "@/components/organisms/Notification/Notification";
 import { emailRules, requiredRules } from "@/helpers/validations.helpers";
-import { handleErrorSubmitted, isInvalidForm } from "@/utils/utils";
+import { isInvalidForm } from "@/utils/utils";
 
 import styles from "./LoginScreen.module.scss";
 import { AuthPathsEnum } from "../../constants/auth.paths";
@@ -27,7 +28,9 @@ const LoginScreen = () => {
     postLogin(values)
       .then(() => navigate(from, { replace: true })) // TODO: Redirect to dashboard
       .catch(err => {
-        handleErrorSubmitted(form, err);
+        openNotification({
+          message: err ? err.message : "Unexpected error occurred",
+        });
       });
   };
 

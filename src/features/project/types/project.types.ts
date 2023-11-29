@@ -9,6 +9,19 @@ export type ProjectMemberDetailResponse = {
   role: boolean;
 };
 
+export type SubProjectsResponse = SubProject[];
+
+export type SubProject = {
+  id: number;
+  subProjectName: string;
+  subTitle: string;
+};
+
 export type UpdateUserInProjectRequestBody = {
   memberName: string;
+};
+
+export type CreateSubProjectRequestBody = {
+  subProjectName: string;
+  subTitle: string;
 };
