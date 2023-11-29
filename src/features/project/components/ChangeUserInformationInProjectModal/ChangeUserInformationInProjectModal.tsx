@@ -47,7 +47,7 @@ const ChangeUserInformationInProjectModal = ({
         });
         setTimeout(() => {
           refetchMemberDetail();
-        }, 200);
+        }, 500);
       })
       .finally(() => onCancel());
   };

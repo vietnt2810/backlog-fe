@@ -35,7 +35,7 @@ const RegisterScreen = () => {
       })
       .catch(err => {
         openNotification({
-          message: err.error,
+          message: err ? err.message : "Unexpected error occurred",
         });
       });
   };

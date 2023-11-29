@@ -1,0 +1,14 @@
+.container {
+  :global {
+    .ant-form-item-label {
+      label {
+        color: black !important;
+      }
+    }
+    .ant-btn {
+      display: flex;
+      align-items: center;
+      height: 35px !important;
+    }
+  }
+}

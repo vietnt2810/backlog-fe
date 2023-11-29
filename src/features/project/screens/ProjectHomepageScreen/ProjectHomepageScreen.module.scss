@@ -1,0 +1,55 @@
+@import "@/styles/colors";
+
+.container {
+  height: 100vh;
+  background-color: #f0f0f0;
+
+  :global {
+    .ant-typography {
+      color: $text-black;
+    }
+    .mainContent {
+      display: flex;
+      padding: 0 32px;
+    }
+    .leftContent {
+      width: 48%;
+    }
+    .subProjects {
+    }
+    .subProjectItem {
+      display: flex;
+      align-items: center;
+      height: 58px;
+      padding: 0 20px;
+      margin: 4px 0;
+      background-color: white;
+      border: 1px solid $text-dark-10;
+      &:hover {
+        cursor: pointer;
+        background-color: #e07b9a;
+        .ant-typography {
+          color: $text-white;
+        }
+        .subProjectButton {
+          display: block;
+        }
+        .subTitle {
+          display: none;
+        }
+      }
+    }
+    .subProjectIcon,
+    .createSubProjectIcon {
+      transform: scale(1.5) !important;
+    }
+    .subProjectButton {
+      display: none;
+      .ant-typography {
+        font-size: 13px;
+      }
+    }
+    .recentUpdates {
+    }
+  }
+}
