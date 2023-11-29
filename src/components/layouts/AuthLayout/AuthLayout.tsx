@@ -12,7 +12,7 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <div className={cx(styles.container, "my-6 px-8")}>
+    <div className={cx(styles.container, "py-6 px-8")}>
       <div className="flex-space-between">
         <Logo />
         <p className="font-18">Contact us</p>
