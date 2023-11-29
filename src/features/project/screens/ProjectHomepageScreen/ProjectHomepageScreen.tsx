@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { memo, useState } from "react";
 
 import { ContainerOutlined, PlusOutlined } from "@ant-design/icons";
@@ -24,9 +26,9 @@ const ProjectHomepageScreen = () => {
 
   return (
     <>
+      <Header />
       <div className={styles.container}>
-        <Header />
-        <div className="py-4">
+        <div className="py-4 pb-10">
           <Typography className="font-20 text-black font-weight-bold text-center mb-4">
             {project?.projectName.toUpperCase()}
           </Typography>
@@ -37,7 +39,7 @@ const ProjectHomepageScreen = () => {
                   Sub Projects
                 </Typography>
                 {subProjects?.map(subProject => (
-                  <div className="subProjectItem">
+                  <div className="subProjectItem" key={subProject.id}>
                     <ContainerOutlined className="subProjectIcon" />
                     <div className="ml-4">
                       <Typography className="font-weight-bold">
@@ -61,12 +63,12 @@ const ProjectHomepageScreen = () => {
                   </div>
                 ))}
 
-                <div className="subProjectItem">
+                <div
+                  className="subProjectItem"
+                  onClick={() => setIsCreateSubProjectModalOpen(true)}
+                >
                   <PlusOutlined className="createSubProjectIcon" />
-                  <Typography
-                    onClick={() => setIsCreateSubProjectModalOpen(true)}
-                    className="ml-4 font-weight-bold"
-                  >
+                  <Typography className="ml-4 font-weight-bold">
                     Create a Sub Project
                   </Typography>
                 </div>

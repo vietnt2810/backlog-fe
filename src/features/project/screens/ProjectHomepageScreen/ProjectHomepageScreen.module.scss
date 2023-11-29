@@ -1,7 +1,10 @@
 @import "@/styles/colors";
 
 .container {
+  position: relative;
+  top: 50px;
   height: 100vh;
+  overflow: auto;
   background-color: #f0f0f0;
 
   :global {
