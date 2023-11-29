@@ -101,6 +101,7 @@ const LoginScreen = () => {
               </div>
             </Form.Item>
             <Form.Item
+              className="buttonItem"
               shouldUpdate={(prevValues, curValues) => prevValues === curValues}
             >
               {() => (

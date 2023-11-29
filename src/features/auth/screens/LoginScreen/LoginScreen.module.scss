@@ -15,6 +15,11 @@
     .ant-form-item:not(:last-child) {
       padding-bottom: 24px;
     }
+    .buttonItem {
+      position: absolute;
+      bottom: 20px;
+      width: calc(100% - 44px);
+    }
     .button-submit {
       font-weight: 600;
     }

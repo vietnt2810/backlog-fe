@@ -61,7 +61,7 @@ const RegisterScreen = () => {
             onFinish={onFinish}
             autoComplete="off"
             requiredMark={false}
-            className="pt-9 text-left"
+            className="pt-6 text-left"
             validateTrigger="onBlur"
           >
             <Form.Item
@@ -102,6 +102,7 @@ const RegisterScreen = () => {
               </div>
             </Form.Item>
             <Form.Item
+              className="buttonItem"
               shouldUpdate={(prevValues, curValues) => prevValues === curValues}
             >
               {() => (
