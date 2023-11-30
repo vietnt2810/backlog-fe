@@ -20,6 +20,27 @@
     }
     .subProjects {
     }
+    .subProjectsContentTitle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 32px;
+      margin-bottom: 8px;
+    }
+    .searchInput {
+      min-width: 240px;
+      height: 32px;
+      background-color: #fcfade;
+      border: 1px solid #00836b;
+      border-radius: 20px;
+      box-shadow: 0 0 3px #00836b;
+      .ant-input {
+        background-color: #fcfade;
+        &::placeholder {
+          color: $text-dark-30;
+        }
+      }
+    }
     .subProjectItem {
       display: flex;
       align-items: center;
@@ -43,9 +64,11 @@
       }
     }
     .subProjectIcon,
-    .createSubProjectIcon {
+    .createSubProjectIcon,
+    .searchIcon {
       transform: scale(1.5) !important;
     }
+
     .subProjectButtonContainer {
       display: none;
       .ant-typography {
