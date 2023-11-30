@@ -68,9 +68,9 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
                       </div>
                     </div>
                   </Link>
-                  {projects?.map(project => (
+                  {projects?.map(item => (
                     <div className="profile-dropdown-item">
-                      {project.projectName}
+                      {item.project.projectName}
                     </div>
                   ))}
                   <div

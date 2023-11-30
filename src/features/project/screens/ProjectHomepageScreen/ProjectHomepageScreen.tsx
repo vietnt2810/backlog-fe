@@ -12,11 +12,15 @@ import styles from "./ProjectHomepageScreen.module.scss";
 import CreateSubProjectModal from "../../components/CreateSubProjectModal/CreateSubProjectModal";
 import useGetProject from "../../hooks/useGetProject";
 import useGetSubProjects from "../../hooks/useGetSubProjects";
+import { USER_ID } from "@/constants/constants";
 
 const ProjectHomepageScreen = () => {
   const { projectId } = useParams();
 
-  const { project } = useGetProject(String(projectId));
+  const { project } = useGetProject(
+    String(localStorage.getItem(USER_ID)),
+    String(projectId)
+  );
   const { subProjects, refetchSubProjects } = useGetSubProjects(
     String(projectId)
   );
@@ -30,7 +34,7 @@ const ProjectHomepageScreen = () => {
       <div className={styles.container}>
         <div className="py-4 pb-10">
           <Typography className="font-20 text-black font-weight-bold text-center mb-4">
-            {project?.projectName.toUpperCase()}
+            {project?.project.projectName.toUpperCase()}
           </Typography>
           <div className="mainContent">
             <div className="leftContent">
@@ -48,7 +52,7 @@ const ProjectHomepageScreen = () => {
                       <Typography className="font-11 text-dark-30 subTitle">
                         {subProject.subTitle}
                       </Typography>
-                      <div className="subProjectButton">
+                      <div className="subProjectButtonContainer">
                         <Typography.Text>Add Issue</Typography.Text>
                         <Typography.Text className="ml-2">|</Typography.Text>
                         <Typography.Text className="ml-2">
@@ -62,16 +66,17 @@ const ProjectHomepageScreen = () => {
                     </div>
                   </div>
                 ))}
-
-                <div
-                  className="subProjectItem"
-                  onClick={() => setIsCreateSubProjectModalOpen(true)}
-                >
-                  <PlusOutlined className="createSubProjectIcon" />
-                  <Typography className="ml-4 font-weight-bold">
-                    Create a Sub Project
-                  </Typography>
-                </div>
+                {project?.role && (
+                  <div
+                    className="subProjectItem"
+                    onClick={() => setIsCreateSubProjectModalOpen(true)}
+                  >
+                    <PlusOutlined className="createSubProjectIcon" />
+                    <Typography className="ml-4 font-weight-bold">
+                      Create a Sub Project
+                    </Typography>
+                  </div>
+                )}
               </div>
             </div>
             <div className="recentUpdates" />

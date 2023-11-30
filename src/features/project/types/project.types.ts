@@ -1,7 +1,13 @@
-export type ProjectDetailResponse = {
+export type Project = {
   id: number;
   projectName: string;
   createdAt: string;
+};
+
+export type ProjectDetailResponse = {
+  username: string;
+  role: boolean;
+  project: Project;
 };
 
 export type ProjectMemberDetailResponse = {

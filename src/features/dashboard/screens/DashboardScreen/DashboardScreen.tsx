@@ -26,6 +26,7 @@ const DashboardScreen = () => {
   const { projects, isGetProjectsLoading, refetchProjects } = useGetProjects(
     String(localStorage.getItem(USER_ID))
   );
+  console.log(projects);
   const { deleteProject, isDeleteProjectLoading } = useDeleteProject();
 
   const [selectedProjectToDelete, setSelectedProjectToDelete] = useState<
@@ -61,42 +62,48 @@ const DashboardScreen = () => {
           </Typography>
           <div>
             {projects?.length ? (
-              projects?.map(project => (
+              projects?.map(item => (
                 <div
-                  key={project.id}
+                  key={item.project.id}
                   className="projectItem flex-space-between-center my-4"
                 >
                   <div className="flex-align-center">
                     <div className="projectLogo flex-center">
-                      {project.projectName.charAt(0)}
+                      {item.project.projectName.charAt(0)}
                     </div>
                     <Typography className="font-weight-bold pl-2">
-                      {project.projectName}
+                      {item.project.projectName}
                     </Typography>
                   </div>
                   <div>
-                    <Button
-                      onClick={() => setSelectedProjectToDelete(project.id)}
-                      className="deleteProjectButton mr-2 font-weight-bold"
-                    >
-                      Delete
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        setSelectedProjectToUpdate({
-                          projectName: project.projectName,
-                          projectId: project.id,
-                        })
-                      }
-                      className="editProjectButton mr-2 font-weight-bold"
-                    >
-                      Edit
-                    </Button>
+                    {item.role && (
+                      <>
+                        <Button
+                          onClick={() =>
+                            setSelectedProjectToDelete(item.project.id)
+                          }
+                          className="deleteProjectButton mr-2 font-weight-bold"
+                        >
+                          Delete
+                        </Button>
+                        <Button
+                          onClick={() =>
+                            setSelectedProjectToUpdate({
+                              projectName: item.project.projectName,
+                              projectId: item.project.id,
+                            })
+                          }
+                          className="editProjectButton mr-2 font-weight-bold"
+                        >
+                          Edit
+                        </Button>
+                      </>
+                    )}
                     <Button className="openProjectButton font-weight-bold">
                       <Link
                         to={ProjectPathsEnum.PROJECT_HOMEPAGE.replace(
                           ":projectId",
-                          String(project.id)
+                          String(item.project.id)
                         )}
                         target="_blank"
                       >
