@@ -19,7 +19,6 @@ import { DashboardPathsEnum } from "@/features/dashboard/constants/dashboard.pat
 import useGetUser from "@/features/dashboard/hooks/useGetUser";
 import ChangeUserInformationInProjectModal from "@/features/project/components/ChangeUserInformationInProjectModal/ChangeUserInformationInProjectModal";
 import { ProjectPaths } from "@/features/project/constants/project.paths";
-import useGetMemberDetail from "@/features/project/hooks/useGetMemberDetail";
 import useGetProject from "@/features/project/hooks/useGetProject";
 import { handleClearLocalStorage } from "@/utils/utils";
 
@@ -32,19 +31,17 @@ const Header = () => {
   const { user, isGetUserLoading } = useGetUser(
     String(localStorage.getItem(USER_ID))
   );
-  const { memberDetail, isGetMemberDetailLoading, refetchMemberDetail } =
-    useGetMemberDetail(
-      String(projectId),
-      String(localStorage.getItem(USER_ID))
-    );
-  const { project, isGetProjectLoading } = useGetProject(String(projectId));
+  const { project, isGetProjectLoading, refetchProject } = useGetProject(
+    String(localStorage.getItem(USER_ID)),
+    String(projectId)
+  );
 
   const [
     isChangeUserInformationInProjectModalOpen,
     setIsChangeUserInformationInProjectModalOpen,
   ] = useState(false);
 
-  if (isGetUserLoading || isGetMemberDetailLoading || isGetProjectLoading) {
+  if (isGetUserLoading || isGetProjectLoading) {
     return <Loader />;
   }
 
@@ -77,7 +74,7 @@ const Header = () => {
             dropdownRender={() => (
               <div className="header-dropdown-container">
                 <div className="header-dropdown-item">
-                  <Typography className="text-dark-30">{`Hello, ${memberDetail?.username}`}</Typography>
+                  <Typography className="text-dark-30">{`Hello, ${project?.username}`}</Typography>
                 </div>
                 <div className="header-dropdown-item">
                   <Typography className="text-black">Activity</Typography>
@@ -109,14 +106,14 @@ const Header = () => {
                 <img alt="avatar" src={user?.avatarUrl} className="avatar" />
               )}
               <Typography className="ml-1 text-black font-weight-bold">
-                {memberDetail?.username}
+                {project?.username}
                 <CaretDownOutlined className="ml-1" />
               </Typography>
             </div>
           </Dropdown>
           <div className="headerProjectItem">
             <ProjectOutlined className="mr-2" />
-            {project?.projectName}
+            {project?.project.projectName}
           </div>
           <div className="headerItem">
             <Link to={DashboardPathsEnum.DASHBOARD} target="_blank">
@@ -127,9 +124,9 @@ const Header = () => {
       </div>
       {isChangeUserInformationInProjectModalOpen && (
         <ChangeUserInformationInProjectModal
-          refetchMemberDetail={refetchMemberDetail}
+          refetchMemberDetail={refetchProject}
           open={isChangeUserInformationInProjectModalOpen}
-          usernameInProject={memberDetail?.username}
+          usernameInProject={project?.username}
           onCancel={() => setIsChangeUserInformationInProjectModalOpen(false)}
         />
       )}

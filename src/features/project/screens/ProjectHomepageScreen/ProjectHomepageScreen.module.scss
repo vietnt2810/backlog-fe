@@ -34,7 +34,7 @@
         .ant-typography {
           color: $text-white;
         }
-        .subProjectButton {
+        .subProjectButtonContainer {
           display: block;
         }
         .subTitle {
@@ -46,10 +46,13 @@
     .createSubProjectIcon {
       transform: scale(1.5) !important;
     }
-    .subProjectButton {
+    .subProjectButtonContainer {
       display: none;
       .ant-typography {
         font-size: 13px;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
     .recentUpdates {
