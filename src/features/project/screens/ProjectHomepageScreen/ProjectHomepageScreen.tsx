@@ -1,18 +1,25 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { memo, useState } from "react";
+import { ChangeEvent, memo, useEffect, useState } from "react";
 
-import { ContainerOutlined, PlusOutlined } from "@ant-design/icons";
-import { Typography } from "antd";
+import {
+  ContainerOutlined,
+  PlusOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
+import { Input, Typography } from "antd";
+import { isEmpty } from "lodash";
 import { useParams } from "react-router-dom";
 
+import Form, { Item } from "@/components/atoms/Form/Form";
 import Header from "@/components/layouts/Header/Header";
+import { USER_ID } from "@/constants/constants";
 
 import styles from "./ProjectHomepageScreen.module.scss";
 import CreateSubProjectModal from "../../components/CreateSubProjectModal/CreateSubProjectModal";
 import useGetProject from "../../hooks/useGetProject";
 import useGetSubProjects from "../../hooks/useGetSubProjects";
-import { USER_ID } from "@/constants/constants";
+import { SubProjectsResponse } from "../../types/project.types";
 
 const ProjectHomepageScreen = () => {
   const { projectId } = useParams();
@@ -25,8 +32,26 @@ const ProjectHomepageScreen = () => {
     String(projectId)
   );
 
+  const [filteredSubProjects, setFilteredSubProjects] =
+    useState<SubProjectsResponse>();
+  const [isSubProjectSearchBoxOpen, setIsSubProjectSearchBoxOpen] =
+    useState(false);
   const [isCreateSubProjectModalOpen, setIsCreateSubProjectModalOpen] =
     useState(false);
+
+  const handleFilterSubProject = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilteredSubProjects(
+      subProjects?.filter(subProject =>
+        subProject.subProjectName
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
+      )
+    );
+  };
+
+  useEffect(() => {
+    setFilteredSubProjects(subProjects);
+  }, [subProjects]);
 
   return (
     <>
@@ -39,10 +64,35 @@ const ProjectHomepageScreen = () => {
           <div className="mainContent">
             <div className="leftContent">
               <div className="subProjects">
-                <Typography className="font-16 font-weight-bold mb-2">
-                  Sub Projects
-                </Typography>
-                {subProjects?.map(subProject => (
+                <div className="subProjectsContentTitle">
+                  <Typography className="font-16 font-weight-bold">
+                    Sub Projects
+                  </Typography>
+                  <div className="flex-align-center">
+                    <SearchOutlined
+                      onClick={() => setIsSubProjectSearchBoxOpen(true)}
+                      className="searchIcon cursor-pointer"
+                    />
+                    {isSubProjectSearchBoxOpen && (
+                      <Form>
+                        <Item className="mb-0 ml-2">
+                          <Input
+                            onChange={e => handleFilterSubProject(e)}
+                            onBlur={e =>
+                              isEmpty(e.target.value) &&
+                              setIsSubProjectSearchBoxOpen(false)
+                            }
+                            className="searchInput"
+                            placeholder="Search sub projects"
+                            allowClear
+                            autoFocus
+                          />
+                        </Item>
+                      </Form>
+                    )}
+                  </div>
+                </div>
+                {filteredSubProjects?.map(subProject => (
                   <div className="subProjectItem" key={subProject.id}>
                     <ContainerOutlined className="subProjectIcon" />
                     <div className="ml-4">
