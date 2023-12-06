@@ -4,10 +4,12 @@ import { ChangeEvent, memo, useEffect, useState } from "react";
 
 import {
   ContainerOutlined,
+  DownOutlined,
   PlusOutlined,
   SearchOutlined,
+  UpOutlined,
 } from "@ant-design/icons";
-import { Input, Typography } from "antd";
+import { Dropdown, Input, Typography } from "antd";
 import { isEmpty } from "lodash";
 import { useParams } from "react-router-dom";
 
@@ -32,10 +34,12 @@ const ProjectHomepageScreen = () => {
     String(projectId)
   );
 
+  const [isSubProjectsVisible, setIsSubProjectsVisible] = useState(false);
   const [filteredSubProjects, setFilteredSubProjects] =
     useState<SubProjectsResponse>();
   const [isSubProjectSearchBoxOpen, setIsSubProjectSearchBoxOpen] =
     useState(false);
+
   const [isCreateSubProjectModalOpen, setIsCreateSubProjectModalOpen] =
     useState(false);
 
@@ -63,70 +67,101 @@ const ProjectHomepageScreen = () => {
           </Typography>
           <div className="mainContent">
             <div className="leftContent">
-              <div className="subProjects">
-                <div className="subProjectsContentTitle">
-                  <Typography className="font-16 font-weight-bold">
-                    Sub Projects
-                  </Typography>
-                  <div className="flex-align-center">
-                    <SearchOutlined
-                      onClick={() => setIsSubProjectSearchBoxOpen(true)}
-                      className="searchIcon cursor-pointer"
-                    />
-                    {isSubProjectSearchBoxOpen && (
-                      <Form>
-                        <Item className="mb-0 ml-2">
-                          <Input
-                            onChange={e => handleFilterSubProject(e)}
-                            onBlur={e =>
-                              isEmpty(e.target.value) &&
-                              setIsSubProjectSearchBoxOpen(false)
-                            }
-                            className="searchInput"
-                            placeholder="Search sub projects"
-                            allowClear
-                            autoFocus
-                          />
-                        </Item>
-                      </Form>
+              <div>
+                <Dropdown
+                  className=""
+                  open={isSubProjectsVisible}
+                  trigger={["click"]}
+                  dropdownRender={() => (
+                    <div className="subProjectContainer">
+                      {filteredSubProjects?.map(subProject => (
+                        <div className="subProjectItem" key={subProject.id}>
+                          <ContainerOutlined className="subProjectIcon" />
+                          <div className="ml-4">
+                            <Typography className="font-weight-bold subProjectName">
+                              {subProject.subProjectName}
+                            </Typography>
+                            <Typography className="font-11 text-dark-30 subTitle">
+                              {subProject.subTitle}
+                            </Typography>
+                            <div className="subProjectButtonContainer">
+                              <Typography.Text>Add Issue</Typography.Text>
+                              <Typography.Text className="ml-2">
+                                |
+                              </Typography.Text>
+                              <Typography.Text className="ml-2">
+                                Issues
+                              </Typography.Text>
+                              <Typography.Text className="ml-2">
+                                |
+                              </Typography.Text>
+                              <Typography.Text className="ml-2">
+                                Board
+                              </Typography.Text>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      {project?.role && (
+                        <div
+                          className="subProjectItem"
+                          onClick={() => {
+                            setIsCreateSubProjectModalOpen(true);
+                          }}
+                        >
+                          <PlusOutlined className="createSubProjectIcon" />
+                          <Typography className="ml-4 font-weight-bold createSubProjectButton">
+                            Create a Sub Project
+                          </Typography>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                >
+                  <div className="subProjectsContentTitle">
+                    <div
+                      className="flex-align-center cursor-pointer"
+                      onClick={() => {
+                        setIsSubProjectsVisible(!isSubProjectsVisible);
+                        setFilteredSubProjects(subProjects);
+                      }}
+                    >
+                      {isSubProjectsVisible ? (
+                        <UpOutlined className="mr-1" />
+                      ) : (
+                        <DownOutlined className="mr-1" />
+                      )}
+                      <Typography className="font-16 font-weight-bold">
+                        Sub Projects
+                      </Typography>
+                    </div>
+                    {isSubProjectsVisible && (
+                      <div className="flex-align-center">
+                        <SearchOutlined
+                          onClick={() => setIsSubProjectSearchBoxOpen(true)}
+                          className="searchIcon cursor-pointer"
+                        />
+                        {isSubProjectSearchBoxOpen && (
+                          <Form>
+                            <Item className="mb-0 ml-2">
+                              <Input
+                                onChange={e => handleFilterSubProject(e)}
+                                onBlur={e =>
+                                  isEmpty(e.target.value) &&
+                                  setIsSubProjectSearchBoxOpen(false)
+                                }
+                                className="searchInput"
+                                placeholder="Search sub projects"
+                                allowClear
+                                autoFocus
+                              />
+                            </Item>
+                          </Form>
+                        )}
+                      </div>
                     )}
                   </div>
-                </div>
-                {filteredSubProjects?.map(subProject => (
-                  <div className="subProjectItem" key={subProject.id}>
-                    <ContainerOutlined className="subProjectIcon" />
-                    <div className="ml-4">
-                      <Typography className="font-weight-bold">
-                        {subProject.subProjectName}
-                      </Typography>
-                      <Typography className="font-11 text-dark-30 subTitle">
-                        {subProject.subTitle}
-                      </Typography>
-                      <div className="subProjectButtonContainer">
-                        <Typography.Text>Add Issue</Typography.Text>
-                        <Typography.Text className="ml-2">|</Typography.Text>
-                        <Typography.Text className="ml-2">
-                          Issues
-                        </Typography.Text>
-                        <Typography.Text className="ml-2">|</Typography.Text>
-                        <Typography.Text className="ml-2">
-                          Board
-                        </Typography.Text>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {project?.role && (
-                  <div
-                    className="subProjectItem"
-                    onClick={() => setIsCreateSubProjectModalOpen(true)}
-                  >
-                    <PlusOutlined className="createSubProjectIcon" />
-                    <Typography className="ml-4 font-weight-bold">
-                      Create a Sub Project
-                    </Typography>
-                  </div>
-                )}
+                </Dropdown>
               </div>
             </div>
             <div className="recentUpdates" />

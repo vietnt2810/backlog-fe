@@ -19,6 +19,7 @@
       width: 48%;
     }
     .subProjects {
+      z-index: 10;
     }
     .subProjectsContentTitle {
       display: flex;
@@ -41,43 +42,11 @@
         }
       }
     }
-    .subProjectItem {
-      display: flex;
-      align-items: center;
-      height: 58px;
-      padding: 0 20px;
-      margin: 4px 0;
-      background-color: white;
-      border: 1px solid $text-dark-10;
-      &:hover {
-        cursor: pointer;
-        background-color: #e07b9a;
-        .ant-typography {
-          color: $text-white;
-        }
-        .subProjectButtonContainer {
-          display: block;
-        }
-        .subTitle {
-          display: none;
-        }
-      }
-    }
-    .subProjectIcon,
-    .createSubProjectIcon,
+
     .searchIcon {
       transform: scale(1.5) !important;
     }
 
-    .subProjectButtonContainer {
-      display: none;
-      .ant-typography {
-        font-size: 13px;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
     .recentUpdates {
     }
   }

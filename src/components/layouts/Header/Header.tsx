@@ -8,10 +8,11 @@ import {
   PlusCircleOutlined,
   ProjectOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Typography } from "antd";
+import { Dropdown, Modal, Select, Typography } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as NotificationIcon } from "@/assets/images/NotificationIcon.svg";
+import Form, { Item } from "@/components/atoms/Form/Form";
 import Loader from "@/components/organisms/Loader/Loader";
 import { USER_ID } from "@/constants/constants";
 import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
@@ -20,6 +21,7 @@ import useGetUser from "@/features/dashboard/hooks/useGetUser";
 import ChangeUserInformationInProjectModal from "@/features/project/components/ChangeUserInformationInProjectModal/ChangeUserInformationInProjectModal";
 import { ProjectPaths } from "@/features/project/constants/project.paths";
 import useGetProject from "@/features/project/hooks/useGetProject";
+// import useGetSubProjects from "@/features/project/hooks/useGetSubProjects";
 import { handleClearLocalStorage } from "@/utils/utils";
 
 import styles from "./Header.module.scss";
@@ -35,11 +37,14 @@ const Header = () => {
     String(localStorage.getItem(USER_ID)),
     String(projectId)
   );
+  // const { subProjects } = useGetSubProjects(String(projectId));
 
   const [
     isChangeUserInformationInProjectModalOpen,
     setIsChangeUserInformationInProjectModalOpen,
   ] = useState(false);
+
+  const [isIssueCreateModalOpen, setIsIssueCreateModalOpen] = useState(false);
 
   if (isGetUserLoading || isGetProjectLoading) {
     return <Loader />;
@@ -59,7 +64,10 @@ const Header = () => {
           </div>
           <div className="headerItem">Projects</div>
           <div className="headerItem">Recently viewed</div>
-          <div className="headerItem">
+          <div
+            className="headerItem"
+            onClick={() => setIsIssueCreateModalOpen(true)}
+          >
             <PlusCircleOutlined />
           </div>
         </div>
@@ -129,6 +137,20 @@ const Header = () => {
           usernameInProject={project?.username}
           onCancel={() => setIsChangeUserInformationInProjectModalOpen(false)}
         />
+      )}
+      {isIssueCreateModalOpen && (
+        <Modal
+          closable={false}
+          footer={false}
+          open={isIssueCreateModalOpen}
+          onCancel={() => setIsIssueCreateModalOpen(false)}
+        >
+          <Form>
+            <Item>
+              <Select />
+            </Item>
+          </Form>
+        </Modal>
       )}
     </>
   );
