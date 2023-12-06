@@ -10,7 +10,6 @@
   padding: 0 10px;
   border-bottom: 1px solid $text-dark-10;
   background-color: #edf4f0;
-  color: $text-black;
 
   :global {
     .headerItem {
@@ -57,6 +56,19 @@
         margin: auto;
         background-color: #bdbdbd;
       }
+    }
+  }
+}
+
+.selectSubProject {
+  :global {
+    .ant-select-selection-item {
+      font-size: 14px;
+      color: black;
+    }
+    .ant-select-selection-placeholder {
+      color: $text-dark-30;
+      font-size: 14px;
     }
   }
 }

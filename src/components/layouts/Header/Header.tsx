@@ -18,10 +18,12 @@ import { USER_ID } from "@/constants/constants";
 import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
 import { DashboardPathsEnum } from "@/features/dashboard/constants/dashboard.paths";
 import useGetUser from "@/features/dashboard/hooks/useGetUser";
+import CreateIssueScreen from "@/features/issues/screens/CreateIssueScreen/CreateIssueScreen";
 import ChangeUserInformationInProjectModal from "@/features/project/components/ChangeUserInformationInProjectModal/ChangeUserInformationInProjectModal";
 import { ProjectPaths } from "@/features/project/constants/project.paths";
 import useGetProject from "@/features/project/hooks/useGetProject";
-// import useGetSubProjects from "@/features/project/hooks/useGetSubProjects";
+import useGetSubProjects from "@/features/project/hooks/useGetSubProjects";
+import { SubProject } from "@/features/project/types/project.types";
 import { handleClearLocalStorage } from "@/utils/utils";
 
 import styles from "./Header.module.scss";
@@ -37,7 +39,7 @@ const Header = () => {
     String(localStorage.getItem(USER_ID)),
     String(projectId)
   );
-  // const { subProjects } = useGetSubProjects(String(projectId));
+  const { subProjects } = useGetSubProjects(String(projectId));
 
   const [
     isChangeUserInformationInProjectModalOpen,
@@ -45,6 +47,8 @@ const Header = () => {
   ] = useState(false);
 
   const [isIssueCreateModalOpen, setIsIssueCreateModalOpen] = useState(false);
+  const [chosenSubProjectToCreateIssue, setChosenSubProjectToCreateIssue] =
+    useState<SubProject>();
 
   if (isGetUserLoading || isGetProjectLoading) {
     return <Loader />;
@@ -85,7 +89,7 @@ const Header = () => {
                   <Typography className="text-dark-30">{`Hello, ${project?.username}`}</Typography>
                 </div>
                 <div className="header-dropdown-item">
-                  <Typography className="text-black">Activity</Typography>
+                  <Typography>Activity</Typography>
                 </div>
                 <div
                   className="header-dropdown-item"
@@ -93,7 +97,7 @@ const Header = () => {
                     setIsChangeUserInformationInProjectModalOpen(true)
                   }
                 >
-                  <Typography className="text-black">
+                  <Typography>
                     Change your user information under this project
                   </Typography>
                 </div>
@@ -104,7 +108,7 @@ const Header = () => {
                     navigate(AuthPathsEnum.LOGIN);
                   }}
                 >
-                  <Typography className="text-black">Logout</Typography>
+                  <Typography>Logout</Typography>
                 </div>
               </div>
             )}
@@ -113,7 +117,7 @@ const Header = () => {
               {user?.avatarUrl && (
                 <img alt="avatar" src={user?.avatarUrl} className="avatar" />
               )}
-              <Typography className="ml-1 text-black font-weight-bold">
+              <Typography className="ml-1 font-weight-bold">
                 {project?.username}
                 <CaretDownOutlined className="ml-1" />
               </Typography>
@@ -145,11 +149,46 @@ const Header = () => {
           open={isIssueCreateModalOpen}
           onCancel={() => setIsIssueCreateModalOpen(false)}
         >
-          <Form>
-            <Item>
-              <Select />
+          <Form layout="vertical">
+            <Item
+              label={
+                <Typography className="font-weight-bold">
+                  Select a Sub project
+                </Typography>
+              }
+            >
+              <Select
+                onChange={subProjectId => {
+                  setChosenSubProjectToCreateIssue(
+                    subProjects?.filter(
+                      subProject => subProject.id === subProjectId
+                    )[0]
+                  );
+                  setIsIssueCreateModalOpen(false);
+                }}
+                className={styles.selectSubProject}
+                options={subProjects?.map(subProject => {
+                  return {
+                    label: subProject.subProjectName,
+                    value: subProject.id,
+                  };
+                })}
+                placeholder="Select a sub project"
+              />
             </Item>
           </Form>
+        </Modal>
+      )}
+      {!!chosenSubProjectToCreateIssue && (
+        <Modal
+          className="createIssueModal"
+          closable={false}
+          footer={false}
+          width="85%"
+          onCancel={() => setChosenSubProjectToCreateIssue(undefined)}
+          open
+        >
+          <CreateIssueScreen subProject={chosenSubProjectToCreateIssue} />
         </Modal>
       )}
     </>

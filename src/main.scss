@@ -297,3 +297,16 @@ th.ant-table-cell {
 .ant-form-item-required::before {
   content: "" !important;
 }
+// Select-dropdown
+.ant-select-dropdown {
+  .ant-select-item-option-content {
+    color: black;
+  }
+}
+
+// Create issue modal
+.createIssueModal {
+  .ant-modal-content {
+    padding: 0px 0;
+  }
+}

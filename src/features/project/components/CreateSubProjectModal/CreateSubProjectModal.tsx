@@ -50,7 +50,7 @@ const CreateSubProjectModal = ({
       {...props}
     >
       <div className={styles.container}>
-        <Typography className="text-black font-weight-bold font-20">
+        <Typography className="font-weight-bold font-20">
           Create a new Sub Project
         </Typography>
         <Form form={form} size="large" layout="vertical">

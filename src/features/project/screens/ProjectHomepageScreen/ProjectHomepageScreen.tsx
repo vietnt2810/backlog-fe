@@ -62,7 +62,7 @@ const ProjectHomepageScreen = () => {
       <Header />
       <div className={styles.container}>
         <div className="py-4 pb-10">
-          <Typography className="font-20 text-black font-weight-bold text-center mb-4">
+          <Typography className="font-20 font-weight-bold text-center mb-4">
             {project?.project.projectName.toUpperCase()}
           </Typography>
           <div className="mainContent">
