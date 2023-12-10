@@ -182,13 +182,15 @@ const Header = () => {
       {!!chosenSubProjectToCreateIssue && (
         <Modal
           className="createIssueModal"
-          closable={false}
           footer={false}
           width="85%"
           onCancel={() => setChosenSubProjectToCreateIssue(undefined)}
           open
         >
-          <CreateIssueScreen subProject={chosenSubProjectToCreateIssue} />
+          <CreateIssueScreen
+            closeModal={() => setChosenSubProjectToCreateIssue(undefined)}
+            subProject={chosenSubProjectToCreateIssue}
+          />
         </Modal>
       )}
     </>

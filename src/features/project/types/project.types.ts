@@ -10,6 +10,16 @@ export type ProjectDetailResponse = {
   project: Project;
 };
 
+export type ProjectMembersResponse = {
+  userId: number;
+  username: string;
+  role: boolean;
+  user: {
+    email: string;
+    avatarUrl: string;
+  };
+}[];
+
 export type ProjectMemberDetailResponse = {
   username: string;
   role: boolean;

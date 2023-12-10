@@ -1,6 +1,12 @@
 @import "variables";
 @import "colors";
 
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .no-wrap {
   white-space: nowrap;
 }
@@ -290,6 +296,11 @@ $colors: (
   "second": $text-second,
   "primary-input": $bg-primary-input,
   "red-button": $bg-red-button,
+  "status-color-1": $status-color-1,
+  "status-color-2": $status-color-2,
+  "status-color-3": $status-color-3,
+  "status-color-4": $status-color-4,
+  "status-color-5": $status-color-5,
 );
 
 // Text colors
