@@ -126,18 +126,12 @@ const DashboardScreen = () => {
           open={!!selectedProjectToDelete}
           onOk={handleDeleteProject}
           onCancel={() => setSelectedProjectToDelete(null)}
-          title={
-            <Typography className="text-black font-20">
-              Delete a project
-            </Typography>
-          }
+          title={<Typography className="font-20">Delete a project</Typography>}
           okText="Delete"
           okButtonProps={{ disabled: isDeleteProjectLoading }}
           closable={false}
         >
-          <Typography className="text-black">
-            Are you sure to delete this project?
-          </Typography>
+          <Typography>Are you sure to delete this project?</Typography>
         </Modal>
       )}
       {!!selectedProjectToUpdate && (

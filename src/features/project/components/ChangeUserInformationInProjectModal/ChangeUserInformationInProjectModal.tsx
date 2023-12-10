@@ -66,7 +66,7 @@ const ChangeUserInformationInProjectModal = ({
       {...props}
     >
       <div className={styles.container}>
-        <Typography className="text-black font-weight-bold font-20">
+        <Typography className="font-weight-bold font-20">
           Change user information
         </Typography>
         <Form form={form} size="large" layout="vertical">

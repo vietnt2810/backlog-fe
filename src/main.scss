@@ -71,11 +71,9 @@ p {
   padding-left: 7px;
   min-height: 25px;
 }
-span.ant-select-arrow {
-  right: 0 !important;
-}
+
 .ant-select .ant-select-clear {
-  inset-inline-end: 22px !important;
+  inset-inline-end: 35px !important;
   font-size: 18px;
   display: flex;
   align-items: center;
@@ -96,7 +94,11 @@ span.ant-select-arrow {
     margin: 0 !important;
   }
 }
-
+.ant-select-focused .ant-select-selector,
+.ant-select-selector:focus,
+.ant-select-selector:active {
+  border-color: transparent !important;
+}
 //Pagination
 .ant-pagination-options {
   .ant-select-selector {
@@ -127,13 +129,22 @@ span.ant-select-arrow {
 .ant-divider-vertical {
   height: 32px;
 }
-// required
-
+// Form
 .ant-form-item-required::before {
-  color: black !important;
+  color: red !important;
   font-weight: 700;
   position: absolute;
   top: 2px;
+}
+
+.ant-select-selection-placeholder {
+  color: $text-dark-10 !important;
+}
+
+.ant-input {
+  &::placeholder {
+    color: $text-dark-10;
+  }
 }
 
 //Table
@@ -239,7 +250,71 @@ th.ant-table-cell {
     background-color: #ddefe5;
   }
 }
-// Form
-.ant-form-item-required::before {
-  content: "" !important;
+
+// Sub-project dropdown
+.ant-dropdown {
+  z-index: 10;
+}
+.subProjectItem {
+  display: flex;
+  align-items: center;
+  height: 58px;
+  padding: 0 20px;
+  margin: 4px 0;
+  background-color: white;
+  border: 1px solid $text-dark-10;
+  &:hover {
+    cursor: pointer;
+    background-color: #e07b9a;
+    .ant-typography {
+      color: $text-white;
+    }
+    .subProjectButtonContainer {
+      display: block;
+    }
+    .subTitle {
+      display: none;
+    }
+    .subProjectIcon,
+    .createSubProjectIcon {
+      color: $text-white;
+    }
+  }
+
+  .subProjectName,
+  .createSubProjectButton {
+    color: $text-black;
+  }
+
+  .subProjectButtonContainer {
+    display: none;
+    .ant-typography {
+      font-size: 13px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .subTitle {
+    color: #000000;
+  }
+  .subProjectIcon,
+  .createSubProjectIcon {
+    color: $text-black;
+    transform: scale(1.5) !important;
+  }
+}
+// Select-dropdown
+.ant-select-dropdown {
+  .ant-select-item-option-content {
+    color: black;
+  }
+}
+
+// Create issue modal
+.createIssueModal {
+  top: 100px !important;
+  .ant-modal-content {
+    padding: 0px 0;
+  }
 }

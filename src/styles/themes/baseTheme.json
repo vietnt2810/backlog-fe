@@ -1,7 +1,7 @@
 {
   "token": {
     "colorPrimary": "#26453E",
-    "colorText": "#FAFAFA",
+    "colorText": "#000000",
     "colorTextBase": "#000000",
     "fontSizeHeading1": 24,
     "fontSizeHeading2": 20,
@@ -11,7 +11,8 @@
     "lineHeightHeading3": 1.4375,
     "boxShadow": "none",
     "fontSize": 14,
-    "borderRadius": 2
+    "borderRadius": 2,
+    "colorInfo": "#26453E"
   },
   "components": {
     "Divider": {
@@ -64,7 +65,7 @@
       "colorPrimaryHover": "none",
       "controlOutline": "none",
       "lineHeight": 1.18,
-      "controlHeight": 22,
+      "controlHeight": 32,
       "paddingSM": 13,
       "colorTextPlaceholder": "#D9D9D9",
       "fontSize": 14,
@@ -79,13 +80,13 @@
       "fontSizeLG": 16
     },
     "Select": {
-      "controlHeight": 25,
+      "controlHeight": 32,
       "fontSize": 14,
       "fontFamily": "Roboto",
       "fontSizeIcon": 22,
-      "colorTextPlaceholder": "#D9D9D9",
       "paddingSM": 13,
-      "controlHeightSM": 25
+      "controlHeightSM": 32,
+      "controlItemBgActive": "#FFFFFF"
     },
     "Table": {
       "colorFillAlter": "#FFFFFF",
