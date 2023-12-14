@@ -1,200 +1,190 @@
-import { memo, useEffect, useState } from "react";
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 
-import { RightOutlined } from "@ant-design/icons";
 import {
-  Avatar,
-  Badge,
-  Breadcrumb,
-  Divider,
-  Dropdown,
-  Menu,
-  Space,
-  Typography,
-} from "antd";
+  HomeFilled,
+  PlusOutlined,
+  ProfileOutlined,
+  ProjectOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+import { Menu, Tooltip, Typography } from "antd";
 import cx from "classnames";
-import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { confirmPrompt } from "@/components/organisms/ConfirmPrompt/ConfirmPrompt";
-import { MENU_SIDEBAR } from "@/constants/constants";
-import ChangePasswordModal from "@/features/admins/components/ChangePasswordModal/ChangePasswordModal";
-import useGetAdmin from "@/features/admins/hooks/useGetAdmin";
-import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
-import useAuth from "@/features/auth/hooks/useAuth";
-import { BreadCrumb } from "@/types/route.types";
+import { MAX_VISIBLE_MEMBERS } from "@/constants/constants";
+import ProjectMembersModal from "@/features/project/components/ProjectMembersModal/ProjectMembersModal";
+import { ProjectPaths } from "@/features/project/constants/project.paths";
+import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
+import useGetSubProjectDetail from "@/features/project/hooks/useGetSubProjectDetail";
 import { SidebarInfo } from "@/types/sidebar.types";
 
 import styles from "./DefaultLayout.module.scss";
+import Header from "../Header/Header";
 
 interface DefaultLayoutProps {
   children: React.ReactNode;
-  pageTitle?: string;
-  breadCrumb?: BreadCrumb[];
 }
-const DefaultLayout = ({
-  children,
-  pageTitle,
-  breadCrumb,
-}: DefaultLayoutProps) => {
-  const { t } = useTranslation("header");
-  const { t: tCommon } = useTranslation();
+
+const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+  const { projectId, subProjectId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  // const [form] = Form.useForm();
+
+  const { subProjectDetail } = useGetSubProjectDetail(
+    String(projectId),
+    String(subProjectId)
+  );
+  const { projectMembers } = useGetProjectMembers(String(projectId));
+
+  const visibleMembers = useMemo(() => {
+    return projectMembers?.slice(0, MAX_VISIBLE_MEMBERS);
+  }, [projectMembers]);
+  const additionalMembers = useMemo(() => {
+    return Number(projectMembers?.length) - MAX_VISIBLE_MEMBERS;
+  }, [projectMembers?.length]);
 
   const [selectedKey, setSelectedKey] = useState<string>("");
+  const [isProjectMembersModalOpen, setIsProjectMembersModalOpen] =
+    useState(false);
 
-  const [isOpenChangePasswordModal, setIsOpenChangePasswordModal] =
-    useState<boolean>(false);
-
-  const { postLogout, isPostLogoutLoading } = useAuth();
-  const { admin } = useGetAdmin("123");
-  // const { editAdmin, isEditAdminLoading } = useEditAdmin();
+  const MENU_SIDEBAR = useCallback(() => {
+    return [
+      {
+        key: "1",
+        label: (
+          <div>
+            <HomeFilled />
+            <span>Home</span>
+          </div>
+        ),
+        path: ProjectPaths.SUB_PROJECT_HOMEPAGE(
+          String(projectId),
+          String(subProjectId)
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <div>
+            <PlusOutlined />
+            <span>Add Issue</span>
+          </div>
+        ),
+        path: "TODO",
+      },
+      {
+        key: "3",
+        label: (
+          <div>
+            <ProfileOutlined />
+            <span>Issues</span>
+          </div>
+        ),
+        path: "TODO",
+      },
+      {
+        key: "4",
+        label: (
+          <div>
+            <ProjectOutlined />
+            <span>Board</span>
+          </div>
+        ),
+        path: "TODO",
+      },
+      {
+        key: "5",
+        label: (
+          <div>
+            <SettingOutlined />
+            <span>Settings</span>
+          </div>
+        ),
+        path: "TODO",
+      },
+    ] as SidebarInfo[];
+  }, [projectId, subProjectId]);
 
   const handleNavigateSidebar = (itemInfo: SidebarInfo) => {
     navigate(itemInfo.path);
   };
 
   useEffect(() => {
-    const currentTab = MENU_SIDEBAR.find(item => {
+    const currentTab = MENU_SIDEBAR().find(item => {
       if (item.path === location.pathname) {
         return true;
       }
-      // if (item.path !== DashboardPathsEnum.DASHBOARD) {
-      //   return location.pathname.includes(item.path);
-      // }
+
       return undefined;
     });
-    currentTab && setSelectedKey(currentTab.key);
-  }, [location]);
 
-  // const handleSubmitChangePassword = (value: EditAdminRequestBody) => {
-  //   editAdmin({ id: LOGGED_IN_USER_ID, password: value.password })
-  //     .then(() => {
-  //       setIsOpenChangePasswordModal(false);
-  //       handleClearLocalStorage();
-  //       navigate(AuthPathsEnum.LOGIN);
-  //     })
-  //     .catch(err => handleErrorSubmitted(form, err));
-  // };
+    currentTab && setSelectedKey(currentTab.key);
+  }, [MENU_SIDEBAR, location]);
 
   return (
     <div className={cx(styles.root)}>
+      <Header fromSubProject />
       <div className="side-bar">
-        <div className="mt-6 text-center">
-          <Typography.Text className="font-24 text-second">
-            swag concierge
-          </Typography.Text>
-        </div>
         <Menu
           mode="inline"
           selectedKeys={[selectedKey]}
-          style={{ marginTop: 76 }}
-          items={MENU_SIDEBAR.map(x => {
+          style={{ marginTop: 76, border: "none" }}
+          items={MENU_SIDEBAR().map(x => {
             return {
               ...x,
-              label: t(x.label),
+              label: x.label,
               onClick: () => handleNavigateSidebar(x),
             };
           })}
         />
       </div>
       <div className="container">
-        <div className="header flex-space-between-start">
-          <div className="flex-direction-column">
-            <Typography.Title level={1} className="mb-2">
-              {t(pageTitle ?? "")}
-            </Typography.Title>
-            <Breadcrumb
-              items={breadCrumb?.map(el => ({
-                title: t(el.title ?? ""),
-                path: el?.path,
-              }))}
-              separator={<RightOutlined />}
-            />
+        <div className="header flex-space-between">
+          <div className="flex-align-center">
+            <Typography.Text className="font-weight-bold font-18 text-dark">
+              {subProjectDetail?.subProjectName}
+            </Typography.Text>
+            <Typography.Text className="ml-2">{`(${subProjectDetail?.subTitle})`}</Typography.Text>
           </div>
-          <Space size={14} align="center">
-            <Dropdown
-              placement="bottomRight"
-              menu={{
-                items: [
-                  {
-                    label: (
-                      <p className="text-right text-underline">
-                        {tCommon("menu_notify.open_chat_box")}
-                      </p>
-                    ),
-                    key: "2",
-                  },
-                ],
-                className: "menu-notify",
-              }}
-              trigger={["click"]}
-            >
-              <Badge color="#3751FF" offset={[-3, 2]} dot>
-                <span className="icon-notify font-16 ml-3" />
-              </Badge>
-            </Dropdown>
-            <Divider type="vertical" className="mr-7" />
-            {admin && (
-              <Typography.Text
-                className="ml-8 menu-profile font-14 text-right"
-                ellipsis={{
-                  tooltip: `${admin?.nameFamily}${admin?.nameFirst}`,
-                }}
-              >
-                {`${admin?.nameFamily}${admin?.nameFirst}`}
-              </Typography.Text>
+          <div
+            className="flex-align-center memberBox"
+            onClick={() => setIsProjectMembersModalOpen(true)}
+          >
+            {visibleMembers?.map(member => (
+              <Tooltip key={member.userId} title={member.username}>
+                {member.user.avatarUrl ? (
+                  <img
+                    className="avatar"
+                    src={member.user.avatarUrl}
+                    alt="avatar"
+                  />
+                ) : (
+                  <div className="avatar flex-center">
+                    {member.username.charAt(0).toUpperCase()}
+                  </div>
+                )}
+              </Tooltip>
+            ))}
+            {additionalMembers > 0 && (
+              <Tooltip title="Other members">
+                <div className="additionalMembers flex-center bg-primary font-13">
+                  +{additionalMembers}
+                </div>
+              </Tooltip>
             )}
-            <Dropdown
-              menu={{
-                items: [
-                  {
-                    label: tCommon("menu_profile.profile"),
-                    key: "0",
-                    onClick: () => {
-                      // TODO: Update spec
-                    },
-                  },
-                  {
-                    label: tCommon("menu_profile.change_password"),
-                    className: "change-password",
-                    key: "1",
-                    onClick: () => setIsOpenChangePasswordModal(true),
-                  },
-                  {
-                    label: tCommon("menu_profile.logout"),
-                    key: "2",
-                    disabled: isPostLogoutLoading,
-                    onClick: () =>
-                      confirmPrompt({
-                        onOk: () =>
-                          postLogout().then(() =>
-                            navigate(AuthPathsEnum.LOGIN, { replace: true })
-                          ),
-                        title: tCommon("modal_confirm.logout_title"),
-                      }),
-                  },
-                ],
-                className: "menu-profile",
-              }}
-              trigger={["click"]}
-            >
-              <Avatar size={44} className="cursor-pointer">
-                A
-              </Avatar>
-            </Dropdown>
-          </Space>
+          </div>
         </div>
-        <Divider />
         <div className="pageContent overflow-scroll">{children}</div>
       </div>
-      <ChangePasswordModal
-        isOpen={isOpenChangePasswordModal}
-        onCancel={() => setIsOpenChangePasswordModal(false)}
-        // onFinish={handleSubmitChangePassword}
-        // isSubmitting={isEditAdminLoading}
-      />
+      {isProjectMembersModalOpen && (
+        <ProjectMembersModal
+          members={projectMembers}
+          open={isProjectMembersModalOpen}
+          onCancel={() => setIsProjectMembersModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

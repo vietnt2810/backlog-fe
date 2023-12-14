@@ -10,6 +10,7 @@ import Form, { Item, useForm } from "@/components/atoms/Form/Form";
 import { openNotification } from "@/components/organisms/Notification/Notification";
 import { USER_ID } from "@/constants/constants";
 import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
+import useGetUserIssues from "@/features/project/hooks/useGetUserIssues";
 import { SubProject } from "@/features/project/types/project.types";
 import { requiredRules } from "@/helpers/validations.helpers";
 import { formatDate } from "@/utils/date";
@@ -34,6 +35,10 @@ const CreateIssueScreen = ({
   const { projectMembers } = useGetProjectMembers(String(projectId));
   const { createIssue, isCreateIssueLoading } = useCreateIssue(
     String(subProject.id)
+  );
+  const { refetchUserIssues } = useGetUserIssues(
+    String(projectId),
+    String(localStorage.getItem(USER_ID))
   );
 
   const statusOptions = [
@@ -139,6 +144,7 @@ const CreateIssueScreen = ({
         message: "You have sucessfully created an issue",
       });
       closeModal?.();
+      refetchUserIssues();
     });
   };
 

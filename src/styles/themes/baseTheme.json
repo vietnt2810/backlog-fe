@@ -27,14 +27,14 @@
     },
     "Menu": {
       "colorItemBgSelected": "rgba(217, 217, 217, 0.5)",
-      "colorItemBgHover": "none",
-      "colorItemTextHover": "none",
-      "fontSize": 20,
+      "colorItemBgHover": "#f0f0f0",
+      "colorItemTextHover": "#e07b9a",
+      "fontSize": 16,
       "colorItemText": "#EEEEEE",
       "colorItemTextSelected": "#D9D9D9",
       "itemMarginInline": 0,
       "radiusItem": 0,
-      "colorItemBg": "#474747"
+      "colorItemBg": "#e07b9a"
     },
     "Button": {
       "colorText": "#FAFAFA",
@@ -55,7 +55,7 @@
       "colorErrorHover": "none",
       "colorErrorActive": "none",
       "colorPrimaryActive": "none",
-      "colorBgContainerDisabled": "rgba(38, 69, 62, 0.5)",
+      "colorBgContainerDisabled": "rgba(38, 69, 62, 0.8)",
       "colorTextDisabled": "#FFFFFF"
     },
     "Input": {

@@ -27,11 +27,26 @@ export type ProjectMemberDetailResponse = {
 
 export type SubProjectsResponse = SubProject[];
 
+export type SubProjectDetailResponse = Omit<SubProject, "id">;
+
 export type SubProject = {
   id: number;
   subProjectName: string;
   subTitle: string;
 };
+
+export type UserIssuesParams = {
+  isAssigned: number;
+};
+
+export type UserIssuesResponse = {
+  id: number;
+  issueKey: string;
+  subject: string;
+  priority: number;
+  status: number;
+  dueDate: string | null;
+}[];
 
 export type UpdateUserInProjectRequestBody = {
   memberName: string;

@@ -9,6 +9,7 @@ import {
   ProjectOutlined,
 } from "@ant-design/icons";
 import { Dropdown, Modal, Select, Typography } from "antd";
+import cx from "classnames";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as NotificationIcon } from "@/assets/images/NotificationIcon.svg";
@@ -28,7 +29,11 @@ import { handleClearLocalStorage } from "@/utils/utils";
 
 import styles from "./Header.module.scss";
 
-const Header = () => {
+interface HeaderProps {
+  fromSubProject?: boolean;
+}
+
+const Header = ({ fromSubProject = false }: HeaderProps) => {
   const navigate = useNavigate();
   const { projectId } = useParams();
 
@@ -56,7 +61,12 @@ const Header = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <div
+        className={cx(
+          styles.container,
+          fromSubProject ? "bg-header-from-sub-project" : ""
+        )}
+      >
         <div className="flex-align-center">
           <div
             className="headerItem"

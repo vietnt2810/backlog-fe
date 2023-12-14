@@ -152,7 +152,9 @@ $font-size-list: 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
 .font-weight-normal {
   font-weight: $font-weight-400 !important;
 }
-
+.font-weight-half-bold {
+  font-weight: 600 !important;
+}
 .font-weight-bold {
   font-weight: $font-weight-700 !important;
 }
@@ -287,6 +289,7 @@ $colors: (
   "white": $text-white,
   "black": $text-black,
   "logo": $text-logo,
+  "pink": $text-pink,
   "dashboard-header": $bg-dashboard-header,
   "dark": $text-dark,
   "dark-10": $text-dark-10,
@@ -295,12 +298,13 @@ $colors: (
   "primary": $bg-primary,
   "second": $text-second,
   "primary-input": $bg-primary-input,
-  "red-button": $bg-red-button,
+  "red-button": $bg-cancel-button,
   "status-color-1": $status-color-1,
   "status-color-2": $status-color-2,
   "status-color-3": $status-color-3,
   "status-color-4": $status-color-4,
   "status-color-5": $status-color-5,
+  "header-from-sub-project": $bg-header-from-sub-project,
 );
 
 // Text colors

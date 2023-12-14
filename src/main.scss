@@ -133,8 +133,6 @@ p {
 .ant-form-item-required::before {
   color: red !important;
   font-weight: 700;
-  position: absolute;
-  top: 2px;
 }
 
 .ant-select-selection-placeholder {
@@ -164,9 +162,6 @@ p {
   .ant-checkbox-inner {
     border: 1px solid transparent !important;
   }
-}
-th.ant-table-cell {
-  font-size: 14px !important;
 }
 
 //Card
@@ -228,6 +223,7 @@ th.ant-table-cell {
 
 .profile-dropdown-item {
   padding: 8px;
+  color: $text-white;
   &:hover {
     cursor: pointer;
     background-color: #47443f;
@@ -255,55 +251,7 @@ th.ant-table-cell {
 .ant-dropdown {
   z-index: 10;
 }
-.subProjectItem {
-  display: flex;
-  align-items: center;
-  height: 58px;
-  padding: 0 20px;
-  margin: 4px 0;
-  background-color: white;
-  border: 1px solid $text-dark-10;
-  &:hover {
-    cursor: pointer;
-    background-color: #e07b9a;
-    .ant-typography {
-      color: $text-white;
-    }
-    .subProjectButtonContainer {
-      display: block;
-    }
-    .subTitle {
-      display: none;
-    }
-    .subProjectIcon,
-    .createSubProjectIcon {
-      color: $text-white;
-    }
-  }
 
-  .subProjectName,
-  .createSubProjectButton {
-    color: $text-black;
-  }
-
-  .subProjectButtonContainer {
-    display: none;
-    .ant-typography {
-      font-size: 13px;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-  .subTitle {
-    color: #000000;
-  }
-  .subProjectIcon,
-  .createSubProjectIcon {
-    color: $text-black;
-    transform: scale(1.5) !important;
-  }
-}
 // Select-dropdown
 .ant-select-dropdown {
   .ant-select-item-option-content {
@@ -315,6 +263,17 @@ th.ant-table-cell {
 .createIssueModal {
   top: 100px !important;
   .ant-modal-content {
-    padding: 0px 0;
+    padding: 0px;
+  }
+}
+
+// Project members modal
+.projectMembersModal {
+  .ant-modal-content {
+    position: relative;
+    min-width: 600px;
+    height: 360px;
+    padding: 0;
+    overflow: auto;
   }
 }

@@ -8,10 +8,21 @@ const BlankLayout = lazy(
   () => import("@/components/layouts/BlankLayout/BlankLayout")
 );
 
+const DefaultLayout = lazy(
+  () => import("@/components/layouts/DefaultLayout/DefaultLayout")
+);
+
 const ProjectHomepageScreen = lazy(
   () =>
     import(
       "@/features/project/screens/ProjectHomepageScreen/ProjectHomepageScreen"
+    )
+);
+
+const SubProjectHomepageScreen = lazy(
+  () =>
+    import(
+      "@/features/project/screens/SubProjectHomepageScreen/SubProjectHomepageScreen"
     )
 );
 
@@ -23,6 +34,14 @@ const PROJECT_HOMEPAGE_SCREEN: RouteItemDef = {
   isPublicRoute: false,
 };
 
-const PROJECT_ROUTES = [PROJECT_HOMEPAGE_SCREEN];
+const SUB_PROJECT_HOMEPAGE_SCREEN: RouteItemDef = {
+  id: "Sub_Project_Homepage",
+  path: ProjectPathsEnum.SUB_PROJECT_HOMEPAGE,
+  component: SubProjectHomepageScreen,
+  layout: DefaultLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
+  isPublicRoute: false,
+};
+
+const PROJECT_ROUTES = [PROJECT_HOMEPAGE_SCREEN, SUB_PROJECT_HOMEPAGE_SCREEN];
 
 export default PROJECT_ROUTES;

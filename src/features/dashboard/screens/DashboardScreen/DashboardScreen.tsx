@@ -26,7 +26,7 @@ const DashboardScreen = () => {
   const { projects, isGetProjectsLoading, refetchProjects } = useGetProjects(
     String(localStorage.getItem(USER_ID))
   );
-  console.log(projects);
+
   const { deleteProject, isDeleteProjectLoading } = useDeleteProject();
 
   const [selectedProjectToDelete, setSelectedProjectToDelete] = useState<
@@ -54,10 +54,10 @@ const DashboardScreen = () => {
         <Loader />
       ) : (
         <div className="mainContent">
-          <Typography className="font-16">
+          <Typography className="font-16 text-white">
             {`Welcome back ${user?.username}! It's ${getCurrentDate()}.`}
           </Typography>
-          <Typography className="font-16 font-weight-bold my-4">
+          <Typography className="font-16 font-weight-bold my-4 text-white">
             Your projects
           </Typography>
           <div>
@@ -71,12 +71,12 @@ const DashboardScreen = () => {
                     <div className="projectLogo flex-center">
                       {item.project.projectName.charAt(0)}
                     </div>
-                    <Typography className="font-weight-bold pl-2">
+                    <Typography className="font-weight-bold pl-2 text-white">
                       {item.project.projectName}
                     </Typography>
                   </div>
                   <div>
-                    {item.role && (
+                    {!!item.role && (
                       <>
                         <Button
                           onClick={() =>
@@ -114,7 +114,7 @@ const DashboardScreen = () => {
                 </div>
               ))
             ) : (
-              <Typography>
+              <Typography className="text-white">
                 Currently, you have not joined in any projects
               </Typography>
             )}
