@@ -61,7 +61,9 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
                         />
                       )}
                       <div>
-                        <Typography>{user?.username}</Typography>
+                        <Typography className="text-white">
+                          {user?.username}
+                        </Typography>
                         <Typography className="text-dark-20">
                           My profile
                         </Typography>
@@ -77,7 +79,7 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
                     onClick={() => setIsCreateProjectModalOpen(true)}
                     className="profile-dropdown-item"
                   >
-                    <PlusCircleOutlined />
+                    <PlusCircleOutlined className="text-white" />
                     <Typography.Text className="ml-2 text-dark-20">
                       Create a new project
                     </Typography.Text>
@@ -106,12 +108,16 @@ const DashboardHeader = ({ subHeaderTitle }: DashboardHeaderProps) => {
                 className={cx(styles.avatar)}
               />
             )}
-            <Typography className="ml-1">{user?.username}</Typography>
+            <Typography className="ml-1 text-white">
+              {user?.username}
+            </Typography>
           </div>
         </Dropdown>
       </div>
       <div className={cx(styles.subHeader)}>
-        <Typography className={cx(styles.subHeaderItem, "flex-center")}>
+        <Typography
+          className={cx(styles.subHeaderItem, "flex-center text-white")}
+        >
           {subHeaderTitle}
         </Typography>
       </div>

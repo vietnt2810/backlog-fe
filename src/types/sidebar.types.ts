@@ -1,5 +1,5 @@
 export type SidebarInfo = {
   key: string;
-  label: string;
+  label: React.ReactNode;
   path: string;
 };

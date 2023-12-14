@@ -1,32 +1,62 @@
+@import "@/styles/colors";
+
 .root {
   display: flex;
   height: 100vh;
-  min-width: 1280px;
   :global {
     .side-bar {
-      min-width: 260px;
-      background-color: #474747;
-      .ant-menu-item {
-        margin-bottom: 35px;
+      position: relative;
+      top: 50px;
+      min-width: 185px;
+      background-color: #e07b9a;
+      .ant-menu {
+        font-weight: 600;
+        color: $text-white;
       }
-      .ant-menu-item-only-child {
-        padding-left: 75px !important;
+      .ant-menu-item-selected {
+        font-weight: 700;
+        color: #e07b9a;
+        background-color: #f0f0f0 !important;
       }
     }
     .container {
+      position: relative;
+      top: 50px;
       width: 100%;
       min-width: 900px;
       background-color: #f7f8fc;
       display: flex;
       flex-direction: column;
       .pageContent {
-        padding: 5px 10px 0 30px;
+        padding: 20px 32px;
         flex-grow: 1;
         height: 100%;
       }
     }
     .header {
-      padding: 29px 30px;
+      height: 48px;
+      padding: 0px 32px;
+      border-bottom: 1px solid $text-dark-10;
+      background-color: white;
+      .memberBox {
+        gap: 4px;
+        cursor: pointer;
+      }
+      .avatar {
+        width: 32px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: #e07b9a;
+        color: white;
+      }
+      .additionalMembers {
+        width: 32px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        border: 1px solid $text-dark-10;
+        color: $text-dark-30;
+      }
     }
   }
 }

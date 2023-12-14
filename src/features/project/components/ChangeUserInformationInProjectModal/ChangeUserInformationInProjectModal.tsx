@@ -80,7 +80,7 @@ const ChangeUserInformationInProjectModal = ({
           </Item>
           <div className="mt-4 flex-justify-end">
             <Item className="mr-2">
-              <Button className="bg-red-button" onClick={onCancel}>
+              <Button className="bg-cancel-button" onClick={onCancel}>
                 Cancel
               </Button>
             </Item>

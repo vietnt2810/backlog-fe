@@ -15,10 +15,7 @@
     .leftContent {
       width: 48%;
     }
-    .subProjects {
-      z-index: 10;
-    }
-    .subProjectsContentTitle {
+    .dropdownContentTitle {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -43,7 +40,110 @@
     .searchIcon {
       transform: scale(1.5) !important;
     }
+    .dropdownItem {
+      display: flex;
+      align-items: center;
+      height: 58px;
+      padding: 0 20px;
+      margin: 4px 0;
+      background-color: white;
+      border: 1px solid $text-dark-10;
+      &:hover {
+        cursor: pointer;
+        background-color: #e07b9a;
+        .ant-typography {
+          color: $text-white;
+        }
+        .subProjectButtonContainer {
+          display: block;
+        }
+        .subTitle {
+          display: none;
+        }
+        .subProjectIcon,
+        .createSubProjectIcon {
+          color: $text-white;
+        }
+      }
 
+      .subProjectName,
+      .createSubProjectButton {
+        color: $text-black;
+      }
+
+      .subProjectButtonContainer {
+        display: none;
+        .ant-typography {
+          font-size: 13px;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      .subTitle {
+        color: #000000;
+      }
+      .subProjectIcon,
+      .createSubProjectIcon {
+        color: $text-black;
+        transform: scale(1.5) !important;
+      }
+    }
+    .issuesTable {
+      .ant-table {
+        font-size: 13px;
+        border: 1px solid $text-dark-10;
+      }
+      th {
+        border-bottom: 2px solid $text-dark-10 !important;
+        font-weight: 500 !important;
+        color: #00836b !important;
+      }
+      .issueKey {
+        font-size: 13px;
+        font-weight: 600;
+        color: #00836b;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+      .priorityIcon {
+        width: 18px;
+        aspect-ratio: 1/1;
+      }
+      .status {
+        padding: 2px 8px;
+        color: white;
+        border-radius: 20px;
+      }
+    }
+    .issueFilter {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      padding: 5px 16px;
+      border: 1px solid $text-dark-10;
+      background-color: #f6f6f6;
+      .filterOption {
+        display: flex;
+        align-items: center;
+        height: 23px;
+        padding: 1px 10px;
+        margin-left: 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        &:hover {
+          cursor: pointer;
+          background-color: #2c9a7a;
+          color: white;
+        }
+      }
+      .activeFilterOption {
+        background-color: #2c9a7a;
+        color: white;
+      }
+    }
     .recentUpdates {
     }
   }

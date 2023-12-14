@@ -1,0 +1,24 @@
+@import "@/styles/colors";
+
+.container {
+  :global {
+    .timelineContainer {
+      width: 49%;
+
+      .timelineItem {
+        background-color: white;
+        .timelineDate {
+          height: 40px;
+          padding: 10px 20px 8px;
+          border: 1px solid #c2c2c2;
+          font-weight: 600;
+          color: #222222;
+        }
+        .timelineContent {
+          padding: 22px 20px 15px;
+          border: 1px solid #c2c2c2;
+        }
+      }
+    }
+  }
+}
