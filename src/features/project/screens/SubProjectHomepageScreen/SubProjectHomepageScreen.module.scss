@@ -1,9 +1,32 @@
 @import "@/styles/colors";
 
 .container {
+  display: flex;
+  gap: 40px;
   :global {
     .recentUpdateContainer {
-      width: 49%;
+      width: 55%;
+    }
+    .statusContainer {
+      width: 44%;
+      .statusBox {
+        padding: 18px;
+        background-color: white;
+      }
+      .statusBar {
+        height: 15px;
+      }
+      .statusCountBox {
+        justify-content: space-between;
+        .statusCount {
+          width: 100px;
+          height: 20px;
+          padding: 1px 8px;
+          border-radius: 20px;
+          color: white;
+          cursor: pointer;
+        }
+      }
     }
   }
 }

@@ -73,3 +73,12 @@ export type RecentUpdateItemType = {
   assigneeUsername: string;
   assignerUsername: string | null;
 };
+
+export type IssueStatusCountResponse = {
+  openIssuesCount: number;
+  inProgressIssuesCount: number;
+  resolvedIssuesCount: number;
+  pendingIssuesCount: number;
+  closedIssuesCount: number;
+  totalIssues: number;
+};

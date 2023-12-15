@@ -1,6 +1,10 @@
 @import "variables";
 @import "colors";
 
+.word-break-all {
+  word-break: break-all;
+}
+
 .text-ellipsis {
   white-space: nowrap;
   overflow: hidden;
