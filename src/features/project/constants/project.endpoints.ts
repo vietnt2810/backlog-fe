@@ -12,4 +12,6 @@ export const ProjectsEndpoints = {
     `projects/${projectId}/recent-updates`,
   SUB_PROJECT_RECENT_UPDATES: (subProjectId: string) =>
     `sub-projects/${subProjectId}/recent-updates`,
+  SUB_PROJECT_ISSUE_STATUS_COUNT: (subProjectId: string) =>
+    `sub-projects/${subProjectId}/issue-status`,
 };

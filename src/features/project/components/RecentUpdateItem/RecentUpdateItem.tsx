@@ -43,7 +43,7 @@ const RecentUpdateItem = ({ recentUpdateItem }: RecentUpdateItemProps) => {
             <Typography.Text className="text-pink font-weight-half-bold">
               {recentUpdateItem.issueKey}
             </Typography.Text>
-            <Typography.Text className="ml-2 font-weight-half-bold">
+            <Typography.Text className="ml-2 font-weight-half-bold word-break-all">
               {recentUpdateItem.issueSubject}
             </Typography.Text>
           </div>
