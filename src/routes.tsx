@@ -41,7 +41,7 @@ const RouteWrapper = ({ route }: { route: RouteItemDef }) => {
   }
 
   return (
-    <RouteLayout pageTitle={route.pageTitle} breadCrumb={route.breadCrumb}>
+    <RouteLayout>
       <Component />
     </RouteLayout>
   );

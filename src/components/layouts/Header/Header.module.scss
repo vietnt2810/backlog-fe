@@ -59,16 +59,3 @@
     }
   }
 }
-
-.selectSubProject {
-  :global {
-    .ant-select-selection-item {
-      font-size: 14px;
-      color: black;
-    }
-    .ant-select-selection-placeholder {
-      color: $text-dark-30;
-      font-size: 14px;
-    }
-  }
-}
