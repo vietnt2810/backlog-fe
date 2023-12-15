@@ -5,13 +5,11 @@ import api from "@/api/api";
 import { ProjectsEndpoints } from "../constants/project.endpoints";
 import { SubProjectDetailResponse } from "../types/project.types";
 
-const useGetSubProjectDetail = (projectId: string, subProjectId: string) => {
+const useGetSubProjectDetail = (subProjectId: string) => {
   const { data: subProjectDetail } = useQuery<SubProjectDetailResponse>({
-    queryKey: ["", subProjectId],
+    queryKey: ["useGetSubProjectDetail", subProjectId],
     queryFn: () => {
-      return api.get(
-        ProjectsEndpoints.SUB_PROJECT_DETAIL(projectId, subProjectId)
-      );
+      return api.get(ProjectsEndpoints.SUB_PROJECT_DETAIL(subProjectId));
     },
   });
 
