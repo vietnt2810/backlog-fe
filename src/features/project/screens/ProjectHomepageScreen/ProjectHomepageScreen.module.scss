@@ -10,6 +10,7 @@
   :global {
     .mainContent {
       display: flex;
+      gap: 40px;
       padding: 0 32px;
     }
     .leftContent {
@@ -113,6 +114,7 @@
         aspect-ratio: 1/1;
       }
       .status {
+        width: 95px;
         padding: 2px 8px;
         color: white;
         border-radius: 20px;
@@ -132,7 +134,6 @@
         padding: 1px 10px;
         margin-left: 20px;
         border-radius: 20px;
-        font-size: 14px;
         &:hover {
           cursor: pointer;
           background-color: #2c9a7a;
@@ -144,7 +145,11 @@
         color: white;
       }
     }
-    .recentUpdates {
+    .rightContent {
+      width: 49%;
+      .recentUpdatesTitle {
+        height: 32px;
+      }
     }
   }
 }

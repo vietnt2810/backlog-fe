@@ -1,0 +1,25 @@
+.recentUpdateItem {
+  background-color: white;
+  :global {
+    .recentUpdateDate {
+      height: 40px;
+      padding: 10px 20px 8px;
+      border: 1px solid #c2c2c2;
+      color: #222222;
+    }
+    .recentUpdateContent {
+      display: flex;
+      padding: 12px 20px;
+      border: 1px solid #c2c2c2;
+
+      .avatar {
+        width: 42px;
+        height: 42px;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: #e07b9a;
+        color: white;
+      }
+    }
+  }
+}

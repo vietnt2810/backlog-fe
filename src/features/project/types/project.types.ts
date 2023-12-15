@@ -56,3 +56,20 @@ export type CreateSubProjectRequestBody = {
   subProjectName: string;
   subTitle: string;
 };
+
+export type RecentUpdatesResponse = RecentUpdateItemType[];
+
+export type RecentUpdateItemType = {
+  id: number;
+  issueId: number;
+  oldStatus: number | null;
+  newStatus: number;
+  updateType: string;
+  createdAt: string;
+  issueKey: string;
+  issueSubject: string;
+  creatorAvatarUrl: string;
+  creatorUsername: string;
+  assigneeUsername: string;
+  assignerUsername: string | null;
+};

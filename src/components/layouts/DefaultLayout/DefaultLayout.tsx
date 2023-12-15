@@ -32,10 +32,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { subProjectDetail } = useGetSubProjectDetail(
-    String(projectId),
-    String(subProjectId)
-  );
+  const { subProjectDetail } = useGetSubProjectDetail(String(subProjectId));
   const { projectMembers } = useGetProjectMembers(String(projectId));
 
   const visibleMembers = useMemo(() => {

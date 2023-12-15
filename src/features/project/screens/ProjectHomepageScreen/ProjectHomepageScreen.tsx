@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import { Input, Table, Typography } from "antd";
 import { isEmpty } from "lodash";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as HighPriorityIcon } from "@/assets/images/highPriorityArrow.svg";
 import { ReactComponent as LowPriorityIcon } from "@/assets/images/lowPriorityArrow.svg";
@@ -22,8 +22,11 @@ import { USER_ID } from "@/constants/constants";
 
 import styles from "./ProjectHomepageScreen.module.scss";
 import CreateSubProjectModal from "../../components/CreateSubProjectModal/CreateSubProjectModal";
+import RecentUpdateItem from "../../components/RecentUpdateItem/RecentUpdateItem";
 import { USER_ISSUES_TABLE_COLUMNS } from "../../constants/project.constants";
+import { ProjectPaths } from "../../constants/project.paths";
 import useGetProject from "../../hooks/useGetProject";
+import useGetProjectRecentUpdates from "../../hooks/useGetProjectRecentUpdates";
 import useGetSubProjects from "../../hooks/useGetSubProjects";
 import useGetUserIssues from "../../hooks/useGetUserIssues";
 import {
@@ -33,6 +36,7 @@ import {
 
 const ProjectHomepageScreen = () => {
   const { projectId } = useParams();
+  const navigate = useNavigate();
 
   const [isAssigned, setIsAssigned] = useState(1);
 
@@ -47,21 +51,24 @@ const ProjectHomepageScreen = () => {
     useGetUserIssues(String(projectId), String(localStorage.getItem(USER_ID)), {
       isAssigned,
     });
+  const { projectRecentUpdates } = useGetProjectRecentUpdates(
+    String(projectId)
+  );
 
-  const [isSubProjectsVisible, setIsSubProjectsVisible] = useState(false);
+  const [isSubProjectsVisible, setIsSubProjectsVisible] = useState(true);
   const [filteredSubProjects, setFilteredSubProjects] =
     useState<SubProjectsResponse>();
   const [isSubProjectSearchBoxOpen, setIsSubProjectSearchBoxOpen] =
     useState(false);
 
-  const [isIssuesVisible, setIsIssuesVisible] = useState(false);
+  const [isIssuesVisible, setIsIssuesVisible] = useState(true);
   const [filteredIssues, setFilteredIssues] = useState<UserIssuesResponse>();
   const [isIssuesSearchBoxOpen, setIsIssuesSearchBoxOpen] = useState(false);
   const [isCreateSubProjectModalOpen, setIsCreateSubProjectModalOpen] =
     useState(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const statusTexts: Record<number, React.ReactNode> = {
+  const tableStatusTexts: Record<number, React.ReactNode> = {
     1: <div className="bg-status-color-1 status">Open</div>,
     2: <div className="bg-status-color-2 status">In progress</div>,
     3: <div className="bg-status-color-3 status">Resolved</div>,
@@ -89,9 +96,9 @@ const ProjectHomepageScreen = () => {
         ) : (
           <LowPriorityIcon className="priorityIcon" />
         ),
-      status: statusTexts[issue.status],
+      status: tableStatusTexts[issue.status],
     }));
-  }, [filteredIssues, statusTexts]);
+  }, [filteredIssues, tableStatusTexts]);
 
   const handleFilterSubProject = (e: ChangeEvent<HTMLInputElement>) => {
     setFilteredSubProjects(
@@ -178,7 +185,18 @@ const ProjectHomepageScreen = () => {
                 </div>
                 <div className={isSubProjectsVisible ? "" : "d-none"}>
                   {filteredSubProjects?.map(subProject => (
-                    <div className="dropdownItem" key={subProject.id}>
+                    <div
+                      className="dropdownItem"
+                      key={subProject.id}
+                      onClick={() =>
+                        navigate(
+                          ProjectPaths.SUB_PROJECT_HOMEPAGE(
+                            String(projectId),
+                            String(subProject.id)
+                          )
+                        )
+                      }
+                    >
                       <ContainerOutlined className="subProjectIcon" />
                       <div className="ml-4">
                         <Typography className="font-weight-bold subProjectName">
@@ -298,7 +316,17 @@ const ProjectHomepageScreen = () => {
                 </div>
               </div>
             </div>
-            <div className="recentUpdates" />
+            <div className="rightContent">
+              <Typography className="font-16 font-weight-bold mb-2 flex-align-center recentUpdatesTitle">
+                Recent Updates
+              </Typography>
+              {projectRecentUpdates?.map(recentUpdateItem => (
+                <RecentUpdateItem
+                  key={recentUpdateItem.id}
+                  recentUpdateItem={recentUpdateItem}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

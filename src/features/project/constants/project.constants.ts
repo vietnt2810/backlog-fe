@@ -29,3 +29,17 @@ export const USER_ISSUES_TABLE_COLUMNS: ColumnsType<any> = [
     width: "80px",
   },
 ];
+
+export const actionTexts: Record<string, string> = {
+  create: "created an issue",
+  update: "updated the issue",
+  comment: "posted a comment on the issue",
+};
+
+export const statusTexts: Record<number, string> = {
+  1: "Open",
+  2: "In Progress",
+  3: "Resolved",
+  4: "Pending",
+  5: "Closed",
+};

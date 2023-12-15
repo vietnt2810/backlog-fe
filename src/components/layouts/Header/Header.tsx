@@ -176,7 +176,6 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
                   );
                   setIsIssueCreateModalOpen(false);
                 }}
-                className={styles.selectSubProject}
                 options={subProjects?.map(subProject => {
                   return {
                     label: subProject.subProjectName,
