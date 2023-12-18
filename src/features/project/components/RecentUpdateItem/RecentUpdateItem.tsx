@@ -1,6 +1,9 @@
 import { Typography } from "antd";
 import cx from "classnames";
 import dayjs from "dayjs";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { IssuePaths } from "@/features/issue/constants/issue.paths";
 
 import styles from "./RecentUpdateItem.module.scss";
 import { actionTexts, statusTexts } from "../../constants/project.constants";
@@ -11,6 +14,9 @@ interface RecentUpdateItemProps {
 }
 
 const RecentUpdateItem = ({ recentUpdateItem }: RecentUpdateItemProps) => {
+  const navigate = useNavigate();
+  const { projectId, subProjectId } = useParams();
+
   const getRecentUpdateActionText = (actionType: string) => {
     return actionTexts[actionType];
   };
@@ -28,7 +34,9 @@ const RecentUpdateItem = ({ recentUpdateItem }: RecentUpdateItemProps) => {
             className="avatar"
           />
         ) : (
-          <div>{recentUpdateItem.creatorUsername.charAt(0).toUpperCase()}</div>
+          <div className="avatar flex-center">
+            {recentUpdateItem.creatorUsername.charAt(0).toUpperCase()}
+          </div>
         )}
         <div className="ml-2">
           <div className="mt-3">
@@ -40,7 +48,18 @@ const RecentUpdateItem = ({ recentUpdateItem }: RecentUpdateItemProps) => {
             )}`}</Typography.Text>
           </div>
           <div className="mt-2">
-            <Typography.Text className="text-pink font-weight-half-bold cursor-pointer">
+            <Typography.Text
+              onClick={() =>
+                navigate(
+                  IssuePaths.ISSUE_DETAIL(
+                    String(projectId),
+                    String(subProjectId ?? recentUpdateItem.subProjectId),
+                    String(recentUpdateItem.issueId)
+                  )
+                )
+              }
+              className="text-pink font-weight-half-bold cursor-pointer hoverTextUnderline"
+            >
               {recentUpdateItem.issueKey}
             </Typography.Text>
             <Typography.Text className="ml-2 font-weight-half-bold word-break-all">

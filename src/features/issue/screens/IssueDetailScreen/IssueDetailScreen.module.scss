@@ -1,0 +1,53 @@
+@import "@/styles/colors";
+
+.container {
+  :global {
+    .issueType {
+      width: fit-content;
+      height: 20px;
+      padding: 1px 8px;
+      border-radius: 20px;
+      background-color: #f42858;
+      color: white;
+    }
+    .status {
+      width: 95px;
+      padding: 2px 8px;
+      color: white;
+      text-align: center;
+      border-radius: 20px;
+    }
+    .issueDetailBox {
+      padding: 15px 25px;
+      background-color: white;
+      border: 1px solid $border-box;
+      .issueDetailField {
+        width: 30%;
+      }
+      .creatorAvatar {
+        width: 42px;
+        height: 42px;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: #e07b9a;
+        color: white;
+      }
+      .priorityIcon {
+        width: 18px;
+      }
+      .priorityText {
+        margin-left: 8px;
+        color: #ca2a4e;
+        background-color: #d049670d;
+      }
+      .assigneeAvatar {
+        width: 24px;
+        height: 24px;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: #e07b9a;
+        color: white;
+      }
+    }
+  }
+}

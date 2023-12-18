@@ -114,6 +114,11 @@
   align-items: center;
 }
 
+.flex-align-baseline {
+  display: flex;
+  align-items: baseline;
+}
+
 .d-none {
   display: none;
 }
@@ -368,10 +373,16 @@ $positions: "static", "relative", "absolute", "fixed", "sticky";
   overflow-y: auto;
 }
 
-// opacity
+// hover
 .hoverOpacity {
   &:hover {
     opacity: 1.1;
+  }
+}
+
+.hoverTextUnderline {
+  &:hover {
+    text-decoration: underline;
   }
 }
 

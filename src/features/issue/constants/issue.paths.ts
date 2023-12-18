@@ -4,5 +4,5 @@ export enum IssuePathsEnum {
 
 export const IssuePaths = {
   ISSUE_DETAIL: (projectId: string, subProjectId: string, issueId: string) =>
-    `/projects/${projectId}/subProjects/${subProjectId}/issues/${issueId}`,
+    `/projects/${projectId}/sub-projects/${subProjectId}/issues/${issueId}`,
 };

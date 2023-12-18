@@ -1,16 +1,18 @@
+@import "@/styles/colors";
+
 .recentUpdateItem {
   background-color: white;
   :global {
     .recentUpdateDate {
       height: 40px;
       padding: 10px 20px 8px;
-      border: 1px solid #c2c2c2;
+      border: 1px solid $border-box;
       color: #222222;
     }
     .recentUpdateContent {
       display: flex;
       padding: 12px 20px;
-      border: 1px solid #c2c2c2;
+      border: 1px solid $border-box;
 
       .avatar {
         width: 42px;

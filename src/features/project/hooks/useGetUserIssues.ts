@@ -8,7 +8,7 @@ import { UserIssuesParams, UserIssuesResponse } from "../types/project.types";
 const useGetUserIssues = (
   userId: string,
   projectId: string,
-  params: UserIssuesParams
+  params?: UserIssuesParams
 ) => {
   const {
     data: userIssues,
