@@ -18,3 +18,21 @@ export type CreateIssueRequestBody = {
   actualHour?: number;
   createdByUserId: number;
 };
+
+export type IssueDetailResponse = {
+  subject: string;
+  description: string;
+  status: number;
+  issueType: string;
+  priority: number;
+  startDate: string | null;
+  dueDate: string | null;
+  estimatedHour: null;
+  actualHour: null;
+  issueKey: string;
+  assigneeAvatarUrl: string | null;
+  assigneeUsername: string;
+  creatorAvatarUrl: string | null;
+  creatorUsername: string;
+  createdAt: string;
+};

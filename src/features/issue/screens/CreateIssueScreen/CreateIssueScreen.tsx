@@ -137,11 +137,11 @@ const CreateIssueScreen = ({
       ...form.getFieldsValue(),
       startDate: formatDate(form.getFieldValue("startDate")),
       dueDate: formatDate(form.getFieldValue("dueDate")),
-      createdByUserId: String(localStorage.getItem(USER_ID)),
+      creatorId: String(localStorage.getItem(USER_ID)),
     }).then(() => {
       openNotification({
         type: "success",
-        message: "You have sucessfully created an issue",
+        message: "You have successfully created an issue",
       });
       closeModal?.();
       refetchUserIssues();
@@ -243,7 +243,7 @@ const CreateIssueScreen = ({
             </div>
             <div className="flex-space-between">
               <Item
-                name="estimatedHours"
+                name="estimatedHour"
                 labelCol={{ span: 7 }}
                 label="Estimated Hours"
                 className="formBoxItem"
@@ -251,7 +251,7 @@ const CreateIssueScreen = ({
                 <InputNumber controls={false} className="inputNumber ml-10" />
               </Item>
               <Item
-                name="actualHours"
+                name="actualHour"
                 labelCol={{ span: 7 }}
                 label="Actual Hours"
                 className="formBoxItem"

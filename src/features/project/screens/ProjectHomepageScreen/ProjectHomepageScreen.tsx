@@ -19,6 +19,7 @@ import { ReactComponent as NormalPriorityIcon } from "@/assets/images/normalPrio
 import Form, { Item } from "@/components/atoms/Form/Form";
 import Header from "@/components/layouts/Header/Header";
 import { USER_ID } from "@/constants/constants";
+import { IssuePaths } from "@/features/issue/constants/issue.paths";
 
 import styles from "./ProjectHomepageScreen.module.scss";
 import CreateSubProjectModal from "../../components/CreateSubProjectModal/CreateSubProjectModal";
@@ -81,7 +82,15 @@ const ProjectHomepageScreen = () => {
       ...issue,
       issueKey: (
         <Typography
-          // TODO: onclick
+          onClick={() =>
+            navigate(
+              IssuePaths.ISSUE_DETAIL(
+                String(projectId),
+                String(issue.subProjectId),
+                String(issue.id)
+              )
+            )
+          }
           className="issueKey"
         >
           {issue.issueKey}
@@ -98,7 +107,7 @@ const ProjectHomepageScreen = () => {
         ),
       status: tableStatusTexts[issue.status],
     }));
-  }, [filteredIssues, tableStatusTexts]);
+  }, [filteredIssues, navigate, projectId, tableStatusTexts]);
 
   const handleFilterSubProject = (e: ChangeEvent<HTMLInputElement>) => {
     setFilteredSubProjects(

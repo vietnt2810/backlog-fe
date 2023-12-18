@@ -41,6 +41,7 @@ export type UserIssuesParams = {
 
 export type UserIssuesResponse = {
   id: number;
+  subProjectId: number;
   issueKey: string;
   subject: string;
   priority: number;
@@ -62,6 +63,7 @@ export type RecentUpdatesResponse = RecentUpdateItemType[];
 export type RecentUpdateItemType = {
   id: number;
   issueId: number;
+  subProjectId: number;
   oldStatus: number | null;
   newStatus: number;
   updateType: string;
