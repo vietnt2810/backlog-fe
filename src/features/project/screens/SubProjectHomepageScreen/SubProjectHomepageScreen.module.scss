@@ -11,6 +11,7 @@
       width: 44%;
       .statusBox {
         padding: 18px;
+        border: 1px solid #c2c2c2;
         background-color: white;
       }
       .statusBar {
@@ -18,13 +19,13 @@
       }
       .statusCountBox {
         justify-content: space-between;
+        row-gap: 4px;
         .statusCount {
           width: 100px;
           height: 20px;
           padding: 1px 8px;
           border-radius: 20px;
           color: white;
-          cursor: pointer;
         }
       }
     }
