@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import api from "@/api/api";
 
-import { IssuesEndpoints } from "../constants/issues.endpoints";
+import { IssuesEndpoints } from "../constants/issue.endpoints";
 import { CreateIssueRequestBody } from "../types/issues.types";
 
 const useCreateIssue = (subProjectId: string) => {

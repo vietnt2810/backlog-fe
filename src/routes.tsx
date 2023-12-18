@@ -17,6 +17,7 @@ import { RouteItemDef } from "@/types/route.types";
 
 import { DashboardPathsEnum } from "./features/dashboard/constants/dashboard.paths";
 import DASHBOARD_ROUTES from "./features/dashboard/routes/dashboard.routes";
+import ISSUE_ROUTES from "./features/issue/routes/issue.routes";
 import PROJECT_ROUTES from "./features/project/routes/project.routes";
 
 const DefaultLayout = lazy(
@@ -52,6 +53,7 @@ const AppRoutes = () => {
     ...AUTH_ROUTES,
     ...DASHBOARD_ROUTES,
     ...PROJECT_ROUTES,
+    ...ISSUE_ROUTES,
   ];
 
   return (
