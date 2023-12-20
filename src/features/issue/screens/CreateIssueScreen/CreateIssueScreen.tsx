@@ -24,6 +24,54 @@ interface CreateIssueScreenProps {
   subProject: SubProject;
 }
 
+export const statusOptions = [
+  {
+    label: (
+      <div className={styles.selectOption}>
+        <div className={cx(styles.statusCircle, "bg-status-color-1 mr-2")} />
+        <Typography.Text>Open</Typography.Text>
+      </div>
+    ),
+    value: 1,
+  },
+  {
+    label: (
+      <div className={styles.selectOption}>
+        <div className={cx(styles.statusCircle, "bg-status-color-2 mr-2")} />
+        <Typography.Text>In Progress</Typography.Text>
+      </div>
+    ),
+    value: 2,
+  },
+  {
+    label: (
+      <div className={styles.selectOption}>
+        <div className={cx(styles.statusCircle, "bg-status-color-3 mr-2")} />
+        <Typography.Text>Resolved</Typography.Text>
+      </div>
+    ),
+    value: 3,
+  },
+  {
+    label: (
+      <div className={styles.selectOption}>
+        <div className={cx(styles.statusCircle, "bg-status-color-4 mr-2")} />
+        <Typography.Text>Pending</Typography.Text>
+      </div>
+    ),
+    value: 4,
+  },
+  {
+    label: (
+      <div className={styles.selectOption}>
+        <div className={cx(styles.statusCircle, "bg-status-color-5 mr-2")} />
+        <Typography.Text>Closed</Typography.Text>
+      </div>
+    ),
+    value: 5,
+  },
+];
+
 const CreateIssueScreen = ({
   closeModal,
   subProject,
@@ -40,54 +88,6 @@ const CreateIssueScreen = ({
     String(projectId),
     String(localStorage.getItem(USER_ID))
   );
-
-  const statusOptions = [
-    {
-      label: (
-        <div className={styles.selectOption}>
-          <div className={cx(styles.statusCircle, "bg-status-color-1 mr-2")} />
-          <Typography.Text>Open</Typography.Text>
-        </div>
-      ),
-      value: 1,
-    },
-    {
-      label: (
-        <div className={styles.selectOption}>
-          <div className={cx(styles.statusCircle, "bg-status-color-2 mr-2")} />
-          <Typography.Text>In Progress</Typography.Text>
-        </div>
-      ),
-      value: 2,
-    },
-    {
-      label: (
-        <div className={styles.selectOption}>
-          <div className={cx(styles.statusCircle, "bg-status-color-3 mr-2")} />
-          <Typography.Text>Resolved</Typography.Text>
-        </div>
-      ),
-      value: 3,
-    },
-    {
-      label: (
-        <div className={styles.selectOption}>
-          <div className={cx(styles.statusCircle, "bg-status-color-4 mr-2")} />
-          <Typography.Text>Pending</Typography.Text>
-        </div>
-      ),
-      value: 4,
-    },
-    {
-      label: (
-        <div className={styles.selectOption}>
-          <div className={cx(styles.statusCircle, "bg-status-color-5 mr-2")} />
-          <Typography.Text>Closed</Typography.Text>
-        </div>
-      ),
-      value: 5,
-    },
-  ];
 
   const memberOptions = useMemo(() => {
     return projectMembers?.map(member => {

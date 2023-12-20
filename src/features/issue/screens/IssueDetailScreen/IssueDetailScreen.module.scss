@@ -1,6 +1,7 @@
 @import "@/styles/colors";
 
 .container {
+  padding-bottom: 80px;
   :global {
     .issueType {
       width: fit-content;
@@ -17,6 +18,18 @@
       text-align: center;
       border-radius: 20px;
     }
+    .creatorAvatar {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+      border-radius: 50%;
+      background-color: #e07b9a;
+      color: white;
+      font-size: 18px;
+    }
+    .icon {
+      width: 14px;
+    }
     .issueDetailBox {
       padding: 15px 25px;
       background-color: white;
@@ -24,20 +37,12 @@
       .issueDetailField {
         width: 30%;
       }
-      .creatorAvatar {
-        width: 42px;
-        height: 42px;
-        object-fit: cover;
-        border-radius: 50%;
-        background-color: #e07b9a;
-        color: white;
-      }
       .priorityIcon {
         width: 18px;
       }
       .priorityText {
         margin-left: 8px;
-        color: #ca2a4e;
+        color: $text-pink;
         background-color: #d049670d;
       }
       .assigneeAvatar {
@@ -49,5 +54,115 @@
         color: white;
       }
     }
+    .historyBox {
+      padding: 15px 25px;
+      background-color: white;
+      border: 1px solid $border-box;
+      .issueHistoryItem {
+        padding: 16px 0;
+        &:not(:last-child) {
+          border-bottom: 1px solid $text-dark-10;
+        }
+      }
+      .historyContent {
+        padding-left: 50px;
+      }
+      .itemContent {
+        &::before {
+          content: "";
+          display: inline-block;
+          margin-right: 6px;
+          height: 8px;
+          width: 8px;
+          border: 2px solid $text-dark-10;
+          background-color: white;
+          border-radius: 50%;
+        }
+      }
+    }
+    .updateIssueFooter {
+      position: fixed;
+      right: 15px;
+      bottom: 0;
+      width: calc(100% - 200px);
+      padding: 0px 32px;
+      border-top: 1px solid $text-dark-10;
+      background-color: white;
+
+      .ant-form-item-label {
+        padding-bottom: 4px !important;
+      }
+      .changeStatusButton {
+        background: none;
+        &:hover {
+          background-color: #f7e4eb;
+        }
+      }
+      .initialCommentItem {
+        width: 86%;
+      }
+      .commentItem {
+        width: 62%;
+        padding: 28px 0 0;
+        .ant-row,
+        .ant-form-item-control-input,
+        .ant-form-item-control-input-content {
+          height: 100%;
+        }
+      }
+      .initialCommentInput {
+        width: 100%;
+        height: 36px;
+      }
+      .commentInput {
+        width: 100%;
+        height: 100%;
+        &:focus {
+          border: 1px solid $text-pink;
+          border-radius: 4px;
+          background-color: #fcfade;
+          box-shadow: 0 0 3px $text-pink;
+        }
+      }
+      .selectRightBox {
+        width: 37%;
+        margin-top: 2px;
+      }
+      .datePickerItem {
+        width: 48%;
+        .datePicker {
+          width: 100%;
+        }
+      }
+      .buttonContainer {
+        .ant-btn {
+          width: 100px;
+          height: 32px;
+        }
+        .closeButton {
+          border: 1px solid $text-dark-10;
+          background-color: #e5e5e5;
+        }
+        .submitButton {
+          background-color: #d04967;
+          &:disabled {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
   }
+}
+
+.selectOption {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.memberAvatarOption {
+  width: 20px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
 }
