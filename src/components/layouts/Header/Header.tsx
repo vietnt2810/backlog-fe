@@ -19,7 +19,7 @@ import { USER_ID } from "@/constants/constants";
 import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
 import { DashboardPathsEnum } from "@/features/dashboard/constants/dashboard.paths";
 import useGetUser from "@/features/dashboard/hooks/useGetUser";
-import CreateIssueScreen from "@/features/issue/screens/CreateIssueScreen/CreateIssueScreen";
+import CreateIssueScreen from "@/features/issue/screens/CreateEditIssueScreen/CreateEditIssueScreen";
 import ChangeUserInformationInProjectModal from "@/features/project/components/ChangeUserInformationInProjectModal/ChangeUserInformationInProjectModal";
 import { ProjectPaths } from "@/features/project/constants/project.paths";
 import useGetProject from "@/features/project/hooks/useGetProject";

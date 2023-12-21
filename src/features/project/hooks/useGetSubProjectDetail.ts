@@ -11,6 +11,7 @@ const useGetSubProjectDetail = (subProjectId: string) => {
     queryFn: () => {
       return api.get(ProjectsEndpoints.SUB_PROJECT_DETAIL(subProjectId));
     },
+    enabled: !!subProjectId,
   });
 
   return { subProjectDetail };

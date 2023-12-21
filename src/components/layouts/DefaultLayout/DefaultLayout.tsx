@@ -70,7 +70,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
             <span>Add Issue</span>
           </div>
         ),
-        path: "TODO",
+        path: IssuePaths.CREATE_ISSUE(String(projectId), String(subProjectId)),
       },
       {
         key: "3",

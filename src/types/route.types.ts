@@ -1,4 +1,4 @@
-import { FC, LazyExoticComponent, MemoExoticComponent } from "react";
+import { FC } from "react";
 
 export type BreadCrumb = {
   title?: string;
@@ -10,7 +10,7 @@ export type RouteItemDef = {
   pageTitle?: string;
   breadCrumb?: BreadCrumb[];
   path: string;
-  component: LazyExoticComponent<MemoExoticComponent<() => JSX.Element>>;
+  component: any;
   layout?: FC;
   isPublicRoute?: boolean;
 };

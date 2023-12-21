@@ -218,7 +218,7 @@ const IssuesScreen = () => {
         columns={ISSUES_TABLE_COLUMNS}
         rowKey="id"
         pagination={{
-          current: issues?.meta.page ? issues?.meta.page : 1,
+          current: issues?.meta.page ? Number(issues?.meta.page) : 1,
           total: issues?.meta.totalRecord,
           pageSize: 20,
           position: ["topLeft", "bottomLeft"],
