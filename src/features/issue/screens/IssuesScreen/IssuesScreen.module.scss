@@ -1,0 +1,122 @@
+@import "@/styles/colors";
+
+.container {
+  padding-left: 4px;
+  :global {
+    .status {
+      padding: 1px 10px;
+      border-radius: 20px;
+      &:hover {
+        color: white !important;
+        background-color: $text-pink;
+      }
+    }
+    .activeStatus {
+      color: white !important;
+      background-color: $text-pink;
+    }
+    .searchForm {
+      .selectItem {
+        width: 160px;
+        .ant-select-selector {
+          border: 1px solid $text-dark-10;
+          border-radius: 5px;
+        }
+      }
+      .ant-input {
+        height: 32px;
+        border: 1px solid $text-dark-10;
+        border-radius: 5px;
+      }
+    }
+
+    .issuesTable {
+      min-width: 1750px;
+      .ant-table {
+        font-size: 13px;
+        border: 1px solid $text-dark-10;
+      }
+      th {
+        border-bottom: 2px solid $text-dark-10 !important;
+        font-weight: 500 !important;
+        color: #00836b !important;
+      }
+      .ant-table-tbody {
+        .ant-table-row {
+          .ant-table-cell-row-hover {
+            background-color: #fcfade;
+          }
+        }
+      }
+      .issueType {
+        width: 75px;
+        height: 20px;
+        border-radius: 20px;
+        background-color: #f42858;
+      }
+      .issueKey {
+        font-size: 13px;
+        font-weight: 600;
+        color: #00836b;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+      .avatar {
+        width: 24px !important;
+        height: 24px;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: #e07b9a;
+        color: white;
+      }
+      .priorityIcon {
+        width: 18px;
+        aspect-ratio: 1/1;
+      }
+      .status {
+        width: 95px;
+        color: white;
+        border-radius: 20px;
+      }
+      .ant-pagination-item,
+      .ant-pagination-item-link {
+        border-color: $text-dark-10 !important;
+        &:hover {
+          background-color: $text-pink;
+          a,
+          span {
+            color: white;
+          }
+        }
+      }
+      .ant-pagination-disabled {
+        &:hover {
+          span {
+            color: $text-dark-10;
+          }
+        }
+      }
+      .ant-pagination-item-active {
+        background-color: $text-pink;
+        a {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.selectOption {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.memberAvatarOption {
+  width: 20px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+}

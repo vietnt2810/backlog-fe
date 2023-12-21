@@ -14,6 +14,7 @@ import cx from "classnames";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { MAX_VISIBLE_MEMBERS } from "@/constants/constants";
+import { IssuePaths } from "@/features/issue/constants/issue.paths";
 import ProjectMembersModal from "@/features/project/components/ProjectMembersModal/ProjectMembersModal";
 import { ProjectPaths } from "@/features/project/constants/project.paths";
 import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
@@ -79,7 +80,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
             <span>Issues</span>
           </div>
         ),
-        path: "TODO",
+        path: IssuePaths.ISSUES(String(projectId), String(subProjectId)),
       },
       {
         key: "4",

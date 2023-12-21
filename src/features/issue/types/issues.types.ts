@@ -1,3 +1,5 @@
+import { PaginationParams } from "@/types/pagination.types";
+
 export type MasterIssueType = {
   id: number;
   issueType: string;
@@ -68,3 +70,35 @@ export type IssueHistoryResponse = {
   assignerUsername: string;
   assigneeUsername: string;
 }[];
+
+export type GetIssuesParams = {
+  keyword?: string | null;
+  status?: string | null;
+  type?: string | null;
+  assigneeId?: string | null;
+} & PaginationParams;
+
+export type IssuesResponse = {
+  data: {
+    id: number;
+    subject: string;
+    status: number;
+    issueType: string;
+    priority: number;
+    startDate: string | null;
+    dueDate: string | null;
+    issueKey: string;
+    createdAt: string;
+    lastUpdatedAt: string;
+    estimatedHour: string | null;
+    actualHour: string | null;
+    creatorAvatarUrl: string | null;
+    creatorUsername: string;
+    assigneeAvatarUrl: string | null;
+    assigneeUsername: string;
+  }[];
+  meta: {
+    page: number;
+    totalRecord: number;
+  };
+};
