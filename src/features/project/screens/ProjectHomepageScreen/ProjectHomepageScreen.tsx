@@ -35,6 +35,14 @@ import {
   UserIssuesResponse,
 } from "../../types/project.types";
 
+export const tableStatusTexts: Record<number, React.ReactNode> = {
+  1: <div className="bg-status-color-1 status">Open</div>,
+  2: <div className="bg-status-color-2 status">In progress</div>,
+  3: <div className="bg-status-color-3 status">Resolved</div>,
+  4: <div className="bg-status-color-4 status">Pending</div>,
+  5: <div className="bg-status-color-5 status">Closed</div>,
+};
+
 const ProjectHomepageScreen = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
@@ -68,15 +76,6 @@ const ProjectHomepageScreen = () => {
   const [isCreateSubProjectModalOpen, setIsCreateSubProjectModalOpen] =
     useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const tableStatusTexts: Record<number, React.ReactNode> = {
-    1: <div className="bg-status-color-1 status">Open</div>,
-    2: <div className="bg-status-color-2 status">In progress</div>,
-    3: <div className="bg-status-color-3 status">Resolved</div>,
-    4: <div className="bg-status-color-4 status">Pending</div>,
-    5: <div className="bg-status-color-5 status">Closed</div>,
-  };
-
   const userIssuesTableData = useMemo(() => {
     return filteredIssues?.map(issue => ({
       ...issue,
@@ -107,7 +106,7 @@ const ProjectHomepageScreen = () => {
         ),
       status: tableStatusTexts[issue.status],
     }));
-  }, [filteredIssues, navigate, projectId, tableStatusTexts]);
+  }, [filteredIssues, navigate, projectId]);
 
   const handleFilterSubProject = (e: ChangeEvent<HTMLInputElement>) => {
     setFilteredSubProjects(

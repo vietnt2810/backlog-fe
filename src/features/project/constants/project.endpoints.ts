@@ -14,4 +14,6 @@ export const ProjectsEndpoints = {
     `sub-projects/${subProjectId}/recent-updates`,
   SUB_PROJECT_ISSUE_STATUS_COUNT: (subProjectId: string) =>
     `sub-projects/${subProjectId}/issue-status`,
+  SUB_PROJECTS_ISSUES: (subProjectId: string) =>
+    `sub-projects/${subProjectId}/issues`,
 };

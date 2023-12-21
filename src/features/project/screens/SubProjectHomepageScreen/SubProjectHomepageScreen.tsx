@@ -1,8 +1,12 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unsafe-optional-chaining */
 import { memo } from "react";
 
 import { Typography } from "antd";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { IssuePaths } from "@/features/issue/constants/issue.paths";
 
 import styles from "./SubProjectHomepageScreen.module.scss";
 import RecentUpdateItem from "../../components/RecentUpdateItem/RecentUpdateItem";
@@ -10,7 +14,8 @@ import useGetIssueStatusCount from "../../hooks/useGetIssueStatusCount";
 import useGetSubProjectRecentUpdates from "../../hooks/useGetSubProjectRecentUpdates";
 
 const SubProjectHomepageScreen = () => {
-  const { subProjectId } = useParams();
+  const navigate = useNavigate();
+  const { projectId, subProjectId } = useParams();
 
   const { subProjectRecentUpdates } = useGetSubProjectRecentUpdates(
     String(subProjectId)
@@ -40,6 +45,7 @@ const SubProjectHomepageScreen = () => {
           <div className="statusBox mt-3">
             <div className="d-flex statusBar">
               <div
+                title="Open"
                 className="bg-status-color-1"
                 style={{
                   width: `${
@@ -50,6 +56,7 @@ const SubProjectHomepageScreen = () => {
                 }}
               />
               <div
+                title="In Progress"
                 className="bg-status-color-2"
                 style={{
                   width: `${
@@ -60,6 +67,7 @@ const SubProjectHomepageScreen = () => {
                 }}
               />
               <div
+                title="Resolved"
                 className="bg-status-color-3"
                 style={{
                   width: `${
@@ -70,6 +78,7 @@ const SubProjectHomepageScreen = () => {
                 }}
               />
               <div
+                title="Pending"
                 className="bg-status-color-4"
                 style={{
                   width: `${
@@ -80,6 +89,7 @@ const SubProjectHomepageScreen = () => {
                 }}
               />
               <div
+                title="Closed"
                 className="bg-status-color-5"
                 style={{
                   width: `${
@@ -91,11 +101,11 @@ const SubProjectHomepageScreen = () => {
               />
             </div>
             <Typography className="text-right mb-2">
-              {`${
+              {`${Math.round(
                 (Number(issueStatusCount?.closedIssuesCount) /
                   Number(issueStatusCount?.totalIssues)) *
-                100
-              }% Closed`}
+                  100
+              )}% Closed`}
             </Typography>
             <div className="flex-wrap d-flex statusCountBox">
               <div
@@ -103,7 +113,17 @@ const SubProjectHomepageScreen = () => {
                 title="Open"
               >
                 <Typography className="mb-1 font-13">Open</Typography>
-                <div className="bg-status-color-1 statusCount flex-center font-14">
+                <div
+                  onClick={() =>
+                    navigate(
+                      IssuePaths.ISSUES(
+                        String(projectId),
+                        String(subProjectId)
+                      ).concat("?status=1")
+                    )
+                  }
+                  className="bg-status-color-1 statusCount flex-center font-14"
+                >
                   {issueStatusCount?.openIssuesCount}
                 </div>
               </div>
@@ -112,7 +132,17 @@ const SubProjectHomepageScreen = () => {
                 title="In Progress"
               >
                 <Typography className="mb-1 font-13">In Progress</Typography>
-                <div className="bg-status-color-2 statusCount flex-center font-14">
+                <div
+                  onClick={() =>
+                    navigate(
+                      IssuePaths.ISSUES(
+                        String(projectId),
+                        String(subProjectId)
+                      ).concat("?status=2")
+                    )
+                  }
+                  className="bg-status-color-2 statusCount flex-center font-14"
+                >
                   {issueStatusCount?.inProgressIssuesCount}
                 </div>
               </div>
@@ -121,7 +151,17 @@ const SubProjectHomepageScreen = () => {
                 title="Resolved"
               >
                 <Typography className="mb-1 font-13">Resolved</Typography>
-                <div className="bg-status-color-3 statusCount flex-center font-14">
+                <div
+                  onClick={() =>
+                    navigate(
+                      IssuePaths.ISSUES(
+                        String(projectId),
+                        String(subProjectId)
+                      ).concat("?status=3")
+                    )
+                  }
+                  className="bg-status-color-3 statusCount flex-center font-14"
+                >
                   {issueStatusCount?.resolvedIssuesCount}
                 </div>
               </div>
@@ -130,7 +170,17 @@ const SubProjectHomepageScreen = () => {
                 title="Pending"
               >
                 <Typography className="mb-1 font-13">Pending</Typography>
-                <div className="bg-status-color-4 statusCount flex-center font-14">
+                <div
+                  onClick={() =>
+                    navigate(
+                      IssuePaths.ISSUES(
+                        String(projectId),
+                        String(subProjectId)
+                      ).concat("?status=4")
+                    )
+                  }
+                  className="bg-status-color-4 statusCount flex-center font-14"
+                >
                   {issueStatusCount?.pendingIssuesCount}
                 </div>
               </div>
@@ -139,7 +189,17 @@ const SubProjectHomepageScreen = () => {
                 title="Closed"
               >
                 <Typography className="mb-1 font-13">Closed</Typography>
-                <div className="bg-status-color-5 statusCount flex-center font-14">
+                <div
+                  onClick={() =>
+                    navigate(
+                      IssuePaths.ISSUES(
+                        String(projectId),
+                        String(subProjectId)
+                      ).concat("?status=5")
+                    )
+                  }
+                  className="bg-status-color-5 statusCount flex-center font-14"
+                >
                   {issueStatusCount?.closedIssuesCount}
                 </div>
               </div>

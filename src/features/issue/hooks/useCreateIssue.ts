@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 
 import api from "@/api/api";
+import { ProjectsEndpoints } from "@/features/project/constants/project.endpoints";
 
-import { IssuesEndpoints } from "../constants/issue.endpoints";
 import { CreateIssueRequestBody } from "../types/issues.types";
 
 const useCreateIssue = (subProjectId: string) => {
@@ -10,7 +10,7 @@ const useCreateIssue = (subProjectId: string) => {
     useMutation({
       mutationFn: (createIssueRequestBody: CreateIssueRequestBody) => {
         return api.post(
-          IssuesEndpoints.CREATE_ISSUE(subProjectId),
+          ProjectsEndpoints.SUB_PROJECTS_ISSUES(subProjectId),
           createIssueRequestBody
         );
       },
