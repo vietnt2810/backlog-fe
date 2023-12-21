@@ -1,6 +1,7 @@
 @import "@/styles/colors";
 
 .container {
+  padding-left: 4px;
   :global {
     .ant-form-item-label {
       text-align: start;
@@ -43,7 +44,6 @@
       height: 240px;
     }
     .addButton {
-      display: inline-block;
       width: 105px;
       height: 32px;
       font-weight: 700;
@@ -51,6 +51,12 @@
       &:disabled {
         opacity: 0.5;
       }
+    }
+    .backButton {
+      width: 105px;
+      height: 32px;
+      border: 1px solid $text-dark-10;
+      background-color: #e5e5e5;
     }
   }
 }

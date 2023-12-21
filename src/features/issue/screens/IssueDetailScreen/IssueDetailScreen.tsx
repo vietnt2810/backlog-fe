@@ -6,13 +6,14 @@ import TextArea from "antd/es/input/TextArea";
 import cx from "classnames";
 import dayjs from "dayjs";
 import { isEmpty, isEqual } from "lodash";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as ChangeArrowIcon } from "@/assets/images/changeArrow.svg";
 import { ReactComponent as HighPriorityIcon } from "@/assets/images/highPriorityArrow.svg";
 import { ReactComponent as LowPriorityIcon } from "@/assets/images/lowPriorityArrow.svg";
 import { ReactComponent as NormalPriorityIcon } from "@/assets/images/normalPriorityArrow.svg";
 import { ReactComponent as NotebookIcon } from "@/assets/images/notebookIcon.svg";
+import { ReactComponent as PencilIcon } from "@/assets/images/pencilIcon.svg";
 import Button from "@/components/atoms/Button/Button";
 import Form, { Item, useForm } from "@/components/atoms/Form/Form";
 import Loader from "@/components/organisms/Loader/Loader";
@@ -26,10 +27,12 @@ import styles from "./IssueDetailScreen.module.scss";
 import useGetIssueDetail from "../../hooks/useGetIssueDetail";
 import useGetIssueHistory from "../../hooks/useGetIssueHistory";
 import useUpdateIssue from "../../hooks/useUpdateIssue";
-import { statusOptions } from "../CreateIssueScreen/CreateIssueScreen";
+import { statusOptions } from "../CreateEditIssueScreen/CreateEditIssueScreen";
 
 const IssueDetailScreen = () => {
   const [form] = useForm();
+
+  const navigate = useNavigate();
   const { projectId, issueId } = useParams();
 
   const { projectMembers } = useGetProjectMembers(String(projectId));
@@ -157,9 +160,18 @@ const IssueDetailScreen = () => {
           {tableStatusTexts[Number(issueDetail?.status)]}
         </div>
       </div>
-      <Typography className="font-20 font-weight-bold mt-2">
-        {issueDetail?.subject}
-      </Typography>
+      <div className="flex-space-between-center my-4">
+        <Typography className="font-20 font-weight-bold">
+          {issueDetail?.subject}
+        </Typography>
+        <Button
+          onClick={() => navigate("edit")}
+          className="editButton flex-align-center"
+        >
+          <PencilIcon className="icon mr-1" />
+          <Typography.Text className="text-dark-30">Edit</Typography.Text>
+        </Button>
+      </div>
       <div className="issueDetailBox mt-2">
         <div className="flex-align-center">
           {issueDetail?.creatorAvatarUrl ? (
@@ -266,11 +278,12 @@ const IssueDetailScreen = () => {
               </div>
             </div>
             <div className="historyContent mt-3">
-              {item.updateType === "create" && (
-                <Typography className="font-12 itemContent">
-                  Created this issue
-                </Typography>
-              )}
+              <Typography className="font-12 itemContent">
+                {item.updateType === "create"
+                  ? "Created this issue"
+                  : "Updated this issue"}
+              </Typography>
+
               {item.oldStatus && (
                 <Typography className="font-12 itemContent flex-align-center">
                   {`Status: ${statusTexts[item.oldStatus]}`}

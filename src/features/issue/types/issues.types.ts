@@ -37,6 +37,7 @@ export type IssueDetailResponse = {
   description: string;
   status: number;
   issueType: string;
+  type: number;
   priority: number;
   startDate: string | null;
   dueDate: string | null;

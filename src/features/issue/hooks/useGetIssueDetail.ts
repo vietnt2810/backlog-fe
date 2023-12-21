@@ -5,7 +5,7 @@ import api from "@/api/api";
 import { IssuesEndpoints } from "../constants/issue.endpoints";
 import { IssueDetailResponse } from "../types/issues.types";
 
-const useGetIssueDetail = (issueId: string) => {
+const useGetIssueDetail = (issueId?: string) => {
   const {
     data: issueDetail,
     isLoading: isGetIssueDetailLoading,
@@ -15,6 +15,7 @@ const useGetIssueDetail = (issueId: string) => {
     queryFn: () => {
       return api.get(IssuesEndpoints.ISSUE_DETAIL(issueId));
     },
+    enabled: !!issueId,
   });
 
   return {
