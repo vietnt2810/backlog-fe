@@ -80,30 +80,6 @@
         color: white;
         border-radius: 20px;
       }
-      .ant-pagination-item,
-      .ant-pagination-item-link {
-        border-color: $text-dark-10 !important;
-        &:hover {
-          background-color: $text-pink;
-          a,
-          span {
-            color: white;
-          }
-        }
-      }
-      .ant-pagination-disabled {
-        &:hover {
-          span {
-            color: $text-dark-10;
-          }
-        }
-      }
-      .ant-pagination-item-active {
-        background-color: $text-pink;
-        a {
-          color: white;
-        }
-      }
     }
   }
 }

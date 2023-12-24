@@ -19,6 +19,7 @@ import { DashboardPathsEnum } from "./features/dashboard/constants/dashboard.pat
 import DASHBOARD_ROUTES from "./features/dashboard/routes/dashboard.routes";
 import ISSUE_ROUTES from "./features/issue/routes/issue.routes";
 import PROJECT_ROUTES from "./features/project/routes/project.routes";
+import SETTING_ROUTES from "./features/settings/routes/settings.routes";
 
 const DefaultLayout = lazy(
   () => import("@/components/layouts/DefaultLayout/DefaultLayout")
@@ -54,6 +55,7 @@ const AppRoutes = () => {
     ...DASHBOARD_ROUTES,
     ...PROJECT_ROUTES,
     ...ISSUE_ROUTES,
+    ...SETTING_ROUTES,
   ];
 
   return (

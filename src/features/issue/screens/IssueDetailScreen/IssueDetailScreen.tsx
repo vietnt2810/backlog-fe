@@ -47,7 +47,7 @@ const IssueDetailScreen = () => {
   const [initialFormValue, setInitialFormValue] = useState<any>();
 
   const memberOptions = useMemo(() => {
-    return projectMembers?.map(member => {
+    return projectMembers?.data.map(member => {
       return {
         label: (
           <div className={styles.selectOption}>

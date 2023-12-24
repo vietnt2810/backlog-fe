@@ -1,0 +1,27 @@
+@import "@/styles/colors";
+
+.container {
+  :global {
+    .settingItem {
+      position: relative;
+      cursor: pointer;
+      &:before {
+        position: absolute;
+        left: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 10px solid $text-dark-30;
+      }
+      &:hover {
+        text-decoration: underline;
+        font-weight: 600;
+      }
+    }
+  }
+}

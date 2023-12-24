@@ -1,6 +1,7 @@
 export const ProjectsEndpoints = {
   PROJECT_DETAIL: (userId: string, projectId: string) =>
     `users/${userId}/projects/${projectId}`,
+  ADD_MEMBER: (projectId: string) => `projects/${projectId}/add-member`,
   PROJECT_MEMBERS: (projectId: string) => `projects/${projectId}/members`,
   PROJECT_MEMBER_DETAIL: (projectId: string, memberId: string) =>
     `projects/${projectId}/members/${memberId}`,
