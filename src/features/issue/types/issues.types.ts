@@ -3,6 +3,7 @@ import { PaginationParams } from "@/types/pagination.types";
 export type MasterIssueType = {
   id: number;
   issueType: string;
+  isCommon: boolean;
 };
 
 export type MasterIssueTypesResponse = MasterIssueType[];
@@ -102,4 +103,9 @@ export type IssuesResponse = {
     page: number;
     totalRecord: number;
   };
+};
+
+export type AddIssueTypeRequestBody = {
+  issueType: string;
+  projectId: string;
 };

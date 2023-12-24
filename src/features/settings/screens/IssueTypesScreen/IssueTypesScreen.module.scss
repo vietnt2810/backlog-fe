@@ -1,0 +1,25 @@
+@import "@/styles/colors";
+
+.container {
+  :global {
+    .button {
+      width: fit-content;
+      background-color: $text-pink;
+      &:hover span {
+        text-decoration: underline;
+      }
+    }
+    .issueTypesTable {
+      width: 830px;
+      .ant-table {
+        font-size: 13px;
+        border: 1px solid $text-dark-10;
+      }
+      th {
+        border-bottom: 2px solid $text-dark-10 !important;
+        font-weight: 500 !important;
+        color: #00836b !important;
+      }
+    }
+  }
+}

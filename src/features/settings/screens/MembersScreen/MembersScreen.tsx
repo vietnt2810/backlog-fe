@@ -3,7 +3,7 @@ import { memo, useEffect, useMemo, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input, Modal, Select, Table, Typography } from "antd";
 import dayjs from "dayjs";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import Button from "@/components/atoms/Button/Button";
 import Form, { Item, useForm } from "@/components/atoms/Form/Form";
@@ -19,11 +19,13 @@ import {
   MEMBER_ROLE_OPTIONS,
   MEMBER_TABLE_COLUMNS,
 } from "../../constants/settings.constants";
+import { SettingPaths } from "../../constants/settings.path";
 
 const MembersScreen = () => {
   const [form] = useForm();
 
-  const { projectId } = useParams();
+  const navigate = useNavigate();
+  const { projectId, subProjectId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { memberDetail } = useGetMemberDetail(
@@ -39,9 +41,6 @@ const MembersScreen = () => {
       role: searchParams.get("role"),
       page: searchParams.get("page"),
     });
-  const userRole = projectMembers?.data.find(
-    member => member.userId === Number(localStorage.getItem(USER_ID))
-  )?.role;
 
   const [isDeleteMemberModalOpen, setIsDeleteMemberModalOpen] =
     useState<number>();
@@ -79,7 +78,7 @@ const MembersScreen = () => {
           {dayjs(member.joinedDate).format("MMM DD, YYYY")}
         </Typography>
       ),
-      action: userRole &&
+      action: memberDetail?.role &&
         Number(localStorage.getItem(USER_ID)) !== member.userId && (
           <Button
             onClick={() => setIsDeleteMemberModalOpen(member.userId)}
@@ -89,7 +88,7 @@ const MembersScreen = () => {
           </Button>
         ),
     }));
-  }, [projectMembers?.data, userRole]);
+  }, [memberDetail?.role, projectMembers?.data]);
 
   useEffect(() => {
     form.setFieldValue("keyword", searchParams.get("keyword"));
@@ -103,7 +102,14 @@ const MembersScreen = () => {
     <div className={styles.container}>
       <div className="flex-space-between-center">
         <Typography className="font-16 font-weight-bold">{`Project Members (${projectMembers?.meta.totalMember} members)`}</Typography>
-        <Typography className="hoverTextUnderline cursor-pointer hoverBolder">
+        <Typography
+          className="hoverTextUnderline cursor-pointer hoverBolder"
+          onClick={() =>
+            navigate(
+              SettingPaths.SETTING(String(projectId), String(subProjectId))
+            )
+          }
+        >
           Back to Setting
         </Typography>
       </div>
@@ -125,6 +131,12 @@ const MembersScreen = () => {
           </Item>
           <Item name="role" className="mb-0">
             <Select
+              onChange={role => {
+                role
+                  ? searchParams.set("role", role)
+                  : searchParams.delete("role");
+                setSearchParams(searchParams);
+              }}
               defaultValue={MEMBER_ROLE_OPTIONS[0].value}
               className="roleSelect ml-3"
               options={MEMBER_ROLE_OPTIONS}
@@ -135,7 +147,7 @@ const MembersScreen = () => {
       {memberDetail?.role && (
         <Button
           onClick={() => setIsAddMemberModalOpen(true)}
-          className="button mt-4"
+          className="button mt-6"
         >
           Add a member
         </Button>
@@ -144,7 +156,7 @@ const MembersScreen = () => {
         loading={isGetProjectMembersLoading}
         dataSource={membersTableData}
         columns={MEMBER_TABLE_COLUMNS}
-        className="membersTable mt-6"
+        className="membersTable mt-2"
         pagination={{
           current: projectMembers?.meta.page
             ? Number(projectMembers?.meta.page)

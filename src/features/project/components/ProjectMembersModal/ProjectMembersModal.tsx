@@ -5,22 +5,20 @@ import { Input, Modal, ModalProps, Typography } from "antd";
 import cx from "classnames";
 
 import styles from "./ProjectMembersModal.module.scss";
-import { ProjectMembersResponse } from "../../types/project.types";
 
 interface ProjectMembersModalProps extends ModalProps {
-  members?: ProjectMembersResponse;
+  members?: any;
 }
 
 const ProjectMembersModal = ({
   members,
   ...props
 }: ProjectMembersModalProps) => {
-  const [filteredMembers, setFilteredMembers] =
-    useState<ProjectMembersResponse>();
+  const [filteredMembers, setFilteredMembers] = useState<any>();
 
   const handleFilterMember = (e: ChangeEvent<HTMLInputElement>) => {
     setFilteredMembers(
-      members?.filter(member =>
+      members?.filter((member: any) =>
         member.username.toLowerCase().includes(e.target.value.toLowerCase())
       )
     );
@@ -52,7 +50,7 @@ const ProjectMembersModal = ({
       </div>
       <div className={styles.memberList}>
         {filteredMembers?.length ? (
-          filteredMembers?.map(member => (
+          filteredMembers?.map((member: any) => (
             <div className={cx(styles.memberItem, "flex-align-center")}>
               {member.user.avatarUrl ? (
                 <img

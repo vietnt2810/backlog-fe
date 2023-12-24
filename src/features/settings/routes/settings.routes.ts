@@ -16,6 +16,10 @@ const MembersScreen = lazy(
   () => import("@/features/settings/screens/MembersScreen/MembersScreen")
 );
 
+const IssueTypesScreen = lazy(
+  () => import("@/features/settings/screens/IssueTypesScreen/IssueTypesScreen")
+);
+
 const SETTING_SCREEN: RouteItemDef = {
   id: "SETTING",
   path: SettingPathsEnum.SETTING,
@@ -32,6 +36,14 @@ const MEMBERS_SCREEN: RouteItemDef = {
   isPublicRoute: false,
 };
 
-const SETTING_ROUTES = [SETTING_SCREEN, MEMBERS_SCREEN];
+const ISSUE_TYPES_SCREEN: RouteItemDef = {
+  id: "ISSUE_TYPES",
+  path: SettingPathsEnum.ISSUE_TYPES,
+  component: IssueTypesScreen,
+  layout: DefaultLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
+  isPublicRoute: false,
+};
+
+const SETTING_ROUTES = [SETTING_SCREEN, MEMBERS_SCREEN, ISSUE_TYPES_SCREEN];
 
 export default SETTING_ROUTES;
