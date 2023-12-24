@@ -190,7 +190,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       </div>
       {isProjectMembersModalOpen && (
         <ProjectMembersModal
-          members={projectMembers}
+          members={projectMembers?.data}
           open={isProjectMembersModalOpen}
           onCancel={() => setIsProjectMembersModalOpen(false)}
         />

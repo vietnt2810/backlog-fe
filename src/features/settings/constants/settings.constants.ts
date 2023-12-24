@@ -40,3 +40,17 @@ export const MEMBER_TABLE_COLUMNS: ColumnsType<any> = [
     align: "center",
   },
 ];
+
+export const ISSUE_TYPES_TABLE_COLUMNS: ColumnsType<any> = [
+  {
+    title: "List of Issue Types",
+    dataIndex: "issueType",
+    width: "200px",
+  },
+  {
+    title: "Delete",
+    dataIndex: "action",
+    width: "50px",
+    align: "center",
+  },
+];

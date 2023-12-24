@@ -27,7 +27,16 @@ const SettingScreen = () => {
         >
           Members
         </Typography>
-        <Typography className="mt-2 settingItem">Issue Types</Typography>
+        <Typography
+          className="mt-2 settingItem"
+          onClick={() =>
+            navigate(
+              SettingPaths.ISSUE_TYPES(String(projectId), String(subProjectId))
+            )
+          }
+        >
+          Issue Types
+        </Typography>
       </div>
     </div>
   );
