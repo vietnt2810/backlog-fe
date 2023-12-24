@@ -19,6 +19,7 @@ import ProjectMembersModal from "@/features/project/components/ProjectMembersMod
 import { ProjectPaths } from "@/features/project/constants/project.paths";
 import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
 import useGetSubProjectDetail from "@/features/project/hooks/useGetSubProjectDetail";
+import { SettingPaths } from "@/features/settings/constants/settings.path";
 import { SidebarInfo } from "@/types/sidebar.types";
 
 import styles from "./DefaultLayout.module.scss";
@@ -37,11 +38,11 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   const { projectMembers } = useGetProjectMembers(String(projectId));
 
   const visibleMembers = useMemo(() => {
-    return projectMembers?.slice(0, MAX_VISIBLE_MEMBERS);
+    return projectMembers?.data.slice(0, MAX_VISIBLE_MEMBERS);
   }, [projectMembers]);
   const additionalMembers = useMemo(() => {
-    return Number(projectMembers?.length) - MAX_VISIBLE_MEMBERS;
-  }, [projectMembers?.length]);
+    return Number(projectMembers?.meta.totalMember) - MAX_VISIBLE_MEMBERS;
+  }, [projectMembers?.meta.totalMember]);
 
   const [selectedKey, setSelectedKey] = useState<string>("");
   const [isProjectMembersModalOpen, setIsProjectMembersModalOpen] =
@@ -100,7 +101,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
             <span>Settings</span>
           </div>
         ),
-        path: "TODO",
+        path: SettingPaths.SETTING(String(projectId), String(subProjectId)),
       },
     ] as SidebarInfo[];
   }, [projectId, subProjectId]);
@@ -115,11 +116,22 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         return true;
       }
 
+      if (
+        item.path !== location.pathname &&
+        item.path !==
+          ProjectPaths.SUB_PROJECT_HOMEPAGE(
+            String(projectId),
+            String(subProjectId)
+          )
+      ) {
+        return location.pathname.includes(item.path);
+      }
+
       return undefined;
     });
 
     currentTab && setSelectedKey(currentTab.key);
-  }, [MENU_SIDEBAR, location]);
+  }, [MENU_SIDEBAR, location, projectId, subProjectId]);
 
   return (
     <div className={cx(styles.root)}>

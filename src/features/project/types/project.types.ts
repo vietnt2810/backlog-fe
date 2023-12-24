@@ -1,3 +1,5 @@
+import { PaginationParams } from "@/types/pagination.types";
+
 export type Project = {
   id: number;
   projectName: string;
@@ -11,14 +13,22 @@ export type ProjectDetailResponse = {
 };
 
 export type ProjectMembersResponse = {
-  userId: number;
-  username: string;
-  role: boolean;
-  user: {
-    email: string;
-    avatarUrl: string;
+  data: {
+    userId: number;
+    username: string;
+    role: boolean;
+    joinedDate: string;
+    user: {
+      email: string;
+      avatarUrl: string;
+    };
+  }[];
+  meta: {
+    page: number;
+    totalRecord: number;
+    totalMember: number;
   };
-}[];
+};
 
 export type ProjectMemberDetailResponse = {
   username: string;
@@ -84,3 +94,8 @@ export type IssueStatusCountResponse = {
   closedIssuesCount: number;
   totalIssues: number;
 };
+
+export type GetProjectMembersParams = {
+  keyword?: string | null;
+  role?: string | null;
+} & PaginationParams;

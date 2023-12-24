@@ -149,7 +149,32 @@ p {
     border: 1px solid transparent !important;
   }
 }
-
+.ant-table-wrapper {
+  .ant-pagination-item,
+  .ant-pagination-item-link {
+    border-color: $text-dark-10 !important;
+    &:hover {
+      background-color: $text-pink;
+      a,
+      span {
+        color: white;
+      }
+    }
+  }
+  .ant-pagination-disabled {
+    &:hover {
+      span {
+        color: $text-dark-10;
+      }
+    }
+  }
+  .ant-pagination-item-active {
+    background-color: $text-pink;
+    a {
+      color: white;
+    }
+  }
+}
 //Card
 .ant-card {
   padding: 5px 16px 5px 20px !important;

@@ -389,4 +389,9 @@ $positions: "static", "relative", "absolute", "fixed", "sticky";
   }
 }
 
+.hoverBolder {
+  &:hover {
+    font-weight: 600;
+  }
+}
 //transform

@@ -1,0 +1,62 @@
+@import "@/styles/colors";
+
+.container {
+  :global {
+    .filter {
+      width: 830px;
+      height: 50px;
+      padding: 8px 15px;
+      border: 1px solid $text-dark-10;
+      border-radius: 5px;
+      background-color: #f3f3f3;
+    }
+    .ant-input {
+      margin-left: 4px;
+    }
+    .searchInput {
+      width: 560px;
+      border-color: $text-dark-10;
+      border-radius: 20px;
+    }
+    .searchIcon {
+      transform: scale(1.5);
+      color: $text-dark-30;
+    }
+    .roleSelect {
+      width: 150px;
+      .ant-select-selector {
+        border-radius: 5px;
+        border-color: $text-dark-10;
+      }
+    }
+    .button {
+      width: fit-content;
+      background-color: $text-pink;
+      &:hover span {
+        text-decoration: underline;
+      }
+    }
+    .membersTable {
+      width: 830px;
+      .ant-table {
+        font-size: 13px;
+        border: 1px solid $text-dark-10;
+      }
+      th {
+        border-bottom: 2px solid $text-dark-10 !important;
+        font-weight: 500 !important;
+        color: #00836b !important;
+      }
+      .avatar {
+        width: 24px !important;
+        height: 24px;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: #e07b9a;
+        color: white;
+      }
+      .deleteButton {
+      }
+    }
+  }
+}
