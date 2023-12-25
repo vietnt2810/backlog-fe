@@ -84,11 +84,13 @@ export const ISSUES_TABLE_COLUMNS: ColumnsType<any> = [
     title: "Estimated Hours",
     dataIndex: "estimatedHour",
     width: "100px",
+    align: "center",
   },
   {
     title: "Actual Hours",
     dataIndex: "actualHour",
     width: "100px",
+    align: "center",
   },
   {
     title: "Last Updated",

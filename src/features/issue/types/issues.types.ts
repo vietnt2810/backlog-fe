@@ -51,6 +51,10 @@ export type IssueDetailResponse = {
   creatorAvatarUrl: string | null;
   creatorUsername: string;
   createdAt: string;
+  attachedFile: {
+    fileUrl: string;
+    fileName: string;
+  }[];
 };
 
 export type IssueHistoryResponse = {

@@ -21,7 +21,7 @@ import { openNotification } from "@/components/organisms/Notification/Notificati
 import { USER_ID } from "@/constants/constants";
 import { statusTexts } from "@/features/project/constants/project.constants";
 import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
-import { isInvalidForm } from "@/utils/utils";
+import { downloadFile, isImageFile, isInvalidForm } from "@/utils/utils";
 
 import styles from "./IssueDetailScreen.module.scss";
 import useGetIssueDetail from "../../hooks/useGetIssueDetail";
@@ -261,6 +261,40 @@ const IssueDetailScreen = () => {
             <Typography>{issueDetail?.estimatedHour}</Typography>
           </div>
         </div>
+        {issueDetail?.attachedFile && (
+          <div className="mt-2">
+            <div className="d-flex attachedImageBox">
+              {issueDetail?.attachedFile.map(file => (
+                <>
+                  {isImageFile(file.fileName) && (
+                    <img
+                      src={file.fileUrl}
+                      alt="attachedFile"
+                      className="attachedImage"
+                    />
+                  )}
+                </>
+              ))}
+            </div>
+            <Typography className="font-weight-half-bold mt-4">
+              Attached Files
+            </Typography>
+            <div className="mt-2">
+              {issueDetail?.attachedFile.map(file => (
+                <>
+                  {!isImageFile(file.fileName) && (
+                    <Typography
+                      className="attachedFile text-pink cursor-pointer hoverTextUnderline"
+                      onClick={() => downloadFile(file.fileUrl)}
+                    >
+                      {file.fileName}
+                    </Typography>
+                  )}
+                </>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <Typography className="font-weight-half-bold font-16 mt-6">
         Comments

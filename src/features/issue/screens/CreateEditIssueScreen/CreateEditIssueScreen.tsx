@@ -1,7 +1,17 @@
 import { memo, useEffect, useMemo, useState } from "react";
 
-import { DatePicker, Input, InputNumber, Select, Typography } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import {
+  DatePicker,
+  Input,
+  InputNumber,
+  Select,
+  Typography,
+  Upload,
+  UploadFile,
+} from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { RcFile } from "antd/lib/upload/interface";
 import cx from "classnames";
 import dayjs from "dayjs";
 import { isEqual } from "lodash";
@@ -14,7 +24,7 @@ import { USER_ID } from "@/constants/constants";
 import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
 import { SubProject } from "@/features/project/types/project.types";
 import { requiredRules } from "@/helpers/validations.helpers";
-import { isInvalidForm } from "@/utils/utils";
+import { isInvalidForm, uploadFileToFirebase } from "@/utils/utils";
 
 import styles from "./CreateEditIssueScreen.module.scss";
 import { IssuePaths } from "../../constants/issue.paths";
@@ -97,7 +107,19 @@ const CreateEditIssueScreen = ({
     issueId ? String(issueId) : undefined
   );
 
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [isUploadToFireBase, setIsUploadToFireBase] = useState(false);
   const [initialFormValue, setInitialFormValue] = useState<any>();
+
+  const initialFileList: any = useMemo(() => {
+    return issueDetail?.attachedFile?.map(file => {
+      return {
+        uid: file.fileUrl,
+        name: file.fileName,
+        url: file.fileUrl,
+      };
+    });
+  }, [issueDetail?.attachedFile]);
 
   const memberOptions = useMemo(() => {
     return projectMembers?.data.map(member => {
@@ -142,11 +164,38 @@ const CreateEditIssueScreen = ({
     },
   ];
 
-  const handleCreateEditIssue = () => {
+  const handleCreateEditIssue = async () => {
+    const attachedFileList: any[] = [];
+    const updateFileList: any[] = [];
+
+    const uploadPromises = fileList.map(async file => {
+      setIsUploadToFireBase(true);
+      file.originFileObj
+        ? await uploadFileToFirebase(
+            "attachedFile",
+            String(Date.now()).concat(file.name),
+            file.originFileObj as RcFile
+          ).then(res => {
+            attachedFileList.push({
+              fileUrl: res.fileUrl,
+              fileName: res.fileName,
+            });
+          })
+        : updateFileList.push({
+            fileUrl: file.url,
+            fileName: file.name,
+          });
+    });
+
+    await Promise.all(uploadPromises).finally(() =>
+      setIsUploadToFireBase(false)
+    );
+
     !issueId
       ? createIssue({
           ...form.getFieldsValue(),
           creatorId: String(localStorage.getItem(USER_ID)),
+          attachedFile: attachedFileList.length ? attachedFileList : undefined,
         }).then((res: any) => {
           openNotification({
             type: "success",
@@ -164,6 +213,7 @@ const CreateEditIssueScreen = ({
       : updateIssue({
           ...form.getFieldsValue(),
           updaterId: String(localStorage.getItem(USER_ID)),
+          attachedFile: attachedFileList.concat(updateFileList),
         }).then(() => {
           openNotification({
             type: "success",
@@ -175,7 +225,9 @@ const CreateEditIssueScreen = ({
 
   useEffect(() => {
     issueId &&
-      (form.setFieldsValue({
+      (setFileList(initialFileList),
+      form.setFieldsValue({
+        attachedFile: initialFileList,
         type: issueDetail?.type,
         subject: issueDetail?.subject,
         description: issueDetail?.description,
@@ -190,6 +242,7 @@ const CreateEditIssueScreen = ({
         actualHour: issueDetail?.actualHour,
       }),
       setInitialFormValue({
+        attachedFile: initialFileList,
         type: issueDetail?.type,
         subject: issueDetail?.subject,
         description: issueDetail?.description,
@@ -203,10 +256,10 @@ const CreateEditIssueScreen = ({
         estimatedHour: issueDetail?.estimatedHour,
         actualHour: issueDetail?.actualHour,
       }));
-  }, [form, issueDetail, issueId]);
+  }, [form, initialFileList, issueDetail, issueId]);
 
   return (
-    <div className={cx(styles.container, subProject ? "" : "mb-5")}>
+    <div className={cx(styles.container, subProject ? "" : "mb-5 pl-1")}>
       {subProject && (
         <div className="contentHeader">
           <Typography.Text className="font-16 font-weight-bold">
@@ -250,6 +303,7 @@ const CreateEditIssueScreen = ({
                 labelCol={{ span: 7 }}
                 label="Status"
                 className="mt-3 formBoxItem"
+                required
               >
                 <Select
                   allowClear
@@ -262,6 +316,7 @@ const CreateEditIssueScreen = ({
                 labelCol={{ span: 7 }}
                 label="Assignee"
                 className="mt-3 formBoxItem"
+                required
               >
                 <Select
                   allowClear
@@ -276,6 +331,7 @@ const CreateEditIssueScreen = ({
                 labelCol={{ span: 7 }}
                 label="Priority"
                 className="formBoxItem"
+                required
               >
                 <Select
                   allowClear
@@ -320,7 +376,21 @@ const CreateEditIssueScreen = ({
                 <InputNumber controls={false} className="inputNumber ml-10" />
               </Item>
             </div>
-            <Item className="text-right" shouldUpdate>
+            <Item name="attachedFile" className="uploadFile">
+              <Upload
+                fileList={fileList}
+                onChange={e => {
+                  setFileList(e.fileList);
+                  !e.fileList.length &&
+                    form.setFieldValue("attachedFile", null);
+                }}
+              >
+                <Button className="uploadButton" icon={<UploadOutlined />}>
+                  Upload
+                </Button>
+              </Upload>
+            </Item>
+            <Item className="text-right mt-3" shouldUpdate>
               {() => (
                 <div>
                   {issueId && (
@@ -352,9 +422,12 @@ const CreateEditIssueScreen = ({
                               "description",
                               "status",
                               "assigneeId",
+                              "priority",
                             ],
                             isSubmitting:
-                              isCreateIssueLoading || isUpdateIssueLoading,
+                              isCreateIssueLoading ||
+                              isUpdateIssueLoading ||
+                              isUploadToFireBase,
                           }) || isEqual(form.getFieldsValue(), initialFormValue)
                         : isInvalidForm({
                             form,
@@ -364,9 +437,12 @@ const CreateEditIssueScreen = ({
                               "description",
                               "status",
                               "assigneeId",
+                              "priority",
                             ],
                             isSubmitting:
-                              isCreateIssueLoading || isUpdateIssueLoading,
+                              isCreateIssueLoading ||
+                              isUpdateIssueLoading ||
+                              isUploadToFireBase,
                           })
                     }
                   >
