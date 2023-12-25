@@ -134,7 +134,8 @@ const MembersScreen = () => {
               onChange={role => {
                 role
                   ? searchParams.set("role", role)
-                  : searchParams.delete("role");
+                  : (searchParams.delete("role"),
+                    form.setFieldValue("role", ""));
                 setSearchParams(searchParams);
               }}
               defaultValue={MEMBER_ROLE_OPTIONS[0].value}
@@ -144,7 +145,7 @@ const MembersScreen = () => {
           </Item>
         </Form>
       </div>
-      {memberDetail?.role && (
+      {!!memberDetail?.role && (
         <Button
           onClick={() => setIsAddMemberModalOpen(true)}
           className="button mt-6"

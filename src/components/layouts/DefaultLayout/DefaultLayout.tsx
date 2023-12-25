@@ -6,7 +6,6 @@ import {
   HomeFilled,
   PlusOutlined,
   ProfileOutlined,
-  ProjectOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import { Menu, Tooltip, Typography } from "antd";
@@ -85,16 +84,6 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       },
       {
         key: "4",
-        label: (
-          <div>
-            <ProjectOutlined />
-            <span>Board</span>
-          </div>
-        ),
-        path: "TODO",
-      },
-      {
-        key: "5",
         label: (
           <div>
             <SettingOutlined />

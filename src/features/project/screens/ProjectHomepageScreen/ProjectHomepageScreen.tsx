@@ -9,7 +9,7 @@ import {
   SearchOutlined,
   UpOutlined,
 } from "@ant-design/icons";
-import { Input, Table, Typography } from "antd";
+import { Input, Modal, Table, Typography } from "antd";
 import { isEmpty } from "lodash";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -18,6 +18,7 @@ import { ReactComponent as LowPriorityIcon } from "@/assets/images/lowPriorityAr
 import { ReactComponent as NormalPriorityIcon } from "@/assets/images/normalPriorityArrow.svg";
 import Form, { Item } from "@/components/atoms/Form/Form";
 import Header from "@/components/layouts/Header/Header";
+import { openNotification } from "@/components/organisms/Notification/Notification";
 import { USER_ID } from "@/constants/constants";
 import { IssuePaths } from "@/features/issue/constants/issue.paths";
 
@@ -26,6 +27,8 @@ import CreateSubProjectModal from "../../components/CreateSubProjectModal/Create
 import RecentUpdateItem from "../../components/RecentUpdateItem/RecentUpdateItem";
 import { USER_ISSUES_TABLE_COLUMNS } from "../../constants/project.constants";
 import { ProjectPaths } from "../../constants/project.paths";
+import useDeleteSubProject from "../../hooks/useDeleteSubProject";
+import useGetMemberDetail from "../../hooks/useGetMemberDetail";
 import useGetProject from "../../hooks/useGetProject";
 import useGetProjectRecentUpdates from "../../hooks/useGetProjectRecentUpdates";
 import useGetSubProjects from "../../hooks/useGetSubProjects";
@@ -49,6 +52,10 @@ const ProjectHomepageScreen = () => {
 
   const [isAssigned, setIsAssigned] = useState(1);
 
+  const { memberDetail } = useGetMemberDetail(
+    String(projectId),
+    String(localStorage.getItem(USER_ID))
+  );
   const { project } = useGetProject(
     String(localStorage.getItem(USER_ID)),
     String(projectId)
@@ -60,9 +67,9 @@ const ProjectHomepageScreen = () => {
     useGetUserIssues(String(projectId), String(localStorage.getItem(USER_ID)), {
       isAssigned,
     });
-  const { projectRecentUpdates } = useGetProjectRecentUpdates(
-    String(projectId)
-  );
+  const { projectRecentUpdates, refetchProjectRecentUpdates } =
+    useGetProjectRecentUpdates(String(projectId));
+  const { deleteSubProject, isDeleteSubProjectLoading } = useDeleteSubProject();
 
   const [isSubProjectsVisible, setIsSubProjectsVisible] = useState(true);
   const [filteredSubProjects, setFilteredSubProjects] =
@@ -73,8 +80,11 @@ const ProjectHomepageScreen = () => {
   const [isIssuesVisible, setIsIssuesVisible] = useState(true);
   const [filteredIssues, setFilteredIssues] = useState<UserIssuesResponse>();
   const [isIssuesSearchBoxOpen, setIsIssuesSearchBoxOpen] = useState(false);
+
   const [isCreateSubProjectModalOpen, setIsCreateSubProjectModalOpen] =
     useState(false);
+  const [isDeleteSubProjectModalOpen, setIsDeleteSubProjectModalOpen] =
+    useState<number>();
 
   const userIssuesTableData = useMemo(() => {
     return filteredIssues?.map(issue => ({
@@ -126,6 +136,21 @@ const ProjectHomepageScreen = () => {
           issue.subject.toLowerCase().includes(e.target.value.toLowerCase())
       )
     );
+  };
+
+  const handleDeleteSubProject = () => {
+    deleteSubProject(String(isDeleteSubProjectModalOpen)).then(() => {
+      openNotification({
+        type: "success",
+        message: "You have successfully deleted a sub project",
+      });
+      setIsDeleteSubProjectModalOpen(undefined);
+      setTimeout(() => {
+        refetchSubProjects();
+        refetchUserIssues();
+        refetchProjectRecentUpdates();
+      }, 500);
+    });
   };
 
   useEffect(() => {
@@ -214,20 +239,56 @@ const ProjectHomepageScreen = () => {
                           {subProject.subTitle}
                         </Typography>
                         <div className="subProjectButtonContainer">
-                          <Typography.Text>Add Issue</Typography.Text>
+                          <Typography.Text
+                            onClick={e => {
+                              navigate(
+                                IssuePaths.CREATE_ISSUE(
+                                  String(projectId),
+                                  String(subProject.id)
+                                )
+                              );
+                              e.stopPropagation();
+                            }}
+                          >
+                            Add Issue
+                          </Typography.Text>
                           <Typography.Text className="ml-2">|</Typography.Text>
-                          <Typography.Text className="ml-2">
+                          <Typography.Text
+                            className="ml-2"
+                            onClick={e => {
+                              navigate(
+                                IssuePaths.ISSUES(
+                                  String(projectId),
+                                  String(subProject.id)
+                                )
+                              );
+                              e.stopPropagation();
+                            }}
+                          >
                             Issues
                           </Typography.Text>
-                          <Typography.Text className="ml-2">|</Typography.Text>
-                          <Typography.Text className="ml-2">
-                            Board
-                          </Typography.Text>
+
+                          {!!memberDetail?.role && (
+                            <>
+                              <Typography.Text className="ml-2">
+                                |
+                              </Typography.Text>
+                              <Typography.Text
+                                className="ml-2"
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  setIsDeleteSubProjectModalOpen(subProject.id);
+                                }}
+                              >
+                                Delete
+                              </Typography.Text>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
                   ))}
-                  {project?.role && (
+                  {!!project?.role && (
                     <div
                       className="dropdownItem"
                       onClick={() => {
@@ -344,6 +405,18 @@ const ProjectHomepageScreen = () => {
           refetchSubProjects={refetchSubProjects}
           onCancel={() => setIsCreateSubProjectModalOpen(false)}
         />
+      )}
+      {isDeleteSubProjectModalOpen && (
+        <Modal
+          title="Delete a sub project"
+          open={!!isDeleteSubProjectModalOpen}
+          onOk={handleDeleteSubProject}
+          onCancel={() => setIsDeleteSubProjectModalOpen(undefined)}
+          okButtonProps={{ disabled: isDeleteSubProjectLoading }}
+          okText="Delete"
+        >
+          Are you sure you want to delete this sub project?
+        </Modal>
       )}
     </>
   );

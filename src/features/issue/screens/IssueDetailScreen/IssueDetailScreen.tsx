@@ -6,7 +6,7 @@ import TextArea from "antd/es/input/TextArea";
 import cx from "classnames";
 import dayjs from "dayjs";
 import { isEmpty, isEqual } from "lodash";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as ChangeArrowIcon } from "@/assets/images/changeArrow.svg";
 import { ReactComponent as HighPriorityIcon } from "@/assets/images/highPriorityArrow.svg";
@@ -33,6 +33,7 @@ const IssueDetailScreen = () => {
   const [form] = useForm();
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { projectId, issueId } = useParams();
 
   const { projectMembers } = useGetProjectMembers(String(projectId));
@@ -97,6 +98,17 @@ const IssueDetailScreen = () => {
       form.setFieldValue("comment", undefined);
     });
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (location.hash) {
+        const element = document.getElementById(location.hash.slice(1));
+        if (element) {
+          element.style.backgroundColor = "#fcfade";
+        }
+      }
+    }, 500);
+  }, [location.hash]);
 
   useEffect(() => {
     form.setFieldsValue({
@@ -255,7 +267,11 @@ const IssueDetailScreen = () => {
       </Typography>
       <div className="historyBox mt-3">
         {issueHistory?.map(item => (
-          <div className="issueHistoryItem" key={item.createdAt}>
+          <div
+            id={`comment-${String(item.id)}`}
+            className="issueHistoryItem"
+            key={item.createdAt}
+          >
             <div className="d-flex">
               {item?.creatorAvatarUrl ? (
                 <img
