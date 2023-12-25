@@ -61,11 +61,10 @@
       }
     }
     .historyBox {
-      padding: 15px 25px;
       background-color: white;
       border: 1px solid $border-box;
       .issueHistoryItem {
-        padding: 16px 0;
+        padding: 16px 25px;
         &:not(:last-child) {
           border-bottom: 1px solid $text-dark-10;
         }

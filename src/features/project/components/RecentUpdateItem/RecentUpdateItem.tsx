@@ -55,7 +55,7 @@ const RecentUpdateItem = ({ recentUpdateItem }: RecentUpdateItemProps) => {
                     String(projectId),
                     String(subProjectId ?? recentUpdateItem.subProjectId),
                     String(recentUpdateItem.issueId)
-                  )
+                  ).concat(`#comment-${recentUpdateItem.id}`)
                 )
               }
               className="text-pink font-weight-half-bold cursor-pointer hoverTextUnderline"

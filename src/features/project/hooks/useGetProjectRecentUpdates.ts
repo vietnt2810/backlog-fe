@@ -6,14 +6,15 @@ import { ProjectsEndpoints } from "../constants/project.endpoints";
 import { RecentUpdatesResponse } from "../types/project.types";
 
 const useGetProjectRecentUpdates = (projectId: string) => {
-  const { data: projectRecentUpdates } = useQuery<RecentUpdatesResponse>({
-    queryKey: ["useGetProjectRecentUpdates", projectId],
-    queryFn: () => {
-      return api.get(ProjectsEndpoints.PROJECT_RECENT_UPDATES(projectId));
-    },
-  });
+  const { data: projectRecentUpdates, refetch: refetchProjectRecentUpdates } =
+    useQuery<RecentUpdatesResponse>({
+      queryKey: ["useGetProjectRecentUpdates", projectId],
+      queryFn: () => {
+        return api.get(ProjectsEndpoints.PROJECT_RECENT_UPDATES(projectId));
+      },
+    });
 
-  return { projectRecentUpdates };
+  return { projectRecentUpdates, refetchProjectRecentUpdates };
 };
 
 export default useGetProjectRecentUpdates;

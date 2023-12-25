@@ -54,6 +54,7 @@ export type IssueDetailResponse = {
 };
 
 export type IssueHistoryResponse = {
+  id: number;
   content: string | null;
   oldStatus: number | null;
   newStatus: number;
