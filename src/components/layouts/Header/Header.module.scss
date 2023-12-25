@@ -21,12 +21,10 @@
       }
     }
     .notificationIcon {
-      padding: 2px;
       cursor: pointer;
       transform: scale(1.5);
       &:hover {
         background-color: #2c9a7a13;
-        color: #00836b;
       }
     }
     .avatar {

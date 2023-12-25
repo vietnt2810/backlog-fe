@@ -8,8 +8,9 @@ import {
   PlusCircleOutlined,
   ProjectOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Modal, Select, Typography } from "antd";
+import { Badge, Dropdown, Modal, Select, Typography } from "antd";
 import cx from "classnames";
+import dayjs from "dayjs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as NotificationIcon } from "@/assets/images/NotificationIcon.svg";
@@ -19,11 +20,15 @@ import { USER_ID } from "@/constants/constants";
 import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
 import { DashboardPathsEnum } from "@/features/dashboard/constants/dashboard.paths";
 import useGetUser from "@/features/dashboard/hooks/useGetUser";
+import { IssuePaths } from "@/features/issue/constants/issue.paths";
 import CreateIssueScreen from "@/features/issue/screens/CreateEditIssueScreen/CreateEditIssueScreen";
 import ChangeUserInformationInProjectModal from "@/features/project/components/ChangeUserInformationInProjectModal/ChangeUserInformationInProjectModal";
+import { notificationTexts } from "@/features/project/constants/project.constants";
 import { ProjectPaths } from "@/features/project/constants/project.paths";
+import useGetNotifications from "@/features/project/hooks/useGetNotifications";
 import useGetProject from "@/features/project/hooks/useGetProject";
 import useGetSubProjects from "@/features/project/hooks/useGetSubProjects";
+import useUpdateReadNotification from "@/features/project/hooks/useUpdateReadNotification";
 import { SubProject } from "@/features/project/types/project.types";
 import { handleClearLocalStorage } from "@/utils/utils";
 
@@ -45,6 +50,11 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
     String(projectId)
   );
   const { subProjects } = useGetSubProjects(String(projectId));
+  const { notifications, refetchNotifications } = useGetNotifications(
+    String(projectId),
+    String(localStorage.getItem(USER_ID))
+  );
+  const { readNotification } = useUpdateReadNotification();
 
   const [
     isChangeUserInformationInProjectModalOpen,
@@ -54,6 +64,14 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
   const [isIssueCreateModalOpen, setIsIssueCreateModalOpen] = useState(false);
   const [chosenSubProjectToCreateIssue, setChosenSubProjectToCreateIssue] =
     useState<SubProject>();
+
+  const tableStatusTexts: Record<number, React.ReactNode> = {
+    1: <div className="bg-status-color-1 status">Open</div>,
+    2: <div className="bg-status-color-2 status">In progress</div>,
+    3: <div className="bg-status-color-3 status">Resolved</div>,
+    4: <div className="bg-status-color-4 status">Pending</div>,
+    5: <div className="bg-status-color-5 status">Closed</div>,
+  };
 
   if (isGetUserLoading || isGetProjectLoading) {
     return <Loader />;
@@ -76,7 +94,6 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
           >
             Dashboard
           </div>
-          <div className="headerItem">Projects</div>
           <div className="headerItem">Recently viewed</div>
           <div
             className="headerItem"
@@ -86,9 +103,90 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
           </div>
         </div>
         <div className="flex-align-center col-gap-20">
-          <div className="notificationIcon mr-2">
-            <NotificationIcon />
-          </div>
+          <Dropdown
+            className="dropdown"
+            placement="bottomLeft"
+            trigger={["click"]}
+            dropdownRender={() => (
+              <div className="notification-dropdown-container">
+                <div className="notification-header">Notification</div>
+                {notifications?.map(notification => (
+                  <Link
+                    onClick={() => {
+                      readNotification(String(notification.id));
+                      setTimeout(() => {
+                        refetchNotifications();
+                      }, 300);
+                    }}
+                    target="_blank"
+                    to={IssuePaths.ISSUE_DETAIL(
+                      String(projectId),
+                      String(notification.subProjectId),
+                      String(notification.issueId)
+                    ).concat(`#comment-${notification.issueUpdateId}`)}
+                  >
+                    <div
+                      className={"notification-item flex-space-between".concat(
+                        notification.isRead ? "" : " unread-notification-item"
+                      )}
+                    >
+                      <div className="d-flex">
+                        {notification?.creatorAvatarUrl ? (
+                          <img
+                            alt="avatar"
+                            src={notification.creatorAvatarUrl}
+                            className="creatorAvatar"
+                          />
+                        ) : (
+                          <div className="creatorAvatar flex-center">
+                            {notification?.creatorUsername
+                              .charAt(0)
+                              .toUpperCase()}
+                          </div>
+                        )}
+                        <div className="ml-2">
+                          <div>
+                            <Typography.Text className="font-weight-half-bold">
+                              {notification.creatorUsername}
+                            </Typography.Text>
+                            <Typography.Text className="ml-1">
+                              {notificationTexts[notification.updateType]}
+                            </Typography.Text>
+                          </div>
+                          <div>
+                            <Typography.Text className="font-weight-half-bold">
+                              {notification.issueKey}
+                            </Typography.Text>
+                            <Typography.Text className="ml-1">
+                              {notification.subject}
+                            </Typography.Text>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="notificationDate">
+                        <Typography className="text-dark-30">
+                          {dayjs(notification.createdAt).format(
+                            "MMM DD YYYY HH:mm"
+                          )}
+                        </Typography>
+                        {tableStatusTexts[notification.status]}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          >
+            <Badge
+              dot={
+                !!notifications?.find(
+                  notificationItem => !notificationItem.isRead
+                )
+              }
+            >
+              <NotificationIcon className="notificationIcon" />
+            </Badge>
+          </Dropdown>
           <Dropdown
             className="dropdown px-2 py-1"
             placement="bottomLeft"

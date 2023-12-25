@@ -26,7 +26,8 @@ export const USER_ISSUES_TABLE_COLUMNS: ColumnsType<any> = [
   {
     title: "Due Date",
     dataIndex: "dueDate",
-    width: "80px",
+    width: "130px",
+    align: "center",
   },
 ];
 
@@ -42,4 +43,10 @@ export const statusTexts: Record<number, string> = {
   3: "Resolved",
   4: "Pending",
   5: "Closed",
+};
+
+export const notificationTexts: Record<string, string> = {
+  create: "created an issue and assigned to you",
+  update: "updated an issue",
+  comment: "added a comment",
 };

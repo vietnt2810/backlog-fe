@@ -10,6 +10,7 @@ import {
   UpOutlined,
 } from "@ant-design/icons";
 import { Input, Modal, Table, Typography } from "antd";
+import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -115,6 +116,7 @@ const ProjectHomepageScreen = () => {
           <LowPriorityIcon className="priorityIcon" />
         ),
       status: tableStatusTexts[issue.status],
+      dueDate: issue.dueDate ? dayjs(issue.dueDate).format("MMM DD YYYY") : "",
     }));
   }, [filteredIssues, navigate, projectId]);
 
