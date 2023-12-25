@@ -87,5 +87,25 @@ export const uploadFileToFirebase = async (
 
   const fileUrl = await getDownloadURL(ref(storage, metadata.fullPath));
 
-  return fileUrl;
+  return { fileUrl, fileName: metadata.name };
+};
+
+export const isImageFile = (filename: string) => {
+  return /\.(jpg|jpeg|png|gif|bmp|tiff)$/i.test(filename);
+};
+
+export const downloadFile = (url: string) => {
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "downloadedFile"; // You can set the filename here
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    })
+    .catch((err: any) => {
+      openNotification({ message: err });
+    });
 };

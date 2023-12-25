@@ -59,6 +59,28 @@
         background-color: #e07b9a;
         color: white;
       }
+      .attachedImageBox {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .attachedImage {
+        width: 300px;
+        height: 200px;
+        object-fit: contain;
+        border: 1px solid $text-dark-10;
+      }
+      .attachedFile {
+        &::before {
+          content: "";
+          display: inline-block;
+          margin-right: 6px;
+          height: 8px;
+          width: 8px;
+          border: 2px solid $text-dark-10;
+          background-color: white;
+          border-radius: 50%;
+        }
+      }
     }
     .historyBox {
       background-color: white;
