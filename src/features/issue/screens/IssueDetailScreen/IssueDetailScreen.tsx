@@ -193,7 +193,7 @@ const IssueDetailScreen = () => {
               className="creatorAvatar"
             />
           ) : (
-            <div className="creatorAvatar">
+            <div className="creatorAvatar flex-center">
               {issueDetail?.creatorUsername.charAt(0).toUpperCase()}
             </div>
           )}

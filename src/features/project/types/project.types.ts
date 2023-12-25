@@ -99,3 +99,18 @@ export type GetProjectMembersParams = {
   keyword?: string | null;
   role?: string | null;
 } & PaginationParams;
+
+export type NotificationsResponse = {
+  id: number;
+  isRead: boolean;
+  createdAt: string;
+  issueUpdateId: number;
+  subProjectId: number;
+  issueId: number;
+  issueKey: string;
+  subject: string;
+  status: number;
+  updateType: string;
+  creatorAvatarUrl: string;
+  creatorUsername: string;
+}[];

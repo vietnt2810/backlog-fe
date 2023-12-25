@@ -17,4 +17,8 @@ export const ProjectsEndpoints = {
     `sub-projects/${subProjectId}/issue-status`,
   SUB_PROJECTS_ISSUES: (subProjectId: string) =>
     `sub-projects/${subProjectId}/issues`,
+  NOTIFICATIONS: (projectId: string, userId: string) =>
+    `projects/${projectId}/users/${userId}/notifications`,
+  READ_NOTIFICATION: (notificationId: string) =>
+    `projects/notifications/${notificationId}`,
 };
