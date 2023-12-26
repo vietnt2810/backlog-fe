@@ -114,3 +114,10 @@ export type NotificationsResponse = {
   creatorAvatarUrl: string;
   creatorUsername: string;
 }[];
+
+export type RecentlyViewedIssuesResponse = {
+  issueId: number;
+  issueKey: string;
+  subject: string;
+  subProjectId: number;
+}[];
