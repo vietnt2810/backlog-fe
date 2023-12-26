@@ -30,6 +30,8 @@ import { openNotification } from "@/components/organisms/Notification/Notificati
 import { USER_ID } from "@/constants/constants";
 import { statusTexts } from "@/features/project/constants/project.constants";
 import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
+import useGetRecentlyViewedIssues from "@/features/project/hooks/useGetRecentlyViewedIssues";
+import useUpdateRecentlyViewedIssues from "@/features/project/hooks/useUpdateRecentlyViewedIssues";
 import {
   downloadFile,
   isImageFile,
@@ -57,6 +59,14 @@ const IssueDetailScreen = () => {
   const { isGetIssueDetailLoading, issueDetail, refetchIssueDetail } =
     useGetIssueDetail(String(issueId));
   const { isUpdateIssueLoading, updateIssue } = useUpdateIssue(String(issueId));
+  const { refetchRecentlyViewedIssues } = useGetRecentlyViewedIssues(
+    String(projectId),
+    String(localStorage.getItem(USER_ID))
+  );
+  const { updateRecentlyViewedIssues } = useUpdateRecentlyViewedIssues(
+    String(projectId),
+    String(localStorage.getItem(USER_ID))
+  );
 
   const [isUpdateIssueFormOpen, setIsUpdateIssueFormOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -139,6 +149,12 @@ const IssueDetailScreen = () => {
       form.setFieldValue("comment", undefined);
     });
   };
+
+  useEffect(() => {
+    updateRecentlyViewedIssues(String(issueId)).finally(() =>
+      refetchRecentlyViewedIssues()
+    );
+  }, [issueId, refetchRecentlyViewedIssues, updateRecentlyViewedIssues]);
 
   useEffect(() => {
     setTimeout(() => {

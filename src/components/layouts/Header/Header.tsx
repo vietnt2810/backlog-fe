@@ -27,6 +27,7 @@ import { notificationTexts } from "@/features/project/constants/project.constant
 import { ProjectPaths } from "@/features/project/constants/project.paths";
 import useGetNotifications from "@/features/project/hooks/useGetNotifications";
 import useGetProject from "@/features/project/hooks/useGetProject";
+import useGetRecentlyViewedIssues from "@/features/project/hooks/useGetRecentlyViewedIssues";
 import useGetSubProjects from "@/features/project/hooks/useGetSubProjects";
 import useUpdateReadNotification from "@/features/project/hooks/useUpdateReadNotification";
 import { SubProject } from "@/features/project/types/project.types";
@@ -55,6 +56,10 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
     String(localStorage.getItem(USER_ID))
   );
   const { readNotification } = useUpdateReadNotification();
+  const { recentlyViewedIssues } = useGetRecentlyViewedIssues(
+    String(projectId),
+    String(localStorage.getItem(USER_ID))
+  );
 
   const [
     isChangeUserInformationInProjectModalOpen,
@@ -94,7 +99,38 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
           >
             Dashboard
           </div>
-          <div className="headerItem">Recently viewed</div>
+
+          <Dropdown
+            className="dropdown"
+            placement="bottomLeft"
+            trigger={["click"]}
+            dropdownRender={() => (
+              <div className="recently-viewed-dropdown-container">
+                <div className="recently-viewed-header">Issues</div>
+                {recentlyViewedIssues?.map(issue => (
+                  <div
+                    className="recently-viewed-item cursor-pointer"
+                    onClick={() =>
+                      navigate(
+                        IssuePaths.ISSUE_DETAIL(
+                          String(projectId),
+                          String(issue.subProjectId),
+                          String(issue.issueId)
+                        )
+                      )
+                    }
+                  >
+                    <Typography.Text className="font-weight-half-bold">{`[${issue.issueKey}] `}</Typography.Text>
+                    <Typography.Text className="word-break-all">
+                      {issue.subject}
+                    </Typography.Text>
+                  </div>
+                ))}
+              </div>
+            )}
+          >
+            <div className="headerItem">Recently viewed</div>
+          </Dropdown>
           <div
             className="headerItem"
             onClick={() => setIsIssueCreateModalOpen(true)}
@@ -157,7 +193,7 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
                             <Typography.Text className="font-weight-half-bold">
                               {notification.issueKey}
                             </Typography.Text>
-                            <Typography.Text className="ml-1">
+                            <Typography.Text className="ml-1 work-break-all">
                               {notification.subject}
                             </Typography.Text>
                           </div>
@@ -195,9 +231,6 @@ const Header = ({ fromSubProject = false }: HeaderProps) => {
               <div className="header-dropdown-container">
                 <div className="header-dropdown-item">
                   <Typography className="text-dark-30">{`Hello, ${project?.username}`}</Typography>
-                </div>
-                <div className="header-dropdown-item">
-                  <Typography>Activity</Typography>
                 </div>
                 <div
                   className="header-dropdown-item"
