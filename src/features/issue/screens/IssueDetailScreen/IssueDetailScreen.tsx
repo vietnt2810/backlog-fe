@@ -1,8 +1,17 @@
 /* eslint-disable no-nested-ternary */
 import { memo, useEffect, useMemo, useState } from "react";
 
-import { DatePicker, InputNumber, Select, Typography } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import {
+  DatePicker,
+  InputNumber,
+  Select,
+  Typography,
+  Upload,
+  UploadFile,
+} from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { RcFile } from "antd/es/upload";
 import cx from "classnames";
 import dayjs from "dayjs";
 import { isEmpty, isEqual } from "lodash";
@@ -21,7 +30,12 @@ import { openNotification } from "@/components/organisms/Notification/Notificati
 import { USER_ID } from "@/constants/constants";
 import { statusTexts } from "@/features/project/constants/project.constants";
 import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
-import { downloadFile, isImageFile, isInvalidForm } from "@/utils/utils";
+import {
+  downloadFile,
+  isImageFile,
+  isInvalidForm,
+  uploadFileToFirebase,
+} from "@/utils/utils";
 
 import styles from "./IssueDetailScreen.module.scss";
 import useGetIssueDetail from "../../hooks/useGetIssueDetail";
@@ -45,6 +59,8 @@ const IssueDetailScreen = () => {
   const { isUpdateIssueLoading, updateIssue } = useUpdateIssue(String(issueId));
 
   const [isUpdateIssueFormOpen, setIsUpdateIssueFormOpen] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [isUploadToFireBase, setIsUploadToFireBase] = useState(false);
   const [initialFormValue, setInitialFormValue] = useState<any>();
 
   const memberOptions = useMemo(() => {
@@ -83,10 +99,35 @@ const IssueDetailScreen = () => {
     5: <div className="bg-status-color-5 status">Closed</div>,
   };
 
-  const handleUpdateIssue = () => {
+  const handleUpdateIssue = async () => {
+    const attachedFileList: any[] = [];
+
+    const uploadPromises = fileList.map(async file => {
+      setIsUploadToFireBase(true);
+      await uploadFileToFirebase(
+        "attachedFile",
+        String(Date.now()).concat(file.name),
+        file.originFileObj as RcFile
+      ).then(res => {
+        attachedFileList.push({
+          fileUrl: res.fileUrl,
+          fileName: res.fileName,
+        });
+      });
+    });
+
+    await Promise.all(uploadPromises).finally(() => {
+      setIsUploadToFireBase(false);
+      setFileList([]);
+    });
+
     updateIssue({
       ...form.getFieldsValue(),
       updaterId: String(localStorage.getItem(USER_ID)),
+      attachedFile: attachedFileList.length ? attachedFileList : undefined,
+      comment: form.getFieldValue("comment")
+        ? form.getFieldValue("comment")
+        : "",
     }).then(() => {
       openNotification({
         type: "success",
@@ -111,16 +152,8 @@ const IssueDetailScreen = () => {
   }, [location.hash]);
 
   useEffect(() => {
-    form.setFieldsValue({
-      status: issueDetail?.status,
-      assigneeId: issueDetail?.assigneeUserId,
-      startDate: issueDetail?.startDate ? dayjs(issueDetail?.startDate) : null,
-      dueDate: issueDetail?.dueDate ? dayjs(issueDetail?.dueDate) : null,
-      estimatedHour: issueDetail?.estimatedHour,
-      actualHour: issueDetail?.actualHour,
-    });
-
     setInitialFormValue({
+      attachedFile: undefined,
       comment: undefined,
       status: issueDetail?.status,
       assigneeId: issueDetail?.assigneeUserId,
@@ -276,9 +309,13 @@ const IssueDetailScreen = () => {
                 </>
               ))}
             </div>
-            <Typography className="font-weight-half-bold mt-4">
-              Attached Files
-            </Typography>
+            {issueDetail?.attachedFile.find(
+              file => !isImageFile(file.fileName)
+            ) && (
+              <Typography className="font-weight-half-bold mt-4">
+                Attached Files
+              </Typography>
+            )}
             <div className="mt-2">
               {issueDetail?.attachedFile.map(file => (
                 <>
@@ -393,6 +430,44 @@ const IssueDetailScreen = () => {
                   <pre>{item.content}</pre>
                 </Typography>
               )}
+              {item.attachedFile && (
+                <div className="mt-2">
+                  <div className="d-flex attachedImageBox">
+                    {item.attachedFile.map(file => (
+                      <>
+                        {isImageFile(file.fileName) && (
+                          <img
+                            src={file.fileUrl}
+                            alt="attachedFile"
+                            className="attachedImage"
+                          />
+                        )}
+                      </>
+                    ))}
+                  </div>
+                  {item.attachedFile.find(
+                    file => !isImageFile(file.fileName)
+                  ) && (
+                    <Typography className="font-weight-half-bold mt-4">
+                      Attached Files
+                    </Typography>
+                  )}
+                  <div className="mt-2">
+                    {item.attachedFile.map(file => (
+                      <>
+                        {!isImageFile(file.fileName) && (
+                          <Typography
+                            className="attachedFile text-pink cursor-pointer hoverTextUnderline"
+                            onClick={() => downloadFile(file.fileUrl)}
+                          >
+                            {file.fileName}
+                          </Typography>
+                        )}
+                      </>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -424,7 +499,22 @@ const IssueDetailScreen = () => {
             {!isUpdateIssueFormOpen ? (
               <Item className="mb-0 flex-align-center">
                 <Button
-                  onClick={() => setIsUpdateIssueFormOpen(true)}
+                  onClick={() => {
+                    setIsUpdateIssueFormOpen(true);
+                    form.setFieldsValue({
+                      attachedFile: undefined,
+                      status: issueDetail?.status,
+                      assigneeId: issueDetail?.assigneeUserId,
+                      startDate: issueDetail?.startDate
+                        ? dayjs(issueDetail?.startDate)
+                        : null,
+                      dueDate: issueDetail?.dueDate
+                        ? dayjs(issueDetail?.dueDate)
+                        : null,
+                      estimatedHour: issueDetail?.estimatedHour,
+                      actualHour: issueDetail?.actualHour,
+                    });
+                  }}
                   className="flex-align-center changeStatusButton"
                 >
                   <NotebookIcon className="icon" />
@@ -477,7 +567,26 @@ const IssueDetailScreen = () => {
             )}
           </div>
           {isUpdateIssueFormOpen && (
-            <div className="buttonContainer flex-justify-center my-5">
+            <Item name="attachedFile" className="uploadFile mt-4 mb-0">
+              <Upload
+                beforeUpload={() => {
+                  return false;
+                }}
+                fileList={fileList}
+                onChange={e => {
+                  setFileList(e.fileList);
+                  !e.fileList.length &&
+                    form.setFieldValue("attachedFile", undefined);
+                }}
+              >
+                <Button className="uploadButton" icon={<UploadOutlined />}>
+                  Upload
+                </Button>
+              </Upload>
+            </Item>
+          )}
+          {isUpdateIssueFormOpen && (
+            <div className="buttonContainer flex-justify-center my-4">
               <Item>
                 <Button
                   onClick={() => setIsUpdateIssueFormOpen(false)}
@@ -492,7 +601,8 @@ const IssueDetailScreen = () => {
                     disabled={
                       isInvalidForm({
                         form,
-                        isSubmitting: isUpdateIssueLoading,
+                        isSubmitting:
+                          isUpdateIssueLoading || isUploadToFireBase,
                       }) || isEqual(form.getFieldsValue(), initialFormValue)
                     }
                     onClick={handleUpdateIssue}

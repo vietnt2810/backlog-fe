@@ -378,6 +378,9 @@ const CreateEditIssueScreen = ({
             </div>
             <Item name="attachedFile" className="uploadFile">
               <Upload
+                beforeUpload={() => {
+                  return false;
+                }}
                 fileList={fileList}
                 onChange={e => {
                   setFileList(e.fileList);
