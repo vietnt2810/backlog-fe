@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import api from "@/api/api";
 
-import { IssuesEndpoints } from "../constants/issue.endpoints";
+import { IssuesEndpoints } from "../../issue/constants/issue.endpoints";
 
 const useDeleteMasterIssueType = () => {
   const { mutateAsync: deleteIssueType, isLoading: isDeleteIssueTypeLoading } =

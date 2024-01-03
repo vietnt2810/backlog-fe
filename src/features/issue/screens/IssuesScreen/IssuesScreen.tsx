@@ -20,7 +20,7 @@ import {
 } from "../../constants/issue.constants";
 import { IssuePaths } from "../../constants/issue.paths";
 import useGetIssues from "../../hooks/useGetIssues";
-import useGetMasterIssueTypes from "../../hooks/useGetMasterIssueTypes";
+import useGetMasterIssueTypes from "../../../settings/hooks/useGetMasterIssueTypes";
 
 const IssuesScreen = () => {
   const navigate = useNavigate();

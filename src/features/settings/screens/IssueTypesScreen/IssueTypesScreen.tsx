@@ -1,18 +1,19 @@
 import { memo, useMemo, useState } from "react";
 
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Modal, Table, Typography } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "@/components/atoms/Button/Button";
 import { openNotification } from "@/components/organisms/Notification/Notification";
 import { USER_ID } from "@/constants/constants";
-import useDeleteMasterIssueType from "@/features/issue/hooks/useDeleteMasterIssueType";
-import useGetMasterIssueTypes from "@/features/issue/hooks/useGetMasterIssueTypes";
 import useGetMemberDetail from "@/features/project/hooks/useGetMemberDetail";
+import useDeleteMasterIssueType from "@/features/settings/hooks/useDeleteMasterIssueType";
+import useGetMasterIssueTypes from "@/features/settings/hooks/useGetMasterIssueTypes";
 
 import styles from "./IssueTypesScreen.module.scss";
 import AddIssueTypeModal from "../../components/AddIssueTypeModal/AddIssueTypeModal";
+import UpdateIssueTypeModal from "../../components/UpdateIssueTypeModal/UpdateIssueTypeModal";
 import { ISSUE_TYPES_TABLE_COLUMNS } from "../../constants/settings.constants";
 import { SettingPaths } from "../../constants/settings.path";
 
@@ -35,15 +36,26 @@ const IssueTypesScreen = () => {
   const [isAddIssueTypeModalOpen, setIsAddIssueTypeModalOpen] = useState(false);
   const [isDeleteIssueTypeModalOpen, setIsDeleteIssueTypeModalOpen] =
     useState<number>();
+  const [isUpdateIssueTypeModalOpen, setIsUpdateIssueTypeModalOpen] =
+    useState<number>();
 
   const issueTypesTableData = useMemo(() => {
     return masterIssueTypes?.map(issueType => ({
       issueType: <Typography>{issueType.issueType}</Typography>,
       action: memberDetail?.role && !issueType.isCommon && (
-        <DeleteOutlined
-          className="hoverBolder"
-          onClick={() => setIsDeleteIssueTypeModalOpen(issueType.id)}
-        />
+        <>
+          <EditOutlined
+            title="Edit"
+            className="cursor-pointer"
+            onClick={() => setIsUpdateIssueTypeModalOpen(issueType.id)}
+          />
+          <Typography.Text> | </Typography.Text>
+          <DeleteOutlined
+            title="Delete"
+            className="cursor-pointer"
+            onClick={() => setIsDeleteIssueTypeModalOpen(issueType.id)}
+          />
+        </>
       ),
     }));
   }, [masterIssueTypes, memberDetail?.role]);
@@ -108,6 +120,17 @@ const IssueTypesScreen = () => {
           refetchIssueTypes={() => {
             refetchMasterIssueTypes();
             setIsAddIssueTypeModalOpen(false);
+          }}
+        />
+      )}
+      {!!isUpdateIssueTypeModalOpen && (
+        <UpdateIssueTypeModal
+          issueTypeId={isUpdateIssueTypeModalOpen}
+          open={!!isUpdateIssueTypeModalOpen}
+          onCancel={() => setIsUpdateIssueTypeModalOpen(undefined)}
+          refetchIssueTypes={() => {
+            refetchMasterIssueTypes();
+            setIsUpdateIssueTypeModalOpen(undefined);
           }}
         />
       )}

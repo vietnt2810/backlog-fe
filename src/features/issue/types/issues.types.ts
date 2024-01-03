@@ -121,7 +121,14 @@ export type IssuesResponse = {
   };
 };
 
-export type AddIssueTypeRequestBody = {
+export type AddUpdateIssueTypeRequestBody = {
   issueType: string;
+  color: string;
   projectId: string;
+  issueTypeId?: number;
+};
+
+export type MasterIssueTypeDetailResponse = {
+  issueType: string;
+  color: string;
 };
