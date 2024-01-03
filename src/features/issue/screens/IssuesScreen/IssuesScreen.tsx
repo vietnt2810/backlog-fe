@@ -14,13 +14,13 @@ import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers"
 import { tableStatusTexts } from "@/features/project/screens/ProjectHomepageScreen/ProjectHomepageScreen";
 
 import styles from "./IssuesScreen.module.scss";
+import useGetMasterIssueTypes from "../../../settings/hooks/useGetMasterIssueTypes";
 import {
   ISSUES_STATUSES,
   ISSUES_TABLE_COLUMNS,
 } from "../../constants/issue.constants";
 import { IssuePaths } from "../../constants/issue.paths";
 import useGetIssues from "../../hooks/useGetIssues";
-import useGetMasterIssueTypes from "../../../settings/hooks/useGetMasterIssueTypes";
 
 const IssuesScreen = () => {
   const navigate = useNavigate();

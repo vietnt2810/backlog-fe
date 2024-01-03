@@ -27,10 +27,10 @@ import { requiredRules } from "@/helpers/validations.helpers";
 import { isInvalidForm, uploadFileToFirebase } from "@/utils/utils";
 
 import styles from "./CreateEditIssueScreen.module.scss";
+import useGetMasterIssueTypes from "../../../settings/hooks/useGetMasterIssueTypes";
 import { IssuePaths } from "../../constants/issue.paths";
 import useCreateIssue from "../../hooks/useCreateIssue";
 import useGetIssueDetail from "../../hooks/useGetIssueDetail";
-import useGetMasterIssueTypes from "../../../settings/hooks/useGetMasterIssueTypes";
 import useUpdateIssue from "../../hooks/useUpdateIssue";
 
 interface CreateEditIssueScreenProps {
