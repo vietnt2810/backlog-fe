@@ -70,7 +70,6 @@
           flex-direction: column;
         }
         .uploadButton {
-          color: $text-pink;
           border: 1px solid $text-dark-10;
           background-color: white;
           &:hover {
@@ -79,6 +78,7 @@
           }
           span {
             font-weight: 600;
+            color: $text-pink !important;
           }
         }
       }

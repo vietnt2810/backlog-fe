@@ -4,6 +4,7 @@ export type MasterIssueType = {
   id: number;
   issueType: string;
   isCommon: boolean;
+  color: string;
 };
 
 export type MasterIssueTypesResponse = MasterIssueType[];
@@ -38,7 +39,8 @@ export type IssueDetailResponse = {
   description: string;
   status: number;
   issueType: string;
-  type: number;
+  issueTypeColor: string;
+  issueTypeId: number;
   priority: number;
   startDate: string | null;
   dueDate: string | null;
@@ -99,6 +101,7 @@ export type IssuesResponse = {
     subject: string;
     status: number;
     issueType: string;
+    issueTypeColor: string;
     priority: number;
     startDate: string | null;
     dueDate: string | null;
