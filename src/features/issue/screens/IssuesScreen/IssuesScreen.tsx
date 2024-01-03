@@ -71,7 +71,14 @@ const IssuesScreen = () => {
   const issuesTableData = useMemo(() => {
     return issues?.data.map(issue => ({
       ...issue,
-      issueType: <div className="issueType text-white">{issue.issueType}</div>,
+      issueType: (
+        <div
+          className="issueType text-white"
+          style={{ background: issue.issueTypeColor }}
+        >
+          {issue.issueType}
+        </div>
+      ),
       issueKey: (
         <Typography
           onClick={() =>
@@ -161,7 +168,7 @@ const IssuesScreen = () => {
               searchParams.set("status", status.value);
               setSearchParams(searchParams);
             }}
-            className={"status text-dark ml-3 font-14".concat(
+            className={"status text-dark ml-3 font-14 cursor-pointer".concat(
               status.value === searchParams.get("status") ? " activeStatus" : ""
             )}
           >

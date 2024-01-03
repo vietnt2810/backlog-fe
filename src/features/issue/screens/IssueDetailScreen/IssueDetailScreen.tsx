@@ -193,7 +193,10 @@ const IssueDetailScreen = () => {
     >
       <div className="flex-space-between">
         <div className="d-flex">
-          <Typography.Text className="issueType flex-align-center">
+          <Typography.Text
+            className="issueType flex-align-center"
+            style={{ background: issueDetail?.issueTypeColor }}
+          >
             {issueDetail?.issueType}
           </Typography.Text>
           <Typography.Text className="ml-1">

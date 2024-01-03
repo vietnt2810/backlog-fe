@@ -228,7 +228,7 @@ const CreateEditIssueScreen = ({
       (setFileList(initialFileList),
       form.setFieldsValue({
         attachedFile: initialFileList,
-        type: issueDetail?.type,
+        issueTypeId: issueDetail?.issueTypeId,
         subject: issueDetail?.subject,
         description: issueDetail?.description,
         priority: issueDetail?.priority,
@@ -243,7 +243,7 @@ const CreateEditIssueScreen = ({
       }),
       setInitialFormValue({
         attachedFile: initialFileList,
-        type: issueDetail?.type,
+        issueTypeId: issueDetail?.issueTypeId,
         subject: issueDetail?.subject,
         description: issueDetail?.description,
         priority: issueDetail?.priority,
@@ -275,7 +275,7 @@ const CreateEditIssueScreen = ({
           {issueId ? "Edit Issue" : "Add Issue"}
         </Typography>
         <Form form={form} colon={false}>
-          <Item name="type" className="selectButtonItem my-3">
+          <Item name="issueTypeId" className="selectButtonItem my-3">
             <Select
               allowClear
               placeholder="Type"
@@ -420,7 +420,7 @@ const CreateEditIssueScreen = ({
                         ? isInvalidForm({
                             form,
                             fieldsRequire: [
-                              "type",
+                              "issueTypeId",
                               "subject",
                               "description",
                               "status",
@@ -435,7 +435,7 @@ const CreateEditIssueScreen = ({
                         : isInvalidForm({
                             form,
                             fieldsRequire: [
-                              "type",
+                              "issueTypeId",
                               "subject",
                               "description",
                               "status",
