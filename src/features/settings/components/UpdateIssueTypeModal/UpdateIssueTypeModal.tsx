@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { Input, Modal, ModalProps } from "antd";
 import { ColorPicker } from "antd/lib";
@@ -7,40 +7,50 @@ import { useParams } from "react-router-dom";
 
 import Button from "@/components/atoms/Button/Button";
 import Form, { Item, useForm } from "@/components/atoms/Form/Form";
+import Loader from "@/components/organisms/Loader/Loader";
 import { openNotification } from "@/components/organisms/Notification/Notification";
-import useAddIssueType from "@/features/settings/hooks/useAddIssueType";
 import { requiredRules } from "@/helpers/validations.helpers";
 import { isInvalidForm } from "@/utils/utils";
 
-import styles from "./AddIssueTypeModal.module.scss";
+import styles from "./UpdateIssueTypeModal.module.scss";
+import useGetMasterIssueType from "../../hooks/useGetMasterIssueType";
+import useUpdateMasterIssueType from "../../hooks/useUpdateMasterIssueType";
 
-interface AddIssueTypeModalProps extends ModalProps {
+interface UpdateIssueTypeModalProps extends ModalProps {
+  issueTypeId: number;
   refetchIssueTypes: () => void;
   onCancel: () => void;
 }
 
-const AddIssueTypeModal = ({
+const UpdateIssueTypeModal = ({
+  issueTypeId,
   refetchIssueTypes,
   onCancel,
   ...props
-}: AddIssueTypeModalProps) => {
+}: UpdateIssueTypeModalProps) => {
   const [form] = useForm();
   const { projectId } = useParams();
 
-  const { addIssueType, isAddIssueTypeLoading } = useAddIssueType();
+  const { updateIssueType, isUpdateIssueTypeLoading } =
+    useUpdateMasterIssueType();
+  const { isGetMasterIssueTypeLoading, masterIssueType } =
+    useGetMasterIssueType(String(issueTypeId));
 
-  const [colorHex, setColorHex] = useState<Color | string>("#f42858");
+  const [colorHex, setColorHex] = useState<Color | string | undefined>(
+    "f42858"
+  );
   const [formatHex, setFormatHex] = useState<ColorPickerProps["format"]>("hex");
 
   const hexString = useMemo(
-    () => (typeof colorHex === "string" ? colorHex : colorHex.toHexString()),
+    () => (typeof colorHex === "string" ? colorHex : colorHex?.toHexString()),
     [colorHex]
   );
 
-  const handleAddIssueType = () => {
-    addIssueType({
+  const handleUpdateIssueType = () => {
+    updateIssueType({
       ...form.getFieldsValue(),
-      color: typeof colorHex === "string" ? colorHex : colorHex.toHexString(),
+      color: typeof colorHex === "string" ? colorHex : colorHex?.toHexString(),
+      issueTypeId,
       projectId: String(projectId),
     })
       .then(() => {
@@ -53,8 +63,20 @@ const AddIssueTypeModal = ({
       .catch(err => openNotification({ message: err.message }));
   };
 
+  useEffect(() => {
+    form.setFieldsValue(masterIssueType);
+    setColorHex(masterIssueType?.color);
+  }, [form, masterIssueType]);
+
+  if (isGetMasterIssueTypeLoading) return <Loader />;
+
   return (
-    <Modal closable={false} footer={false} title="Add an issue type" {...props}>
+    <Modal
+      closable={false}
+      footer={false}
+      title="Editing an issue type"
+      {...props}
+    >
       <Form layout="vertical" form={form}>
         <Item
           name="issueType"
@@ -71,13 +93,12 @@ const AddIssueTypeModal = ({
           required
         >
           <ColorPicker
-            defaultValue="#f42858"
             format={formatHex}
             value={colorHex}
             onChange={setColorHex}
             onFormatChange={setFormatHex}
           />
-          <span className="ml-1">HEX: {hexString.toUpperCase()}</span>
+          <span className="ml-1">HEX: {hexString?.toUpperCase()}</span>
         </Item>
         <div className="mt-4 flex-justify-end">
           <Item className="mr-2">
@@ -88,15 +109,15 @@ const AddIssueTypeModal = ({
           <Item shouldUpdate>
             {() => (
               <Button
-                onClick={handleAddIssueType}
+                onClick={handleUpdateIssueType}
                 type="primary"
                 disabled={isInvalidForm({
                   form,
                   fieldsRequire: ["issueType"],
-                  isSubmitting: isAddIssueTypeLoading,
+                  isSubmitting: isUpdateIssueTypeLoading,
                 })}
               >
-                Create
+                Update
               </Button>
             )}
           </Item>
@@ -106,4 +127,4 @@ const AddIssueTypeModal = ({
   );
 };
 
-export default memo(AddIssueTypeModal);
+export default memo(UpdateIssueTypeModal);

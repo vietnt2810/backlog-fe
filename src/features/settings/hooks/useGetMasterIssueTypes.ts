@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 
 import api from "@/api/api";
 
-import { IssuesEndpoints } from "../constants/issue.endpoints";
-import { MasterIssueTypesResponse } from "../types/issues.types";
+import { IssuesEndpoints } from "../../issue/constants/issue.endpoints";
+import { MasterIssueTypesResponse } from "../../issue/types/issues.types";
 
 const useGetMasterIssueTypes = (projectId: string) => {
   const {

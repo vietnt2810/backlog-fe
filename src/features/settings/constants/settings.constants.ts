@@ -48,7 +48,7 @@ export const ISSUE_TYPES_TABLE_COLUMNS: ColumnsType<any> = [
     width: "200px",
   },
   {
-    title: "Delete",
+    title: "Action",
     dataIndex: "action",
     width: "50px",
     align: "center",
