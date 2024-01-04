@@ -8,9 +8,7 @@ const useDeleteMember = (projectId: string) => {
   const { mutateAsync: deleteMember, isLoading: isDeleteMemberLoading } =
     useMutation({
       mutationFn: (memberId: string) => {
-        return api.delete(
-          ProjectsEndpoints.PROJECT_MEMBER_DETAIL(projectId, memberId)
-        );
+        return api.put(ProjectsEndpoints.DELETE_MEMBER(projectId, memberId));
       },
     });
 

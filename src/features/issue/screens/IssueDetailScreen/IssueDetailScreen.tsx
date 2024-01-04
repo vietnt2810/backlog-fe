@@ -252,6 +252,9 @@ const IssueDetailScreen = () => {
           <div className="ml-2">
             <Typography className="font-weight-bold">
               {issueDetail?.creatorUsername}
+              {!!issueDetail?.isCreatorRemoved && (
+                <span className="text-dark-10 ml-1">(Deactivated)</span>
+              )}
             </Typography>
             <Typography className="text-dark-30 font-13">{`Created ${dayjs(
               issueDetail?.createdAt
@@ -300,6 +303,11 @@ const IssueDetailScreen = () => {
               <Typography className="ml-2">
                 {issueDetail?.assigneeUsername}
               </Typography>
+              {!!issueDetail?.isAssigneeRemoved && (
+                <Typography className="text-dark-10 ml-1">
+                  (Deactivated)
+                </Typography>
+              )}
             </div>
           </div>
         </div>

@@ -50,8 +50,10 @@ export type IssueDetailResponse = {
   assigneeUserId: number;
   assigneeAvatarUrl: string | null;
   assigneeUsername: string;
+  isAssigneeRemoved: boolean;
   creatorAvatarUrl: string | null;
   creatorUsername: string;
+  isCreatorRemoved: boolean;
   createdAt: string;
   attachedFile:
     | {

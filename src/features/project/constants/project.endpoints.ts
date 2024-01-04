@@ -23,4 +23,6 @@ export const ProjectsEndpoints = {
     `projects/notifications/${notificationId}`,
   RECENTLY_VIEWED_ISSUES: (projectId: string, userId: string) =>
     `projects/${projectId}/users/${userId}/recently-viewed`,
+  DELETE_MEMBER: (projectId: string, memberId: string) =>
+    `projects/${projectId}/members/${memberId}/delete-member`,
 };
