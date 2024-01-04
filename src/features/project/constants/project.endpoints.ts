@@ -5,6 +5,8 @@ export const ProjectsEndpoints = {
   PROJECT_MEMBERS: (projectId: string) => `projects/${projectId}/members`,
   PROJECT_MEMBER_DETAIL: (projectId: string, memberId: string) =>
     `projects/${projectId}/members/${memberId}`,
+  UPDATE_MEMBER_ROLE: (projectId: string, memberId: string) =>
+    `projects/${projectId}/members/${memberId}/change-role`,
   SUB_PROJECTS: (projectId: string) => `projects/${projectId}/sub-projects`,
   SUB_PROJECT_DETAIL: (subProjectId: string) => `sub-projects/${subProjectId}`,
   USER_ISSUES: (projectId: string, userId: string) =>

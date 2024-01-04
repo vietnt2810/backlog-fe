@@ -16,7 +16,7 @@ export type ProjectMembersResponse = {
   data: {
     userId: number;
     username: string;
-    role: boolean;
+    role: number;
     joinedDate: string;
     user: {
       email: string;
@@ -32,7 +32,7 @@ export type ProjectMembersResponse = {
 
 export type ProjectMemberDetailResponse = {
   username: string;
-  role: boolean;
+  role: number;
 };
 
 export type SubProjectsResponse = SubProject[];

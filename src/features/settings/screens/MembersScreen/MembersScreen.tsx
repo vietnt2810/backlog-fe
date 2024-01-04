@@ -12,6 +12,7 @@ import { USER_ID } from "@/constants/constants";
 import useDeleteMember from "@/features/project/hooks/useDeleteMember";
 import useGetMemberDetail from "@/features/project/hooks/useGetMemberDetail";
 import useGetProjectMembers from "@/features/project/hooks/useGetProjectMembers";
+import useUpdateMemberRole from "@/features/project/hooks/useUpdateMemberRole";
 
 import styles from "./MembersScreen.module.scss";
 import AddMemberModal from "../../components/AddMemberModal/AddMemberModal";
@@ -32,6 +33,9 @@ const MembersScreen = () => {
     String(projectId),
     String(localStorage.getItem(USER_ID))
   );
+  const { updateMemberRole, isUpdateMemberRoleLoading } = useUpdateMemberRole(
+    String(projectId)
+  );
   const { deleteMember, isDeleteMemberLoading } = useDeleteMember(
     String(projectId)
   );
@@ -45,6 +49,18 @@ const MembersScreen = () => {
   const [isDeleteMemberModalOpen, setIsDeleteMemberModalOpen] =
     useState<number>();
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+  const [triggerReload, setTriggerReload] = useState(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleUpdateMemberRole = (memberId: number, role: number) => {
+    updateMemberRole({ memberId, role: role === 1 ? 0 : 1 })
+      .then(() => {
+        openNotification({
+          type: "success",
+          message: "You have successfully updated a member",
+        });
+      })
+      .then(() => setTriggerReload(!triggerReload));
+  };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleDeleteMember = () => {
@@ -53,7 +69,7 @@ const MembersScreen = () => {
         type: "success",
         message: "You have successfully deleted a member",
       });
-      refetchProjectsMembers();
+      setTriggerReload(!triggerReload);
       setIsDeleteMemberModalOpen(undefined);
     });
   };
@@ -80,15 +96,29 @@ const MembersScreen = () => {
       ),
       action: memberDetail?.role &&
         Number(localStorage.getItem(USER_ID)) !== member.userId && (
-          <Button
-            onClick={() => setIsDeleteMemberModalOpen(member.userId)}
-            className="button"
-          >
-            Delete
-          </Button>
+          <div className="flex-center">
+            <Button
+              disabled={isUpdateMemberRoleLoading}
+              onClick={() => handleUpdateMemberRole(member.userId, member.role)}
+              type="default"
+            >
+              {member.role ? "Demote" : "Promote"}
+            </Button>
+            <Button
+              onClick={() => setIsDeleteMemberModalOpen(member.userId)}
+              className="button ml-2"
+            >
+              Remove
+            </Button>
+          </div>
         ),
     }));
-  }, [memberDetail?.role, projectMembers?.data]);
+  }, [
+    handleUpdateMemberRole,
+    isUpdateMemberRoleLoading,
+    memberDetail?.role,
+    projectMembers?.data,
+  ]);
 
   useEffect(() => {
     form.setFieldValue("keyword", searchParams.get("keyword"));
@@ -96,7 +126,7 @@ const MembersScreen = () => {
 
   useEffect(() => {
     refetchProjectsMembers();
-  }, [refetchProjectsMembers, searchParams]);
+  }, [refetchProjectsMembers, searchParams, triggerReload]);
 
   return (
     <div className={styles.container}>
@@ -154,7 +184,7 @@ const MembersScreen = () => {
         </Button>
       )}
       <Table
-        loading={isGetProjectMembersLoading}
+        loading={isGetProjectMembersLoading || isUpdateMemberRoleLoading}
         dataSource={membersTableData}
         columns={MEMBER_TABLE_COLUMNS}
         className="membersTable mt-2"

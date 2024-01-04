@@ -34,7 +34,7 @@ export const MEMBER_TABLE_COLUMNS: ColumnsType<any> = [
     align: "center",
   },
   {
-    title: " ",
+    title: "Action",
     dataIndex: "action",
     width: "80px",
     align: "center",
