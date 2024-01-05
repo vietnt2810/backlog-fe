@@ -15,6 +15,7 @@ import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
 import AUTH_ROUTES from "@/features/auth/routes/auth.routes";
 import { RouteItemDef } from "@/types/route.types";
 
+import CHAT_ROUTES from "./features/chat/routes/chat.routes";
 import { DashboardPathsEnum } from "./features/dashboard/constants/dashboard.paths";
 import DASHBOARD_ROUTES from "./features/dashboard/routes/dashboard.routes";
 import ISSUE_ROUTES from "./features/issue/routes/issue.routes";
@@ -56,6 +57,7 @@ const AppRoutes = () => {
     ...PROJECT_ROUTES,
     ...ISSUE_ROUTES,
     ...SETTING_ROUTES,
+    ...CHAT_ROUTES,
   ];
 
   return (

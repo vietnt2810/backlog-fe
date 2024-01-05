@@ -1,0 +1,8 @@
+@import "@/styles/colors";
+
+.container {
+  display: flex;
+  height: calc(100% - 20px);
+  margin-bottom: 20px;
+  border: 1px solid $text-dark-10;
+}

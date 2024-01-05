@@ -1,0 +1,49 @@
+@import "@/styles/colors";
+
+.container {
+  position: relative;
+  overflow-y: auto;
+  height: 100%;
+  width: 35%;
+  padding: 10px;
+  background-color: #f7ebef;
+
+  :global {
+    .conversation {
+      height: 60px;
+      padding: 5px;
+      margin-bottom: 15px;
+      border: 1px solid $text-dark-20;
+      border-radius: 10px;
+    }
+    .chosenContact {
+      background-color: #e7b8c6;
+    }
+    .avatar {
+      width: 32px !important;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 50%;
+      background-color: #e07b9a;
+      color: white;
+      border: 1px solid $text-dark-30;
+    }
+    .contentBox {
+      width: 125px;
+    }
+    .openNewContactChat {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background-color: $text-pink;
+      font-size: 30px;
+      color: white;
+      &:hover {
+        filter: brightness(1.1);
+      }
+    }
+  }
+}

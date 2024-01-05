@@ -66,6 +66,7 @@ const CreateEditProjectModal = ({
 
   return (
     <Modal
+      onCancel={onCancel}
       destroyOnClose
       width="700px"
       closable={false}
