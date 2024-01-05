@@ -7,12 +7,14 @@ import {
   PlusOutlined,
   ProfileOutlined,
   SettingOutlined,
+  WechatOutlined,
 } from "@ant-design/icons";
 import { Menu, Tooltip, Typography } from "antd";
 import cx from "classnames";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { MAX_VISIBLE_MEMBERS } from "@/constants/constants";
+import { ChatPaths } from "@/features/chat/constants/chat.paths";
 import { IssuePaths } from "@/features/issue/constants/issue.paths";
 import ProjectMembersModal from "@/features/project/components/ProjectMembersModal/ProjectMembersModal";
 import { ProjectPaths } from "@/features/project/constants/project.paths";
@@ -84,6 +86,16 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       },
       {
         key: "4",
+        label: (
+          <div>
+            <WechatOutlined />
+            <span>Chat</span>
+          </div>
+        ),
+        path: ChatPaths.CHAT_SCREEN(String(projectId), String(subProjectId)),
+      },
+      {
+        key: "5",
         label: (
           <div>
             <SettingOutlined />

@@ -1,0 +1,78 @@
+@import "@/styles/colors";
+
+.container {
+  position: relative;
+  width: 100%;
+  padding: 10px 0 20px;
+  background-color: white;
+
+  :global {
+    .chatHeader {
+      top: 0;
+      padding: 0 20px 10px;
+      border-bottom: 1px solid $text-dark-10;
+    }
+    .avatar {
+      width: 42px;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 50%;
+      background-color: #e07b9a;
+      color: white;
+      font-size: 18px;
+    }
+    .chatContent {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      height: calc(100% - 84px);
+      padding: 20px;
+      .message {
+        max-width: 85%;
+        padding: 10px;
+        border-radius: 20px;
+      }
+      .currentUserMessage {
+        align-self: flex-end;
+        background-color: #e07b9a;
+      }
+      .contactUserMessage {
+        align-self: flex-start;
+        background-color: #f7ebef;
+      }
+      .timeline {
+        position: relative;
+        right: 0;
+      }
+    }
+    .formInput {
+      position: absolute;
+      bottom: 0;
+      width: calc(100%);
+      padding: 0px 20px 10px;
+      .chatInput {
+        width: 100%;
+        input {
+          border: 2px solid pink;
+        }
+      }
+      .sendButton {
+        border: 1px solid $text-pink;
+        background: none;
+        .sendIcon {
+          color: $text-pink;
+        }
+        &:hover {
+          border: 1px solid white !important;
+          background-color: $text-pink;
+          .sendIcon {
+            color: white;
+          }
+        }
+        &:disabled {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}

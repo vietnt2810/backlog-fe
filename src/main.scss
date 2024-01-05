@@ -372,3 +372,9 @@ p {
     overflow: auto;
   }
 }
+
+.newContactChatModal {
+  .ant-modal-content {
+    padding-bottom: 4px;
+  }
+}
