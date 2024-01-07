@@ -27,7 +27,7 @@ const ChatSideBar = ({
       {conversations?.map((conversation, index) => (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
-          className={"conversation flex-space-between".concat(
+          className={"cursor-pointer conversation flex-space-between".concat(
             index === chosenContact ? " chosenContact" : ""
           )}
           onClick={() => setChosenContact(index)}

@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useRef } from "react";
 
 import { MessageOutlined } from "@ant-design/icons";
 import { Timestamp } from "@firebase/firestore";
@@ -22,11 +22,18 @@ interface ChatContentInterface {
 
 const ChatContent = ({ contactConversation }: ChatContentInterface) => {
   const { projectId } = useParams();
-
   const [form] = useForm();
   const { createDocument } = useCreateDocument("chat");
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const { user } = useGetUser(String(localStorage.getItem(USER_ID)));
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  };
 
   const handleSendMessage = () => {
     createDocument({
@@ -44,6 +51,10 @@ const ChatContent = ({ contactConversation }: ChatContentInterface) => {
       openNotification({ type: "success", message: "Send success" });
     });
   };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [contactConversation]);
 
   return (
     <div className={styles.container}>
@@ -65,7 +76,7 @@ const ChatContent = ({ contactConversation }: ChatContentInterface) => {
               {contactConversation?.[0].username}
             </Typography>
           </div>
-          <div className="chatContent">
+          <div className="chatContent" ref={chatContainerRef}>
             {contactConversation?.[1].map((conversation: any) => (
               <>
                 {conversation.sender.id ===
@@ -74,7 +85,7 @@ const ChatContent = ({ contactConversation }: ChatContentInterface) => {
                     <Typography className="text-white">
                       {conversation.content}
                     </Typography>
-                    <Typography className="text-white-10 timeline">
+                    <Typography className="text-white-10 text-right">
                       {dayjs(conversation.createdAt.toDate()).format(
                         "DD/MM/YYYY HH:mm"
                       )}
@@ -83,7 +94,7 @@ const ChatContent = ({ contactConversation }: ChatContentInterface) => {
                 ) : (
                   <div className="contactUserMessage message mb-3">
                     <Typography>{conversation.content}</Typography>
-                    <Typography className="text-dark-10">
+                    <Typography className="text-dark-10 text-right">
                       {dayjs(conversation.createdAt.toDate()).format(
                         "DD/MM/YYYY HH:mm"
                       )}
