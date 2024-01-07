@@ -10,7 +10,6 @@ import {
 
 import { AuthenticationContext } from "@/components/organisms/AuthenticationProvider/AuthenticationProvider";
 import Loader from "@/components/organisms/Loader/Loader";
-import { AdminsPathsEnum } from "@/features/admins/constants/admins.paths";
 import { AuthPathsEnum } from "@/features/auth/constants/auth.paths";
 import AUTH_ROUTES from "@/features/auth/routes/auth.routes";
 import { RouteItemDef } from "@/types/route.types";
@@ -19,6 +18,8 @@ import CHAT_ROUTES from "./features/chat/routes/chat.routes";
 import { DashboardPathsEnum } from "./features/dashboard/constants/dashboard.paths";
 import DASHBOARD_ROUTES from "./features/dashboard/routes/dashboard.routes";
 import ISSUE_ROUTES from "./features/issue/routes/issue.routes";
+import { NotFoundPathsEnum } from "./features/notFound/constants/notFound.paths";
+import NOT_FOUND_ROUTES from "./features/notFound/routes/notFound.routes";
 import PROJECT_ROUTES from "./features/project/routes/project.routes";
 import SETTING_ROUTES from "./features/settings/routes/settings.routes";
 
@@ -52,6 +53,7 @@ const RouteWrapper = ({ route }: { route: RouteItemDef }) => {
 
 const AppRoutes = () => {
   const ROUTE_LIST: RouteItemDef[] = [
+    ...NOT_FOUND_ROUTES,
     ...AUTH_ROUTES,
     ...DASHBOARD_ROUTES,
     ...PROJECT_ROUTES,
@@ -73,7 +75,7 @@ const AppRoutes = () => {
           ))}
           <Route
             path="*"
-            element={<Navigate to={AdminsPathsEnum.NOT_FOUND} replace />}
+            element={<Navigate to={NotFoundPathsEnum.NOT_FOUND} replace />}
           />
         </Routes>
       </BrowserRouter>

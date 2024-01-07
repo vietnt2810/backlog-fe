@@ -14,7 +14,7 @@ export type ProjectsResponse = {
 export type UpdateUserRequestBody = {
   email: string;
   username: string;
-  avatarUrl?: string | null;
+  avatarUrl?: any;
 };
 
 export type CreateEditProjectRequestBody = {
