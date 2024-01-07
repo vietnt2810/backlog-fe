@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { memo, useEffect, useMemo, useState } from "react";
 
-import { UploadOutlined } from "@ant-design/icons";
+import { FireOutlined, UploadOutlined } from "@ant-design/icons";
 import {
   DatePicker,
   InputNumber,
@@ -72,6 +72,8 @@ const IssueDetailScreen = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [isUploadToFireBase, setIsUploadToFireBase] = useState(false);
   const [initialFormValue, setInitialFormValue] = useState<any>();
+
+  const currentDate = dayjs();
 
   const memberOptions = useMemo(() => {
     return projectMembers?.data.map(member => {
@@ -216,11 +218,22 @@ const IssueDetailScreen = () => {
           <Typography.Text className="font-13 text-dark-30">
             Due Date
           </Typography.Text>
-          <Typography.Text className="ml-1 mr-3">
+          <Typography.Text
+            className={
+              dayjs(issueDetail?.dueDate).isBefore(currentDate)
+                ? "expiredDueDate ml-1"
+                : "ml-1 mr-3"
+            }
+          >
             {issueDetail?.dueDate
               ? dayjs(issueDetail?.dueDate).format("ddd MMM. DD, YYYY")
               : ""}
           </Typography.Text>
+          {dayjs(issueDetail?.dueDate).isBefore(currentDate) && (
+            <Typography.Text>
+              <FireOutlined className="ml-1 expiredDueDate mr-3" />
+            </Typography.Text>
+          )}
           {tableStatusTexts[Number(issueDetail?.status)]}
         </div>
       </div>

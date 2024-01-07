@@ -3,6 +3,9 @@
 .container {
   padding-bottom: 80px;
   :global {
+    .expiredDueDate {
+      color: red;
+    }
     .issueType {
       width: fit-content;
       height: 20px;

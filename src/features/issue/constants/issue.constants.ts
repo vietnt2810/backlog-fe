@@ -71,13 +71,13 @@ export const ISSUES_TABLE_COLUMNS: ColumnsType<any> = [
   {
     title: "Start Date",
     dataIndex: "startDate",
-    width: "125px",
+    width: "130px",
     align: "center",
   },
   {
     title: "Due Date",
     dataIndex: "dueDate",
-    width: "125px",
+    width: "130px",
     align: "center",
   },
   {
