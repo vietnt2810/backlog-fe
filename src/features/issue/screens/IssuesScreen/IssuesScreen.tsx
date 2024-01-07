@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { memo, useEffect, useMemo } from "react";
 
+import { FireOutlined } from "@ant-design/icons";
 import { Input, Select, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -39,6 +40,8 @@ const IssuesScreen = () => {
       page: searchParams.get("page"),
     }
   );
+
+  const currentDate = dayjs();
 
   const memberOptions = useMemo(() => {
     return projectMembers?.data.map(member => {
@@ -129,7 +132,22 @@ const IssuesScreen = () => {
       startDate: issue.startDate
         ? dayjs(issue.startDate).format("MMM DD, YYYY")
         : "",
-      dueDate: issue.dueDate ? dayjs(issue.dueDate).format("MMM DD, YYYY") : "",
+      dueDate: issue.dueDate ? (
+        <div className="flex-justify-center">
+          <Typography
+            className={
+              dayjs(issue.dueDate).isBefore(currentDate) ? "expiredDueDate" : ""
+            }
+          >
+            {dayjs(issue.dueDate).format("MMM DD, YYYY")}
+          </Typography>
+          {dayjs(issue.dueDate).isBefore(currentDate) && (
+            <FireOutlined className="ml-1 expiredDueDate" />
+          )}
+        </div>
+      ) : (
+        ""
+      ),
       lastUpdatedAt: issue.lastUpdatedAt
         ? dayjs(issue.lastUpdatedAt).format("MMM DD, YYYY")
         : "",
@@ -148,7 +166,7 @@ const IssuesScreen = () => {
         </div>
       ),
     }));
-  }, [issues, navigate, projectId, subProjectId]);
+  }, [currentDate, issues?.data, navigate, projectId, subProjectId]);
 
   useEffect(() => {
     refetchIssues();
