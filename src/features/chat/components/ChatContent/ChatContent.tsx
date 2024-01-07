@@ -2,7 +2,8 @@ import { memo, useEffect, useRef } from "react";
 
 import { MessageOutlined } from "@ant-design/icons";
 import { Timestamp } from "@firebase/firestore";
-import { Input, Typography } from "antd";
+import { Typography } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
 
@@ -35,21 +36,23 @@ const ChatContent = ({ contactConversation }: ChatContentInterface) => {
     }
   };
 
-  const handleSendMessage = () => {
-    createDocument({
-      createdAt: Timestamp.fromDate(new Date()),
-      content: form.getFieldValue("content"),
-      projectId: Number(projectId),
-      recipient: contactConversation[0],
-      sender: {
-        id: Number(localStorage.getItem(USER_ID)),
-        username: user?.username,
-        avatarUrl: user?.avatarUrl,
-      },
-    }).then(() => {
-      form?.resetFields();
-      openNotification({ type: "success", message: "Send success" });
-    });
+  const handleSendMessage = (e: any) => {
+    if (!e.shiftKey) {
+      createDocument({
+        createdAt: Timestamp.fromDate(new Date()),
+        content: form.getFieldValue("content"),
+        projectId: Number(projectId),
+        recipient: contactConversation[0],
+        sender: {
+          id: Number(localStorage.getItem(USER_ID)),
+          username: user?.username,
+          avatarUrl: user?.avatarUrl,
+        },
+      }).then(() => {
+        form?.resetFields();
+        openNotification({ type: "success", message: "Send success" });
+      });
+    }
   };
 
   useEffect(() => {
@@ -83,7 +86,16 @@ const ChatContent = ({ contactConversation }: ChatContentInterface) => {
                 Number(localStorage.getItem(USER_ID)) ? (
                   <div className="currentUserMessage message mb-3">
                     <Typography className="text-white">
-                      {conversation.content}
+                      <pre
+                        style={{
+                          padding: 0,
+                          margin: 0,
+                          backgroundColor: "#e07b9a",
+                          border: "none",
+                        }}
+                      >
+                        {conversation.content}
+                      </pre>
                     </Typography>
                     <Typography className="text-white-10 text-right">
                       {dayjs(conversation.createdAt.toDate()).format(
@@ -93,7 +105,18 @@ const ChatContent = ({ contactConversation }: ChatContentInterface) => {
                   </div>
                 ) : (
                   <div className="contactUserMessage message mb-3">
-                    <Typography>{conversation.content}</Typography>
+                    <Typography>
+                      <pre
+                        style={{
+                          padding: 0,
+                          margin: 0,
+                          backgroundColor: "#f7ebef",
+                          border: "none",
+                        }}
+                      >
+                        {conversation.content}
+                      </pre>
+                    </Typography>
                     <Typography className="text-dark-10 text-right">
                       {dayjs(conversation.createdAt.toDate()).format(
                         "DD/MM/YYYY HH:mm"
@@ -106,7 +129,7 @@ const ChatContent = ({ contactConversation }: ChatContentInterface) => {
           </div>
           <Form form={form} className="formInput flex-align-center">
             <Item name="content" className="chatInput mb-0">
-              <Input
+              <TextArea
                 onPressEnter={handleSendMessage}
                 placeholder="Type your message here..."
               />
