@@ -3,7 +3,7 @@
 import { memo, useEffect, useMemo } from "react";
 
 import { FireOutlined } from "@ant-design/icons";
-import { Input, Select, Table, Typography } from "antd";
+import { Checkbox, Input, Select, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
@@ -34,6 +34,7 @@ const IssuesScreen = () => {
     String(subProjectId),
     {
       keyword: searchParams.get("keyword"),
+      isOverdue: searchParams.get("isOverdue"),
       status: searchParams.get("status"),
       type: searchParams.get("type"),
       assigneeId: searchParams.get("assigneeId"),
@@ -194,7 +195,19 @@ const IssuesScreen = () => {
           </div>
         ))}
       </div>
-      <Form layout="vertical" className="searchForm mt-5 flex-align-center">
+      <Checkbox
+        defaultChecked={searchParams.get("isOverdue") === "1"}
+        onChange={e => {
+          e.target.checked
+            ? searchParams.set("isOverdue", "1")
+            : searchParams.delete("isOverdue");
+          setSearchParams(searchParams);
+        }}
+        className="mt-2"
+      >
+        Overdue Tasks
+      </Checkbox>
+      <Form layout="vertical" className="searchForm mt-3 flex-align-center">
         <Item label="Issue Type" className="selectItem">
           <Select
             allowClear
