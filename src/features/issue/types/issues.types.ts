@@ -92,6 +92,7 @@ export type IssueHistoryResponse = {
 
 export type GetIssuesParams = {
   keyword?: string | null;
+  isOverdue?: string | null;
   status?: string | null;
   type?: string | null;
   assigneeId?: string | null;
