@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
 import { Input, Modal, ModalProps, Typography } from "antd";
 import { useParams } from "react-router-dom";
@@ -9,37 +9,64 @@ import { openNotification } from "@/components/organisms/Notification/Notificati
 import { requiredRules } from "@/helpers/validations.helpers";
 import { isInvalidForm } from "@/utils/utils";
 
-import styles from "./CreateSubProjectModal.module.scss";
+import styles from "./CreateEditSubProjectModal.module.scss";
 import useCreateSubProject from "../../hooks/useCreateSubProject";
+import useUpdateSubProject from "../../hooks/useUpdateSubProject";
+import { SubProject } from "../../types/project.types";
 
-interface CreateSubProjectModalProps extends ModalProps {
+interface CreateEditSubProjectModalProps extends ModalProps {
+  subProject?: SubProject;
   refetchSubProjects: () => void;
   onCancel: () => void;
 }
 
-const CreateSubProjectModal = ({
+const CreateEditSubProjectModal = ({
+  subProject = undefined,
   refetchSubProjects,
   onCancel,
   ...props
-}: CreateSubProjectModalProps) => {
+}: CreateEditSubProjectModalProps) => {
   const [form] = useForm();
   const { projectId } = useParams();
 
   const { createSubProject, isCreateSubProjectLoading } = useCreateSubProject(
     String(projectId)
   );
+  const { isUpdateSubProjectLoading, updateSubProject } = useUpdateSubProject(
+    String(subProject?.id)
+  );
 
-  const handleCreateSubProject = () => {
-    createSubProject(form.getFieldsValue())
-      .then(() => {
-        openNotification({
-          type: "success",
-          message: "You have successfully created a sub project",
-        });
-        refetchSubProjects();
-      })
-      .finally(() => onCancel());
+  const handleCreateEditSubProject = () => {
+    !subProject
+      ? createSubProject(form.getFieldsValue())
+          .then(() => {
+            openNotification({
+              type: "success",
+              message: "You have successfully created a sub project",
+            });
+            refetchSubProjects();
+          })
+          .finally(() => onCancel())
+      : updateSubProject(form.getFieldsValue())
+          .then(() => {
+            openNotification({
+              type: "success",
+              message: "You have successfully updated a sub project",
+            });
+            setTimeout(() => {
+              refetchSubProjects();
+            }, 300);
+          })
+          .finally(() => onCancel());
   };
+
+  useEffect(() => {
+    subProject &&
+      form.setFieldsValue({
+        subProjectName: subProject?.subProjectName,
+        subTitle: subProject?.subTitle,
+      });
+  }, [form, subProject]);
 
   return (
     <Modal
@@ -51,7 +78,7 @@ const CreateSubProjectModal = ({
     >
       <div className={styles.container}>
         <Typography className="font-weight-bold font-20">
-          Create a new Sub Project
+          {subProject ? "Edit a Sub Project" : "Create a new Sub Project"}
         </Typography>
         <Form form={form} size="large" layout="vertical">
           <Item
@@ -81,15 +108,16 @@ const CreateSubProjectModal = ({
             >
               {() => (
                 <Button
-                  onClick={handleCreateSubProject}
+                  onClick={handleCreateEditSubProject}
                   type="primary"
                   disabled={isInvalidForm({
                     form,
                     fieldsRequire: ["subProjectName", "subTitle"],
-                    isSubmitting: isCreateSubProjectLoading,
+                    isSubmitting:
+                      isCreateSubProjectLoading || isUpdateSubProjectLoading,
                   })}
                 >
-                  Create
+                  {subProject ? "Edit" : "Create"}
                 </Button>
               )}
             </Item>
@@ -100,4 +128,4 @@ const CreateSubProjectModal = ({
   );
 };
 
-export default memo(CreateSubProjectModal);
+export default memo(CreateEditSubProjectModal);
