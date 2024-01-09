@@ -24,7 +24,7 @@ import { USER_ID } from "@/constants/constants";
 import { IssuePaths } from "@/features/issue/constants/issue.paths";
 
 import styles from "./ProjectHomepageScreen.module.scss";
-import CreateSubProjectModal from "../../components/CreateSubProjectModal/CreateSubProjectModal";
+import CreateSubProjectModal from "../../components/CreateEditSubProjectModal/CreateEditSubProjectModal";
 import RecentUpdateItem from "../../components/RecentUpdateItem/RecentUpdateItem";
 import { USER_ISSUES_TABLE_COLUMNS } from "../../constants/project.constants";
 import { ProjectPaths } from "../../constants/project.paths";
@@ -35,6 +35,7 @@ import useGetProjectRecentUpdates from "../../hooks/useGetProjectRecentUpdates";
 import useGetSubProjects from "../../hooks/useGetSubProjects";
 import useGetUserIssues from "../../hooks/useGetUserIssues";
 import {
+  SubProject,
   SubProjectsResponse,
   UserIssuesResponse,
 } from "../../types/project.types";
@@ -84,6 +85,8 @@ const ProjectHomepageScreen = () => {
 
   const [isCreateSubProjectModalOpen, setIsCreateSubProjectModalOpen] =
     useState(false);
+  const [isEditSubProjectModalOpen, setIsEditSubProjectModalOpen] =
+    useState<SubProject>();
   const [isDeleteSubProjectModalOpen, setIsDeleteSubProjectModalOpen] =
     useState<number>();
 
@@ -269,7 +272,22 @@ const ProjectHomepageScreen = () => {
                           >
                             Issues
                           </Typography.Text>
-
+                          {!!memberDetail?.role && (
+                            <>
+                              <Typography.Text className="ml-2">
+                                |
+                              </Typography.Text>
+                              <Typography.Text
+                                className="ml-2"
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  setIsEditSubProjectModalOpen(subProject);
+                                }}
+                              >
+                                Edit
+                              </Typography.Text>
+                            </>
+                          )}
                           {!!memberDetail?.role && (
                             <>
                               <Typography.Text className="ml-2">
@@ -406,6 +424,14 @@ const ProjectHomepageScreen = () => {
           open={isCreateSubProjectModalOpen}
           refetchSubProjects={refetchSubProjects}
           onCancel={() => setIsCreateSubProjectModalOpen(false)}
+        />
+      )}
+      {isEditSubProjectModalOpen && (
+        <CreateSubProjectModal
+          subProject={isEditSubProjectModalOpen}
+          open={!!isEditSubProjectModalOpen}
+          refetchSubProjects={refetchSubProjects}
+          onCancel={() => setIsEditSubProjectModalOpen(undefined)}
         />
       )}
       {isDeleteSubProjectModalOpen && (
