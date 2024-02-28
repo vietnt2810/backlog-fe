@@ -108,7 +108,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   }, [projectId, subProjectId]);
 
   const handleNavigateSidebar = (itemInfo: SidebarInfo) => {
-    navigate(itemInfo.path);
+    location.pathname !== itemInfo.path && navigate(itemInfo.path);
   };
 
   useEffect(() => {
@@ -131,8 +131,10 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       return undefined;
     });
 
-    currentTab && setSelectedKey(currentTab.key);
-  }, [MENU_SIDEBAR, location, projectId, subProjectId]);
+    currentTab &&
+      selectedKey !== currentTab.key &&
+      setSelectedKey(currentTab.key);
+  }, [MENU_SIDEBAR, location, projectId, selectedKey, subProjectId]);
 
   return (
     <div className={cx(styles.root)}>
