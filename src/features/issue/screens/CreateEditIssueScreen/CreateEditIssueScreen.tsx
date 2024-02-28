@@ -225,7 +225,7 @@ const CreateEditIssueScreen = ({
 
   useEffect(() => {
     issueId &&
-      (setFileList(initialFileList),
+      (setFileList(initialFileList || []),
       form.setFieldsValue({
         attachedFile: initialFileList,
         issueTypeId: issueDetail?.issueTypeId,
@@ -257,6 +257,12 @@ const CreateEditIssueScreen = ({
         actualHour: issueDetail?.actualHour,
       }));
   }, [form, initialFileList, issueDetail, issueId]);
+
+  useEffect(() => {
+    return () => {
+      form.resetFields();
+    };
+  }, [form, pathname]);
 
   return (
     <div className={cx(styles.container, subProject ? "" : "mb-5 pl-1")}>
