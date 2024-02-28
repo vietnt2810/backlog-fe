@@ -5,7 +5,7 @@ import { memo, useEffect, useMemo } from "react";
 import { FireOutlined } from "@ant-design/icons";
 import { Checkbox, Input, Select, Table, Typography } from "antd";
 import dayjs from "dayjs";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 import { ReactComponent as HighPriorityIcon } from "@/assets/images/highPriorityArrow.svg";
 import { ReactComponent as LowPriorityIcon } from "@/assets/images/lowPriorityArrow.svg";
@@ -24,7 +24,6 @@ import { IssuePaths } from "../../constants/issue.paths";
 import useGetIssues from "../../hooks/useGetIssues";
 
 const IssuesScreen = () => {
-  const navigate = useNavigate();
   const { projectId, subProjectId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -84,20 +83,15 @@ const IssuesScreen = () => {
         </div>
       ),
       issueKey: (
-        <Typography
-          onClick={() =>
-            navigate(
-              IssuePaths.ISSUE_DETAIL(
-                String(projectId),
-                String(subProjectId),
-                String(issue.id)
-              )
-            )
-          }
-          className="issueKey"
+        <Link
+          to={IssuePaths.ISSUE_DETAIL(
+            String(projectId),
+            String(subProjectId),
+            String(issue.id)
+          )}
         >
-          {issue.issueKey}
-        </Typography>
+          <Typography className="issueKey">{issue.issueKey}</Typography>
+        </Link>
       ),
       assignee: (
         <div className="d-flex">
@@ -167,7 +161,7 @@ const IssuesScreen = () => {
         </div>
       ),
     }));
-  }, [currentDate, issues?.data, navigate, projectId, subProjectId]);
+  }, [currentDate, issues?.data, projectId, subProjectId]);
 
   useEffect(() => {
     refetchIssues();

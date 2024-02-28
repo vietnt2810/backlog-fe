@@ -15,25 +15,6 @@ const RegisterScreen = lazy(
   () => import("@/features/auth/screens/RegisterScreen/RegisterScreen")
 );
 
-const ConfirmForgotPasswordScreen = lazy(
-  () =>
-    import(
-      "@/features/auth/screens/ConfirmForgotPasswordScreen/ConfirmForgotPasswordScreen"
-    )
-);
-
-const ForgotPasswordScreen = lazy(
-  () =>
-    import("@/features/auth/screens/ForgotPasswordScreen/ForgotPasswordScreen")
-);
-
-const ForgotPasswordSuccessScreen = lazy(
-  () =>
-    import(
-      "@/features/auth/screens/ForgotPasswordSuccessScreen/ForgotPasswordSuccessScreen"
-    )
-);
-
 const LOGIN_SCREEN: RouteItemDef = {
   id: "Login",
   path: AuthPathsEnum.LOGIN,
@@ -50,36 +31,6 @@ const REGISTER_SCREEN: RouteItemDef = {
   isPublicRoute: true,
 };
 
-const FORGOT_PASSWORD: RouteItemDef = {
-  id: "AD_0-2",
-  path: AuthPathsEnum.FORGOT_PASSWORD,
-  component: ForgotPasswordScreen,
-  layout: AuthLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
-  isPublicRoute: true,
-};
-
-const CONFIRM_FORGOT_PASSWORD_SCREEN: RouteItemDef = {
-  id: "AD_0-4",
-  path: AuthPathsEnum.CONFIRM_FORGOT_PASSWORD,
-  component: ConfirmForgotPasswordScreen,
-  layout: AuthLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
-  isPublicRoute: true,
-};
-
-const FORGOT_PASSWORD_SUCCESS_SCREEN: RouteItemDef = {
-  id: "AD_0-5",
-  path: AuthPathsEnum.FORGOT_PASSWORD_SUCCESS,
-  component: ForgotPasswordSuccessScreen,
-  layout: AuthLayout as LazyExoticComponent<MemoExoticComponent<FC>>,
-  isPublicRoute: true,
-};
-
-const AUTH_ROUTES = [
-  LOGIN_SCREEN,
-  REGISTER_SCREEN,
-  FORGOT_PASSWORD,
-  CONFIRM_FORGOT_PASSWORD_SCREEN,
-  FORGOT_PASSWORD_SUCCESS_SCREEN,
-];
+const AUTH_ROUTES = [LOGIN_SCREEN, REGISTER_SCREEN];
 
 export default AUTH_ROUTES;
