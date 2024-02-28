@@ -74,7 +74,7 @@ const AddMemberModal = ({
                   isSubmitting: isAddMemberLoading,
                 })}
               >
-                Create
+                Add
               </Button>
             )}
           </Item>

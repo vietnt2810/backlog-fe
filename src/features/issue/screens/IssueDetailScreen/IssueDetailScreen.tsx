@@ -170,6 +170,26 @@ const IssueDetailScreen = () => {
   }, [location.hash]);
 
   useEffect(() => {
+    form.setFieldsValue({
+      attachedFile: undefined,
+      status: issueDetail?.status,
+      assigneeId: issueDetail?.assigneeUserId,
+      startDate: issueDetail?.startDate ? dayjs(issueDetail?.startDate) : null,
+      dueDate: issueDetail?.dueDate ? dayjs(issueDetail?.dueDate) : null,
+      estimatedHour: issueDetail?.estimatedHour,
+      actualHour: issueDetail?.actualHour,
+    });
+  }, [
+    form,
+    issueDetail?.actualHour,
+    issueDetail?.assigneeUserId,
+    issueDetail?.dueDate,
+    issueDetail?.estimatedHour,
+    issueDetail?.startDate,
+    issueDetail?.status,
+  ]);
+
+  useEffect(() => {
     setInitialFormValue({
       attachedFile: undefined,
       comment: undefined,
@@ -541,19 +561,6 @@ const IssueDetailScreen = () => {
                 <Button
                   onClick={() => {
                     setIsUpdateIssueFormOpen(true);
-                    form.setFieldsValue({
-                      attachedFile: undefined,
-                      status: issueDetail?.status,
-                      assigneeId: issueDetail?.assigneeUserId,
-                      startDate: issueDetail?.startDate
-                        ? dayjs(issueDetail?.startDate)
-                        : null,
-                      dueDate: issueDetail?.dueDate
-                        ? dayjs(issueDetail?.dueDate)
-                        : null,
-                      estimatedHour: issueDetail?.estimatedHour,
-                      actualHour: issueDetail?.actualHour,
-                    });
                   }}
                   className="flex-align-center changeStatusButton"
                 >
